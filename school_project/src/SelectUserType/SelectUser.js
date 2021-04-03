@@ -6,6 +6,9 @@ import Checkbox from '@material-ui/core/Checkbox'
 import Button from '@material-ui/core/Button'
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow'
 
+import { useHistory } from 'react-router-dom'
+import '../App.css'
+
 
 
 // setting up material-ui styling.
@@ -33,9 +36,12 @@ const useStyles = makeStyles({
 
 
 // the functional component.
-export default function SelectUser() {
+export default function SelectUser(props) {
     // for styling
     const classes = useStyles()
+
+    // for routing
+    const router = useHistory()
 
     // handling state.
     const [studentChecked, setStudentChecked] = useState(false)
@@ -45,6 +51,7 @@ export default function SelectUser() {
     function HandleStudentChecked (event) {
         setStudentChecked(event.target.checked)
         console.log(studentChecked)
+        console.log(`router = ${router}`)
     }
 
 
@@ -52,6 +59,7 @@ export default function SelectUser() {
     function HandleStaffChecked (event) {
         setStaffChecked(event.target.checked)
         console.log(staffChecked)
+        console.log(`router = ${router}`)
     }
 
 
@@ -91,14 +99,21 @@ export default function SelectUser() {
     }
 
 
-
-
-
-
+    // function to handle when the continue button is clicked.
+    function HandleContinueButtonClick() {
+        if(studentChecked) {
+            router.push('/studentlogin')
+        } else if(staffChecked) {
+            router.push('/stafflogin')
+        } else {
+            // a dialog or modal comes in here later.
+            alert('You need to select a user-type to continue')
+        }
+    }
 
 
     return (
-        <div>
+        <div className='App-header'>
           <Typography variant='h4' className={classes.introText} >
             Integrated student tracking, report submission and nss accomodation finder.
           </Typography>
@@ -108,7 +123,7 @@ export default function SelectUser() {
 
           <ShowCheckBoxes />
           <Button className={classes.continueBtn} 
-                  onClick={() => staffChecked? alert(staffChecked): alert(studentChecked)}
+                  onClick={HandleContinueButtonClick}
                   variant='contained'
                   size='large'
                   color='primary'
