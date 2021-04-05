@@ -6,6 +6,7 @@ import SelectUser from './SelectUserType/SelectUser'
 import StaffLogin from './StudentTracking/StaffLogin'
 import StudentLogin from './Complaint/StudentLogin'
 import StudentSignUp from './Complaint/StudentSignUp'
+import MainPage from './StudentTracking/MainPage'
 
 
 
@@ -18,6 +19,7 @@ function App() {
                 <Route exact path='/stafflogin' component={StaffLogin} />
                 <Route exact path='/studentsignup' component={StudentSignUp} />
                 <Route exact path='/studentLogin' component={StudentLogin} />
+                <Route exact path='/viewallstudents' component={MainPage} />
                 <Route path='*' render={() => <h2> Sorry, page not found </h2>} />
             </Switch>
 

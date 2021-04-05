@@ -75,11 +75,10 @@ export default function SelectUser(props) {
                           inputProps= {{
                               'aria-label': 'primary checkbox'
                           }}
-                />
-                 } 
+                /> }
                  label='Student' 
-                 
-                 />
+                      />
+
 
             <FormControlLabel control={
                 <Checkbox checked={staffChecked} 
@@ -88,11 +87,9 @@ export default function SelectUser(props) {
                           inputProps= {{
                             'aria-label': 'primary checkbox'
                         }}
-                />
-
-            }
+                /> }
                 label='Staff'
-            />
+                   />
 
           </div>
         )
