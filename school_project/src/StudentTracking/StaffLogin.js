@@ -86,7 +86,7 @@ const StaffLogin = () => {
                     temporaryArray.push({...doc.data() })
                 })
                 setLoginsArray(temporaryArray)
-                //console.log(loginsArray)
+                console.log(loginsArray)
 
                 // verifying that there is a matching user
                 let verify = loginsArray.filter(eachItem => ( 

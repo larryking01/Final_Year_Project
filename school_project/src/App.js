@@ -7,6 +7,9 @@ import StaffLogin from './StudentTracking/StaffLogin'
 import StudentLogin from './Complaint/StudentLogin'
 import StudentSignUp from './Complaint/StudentSignUp'
 import MainPage from './StudentTracking/MainPage'
+import AddNewStudent from './StudentTracking/AddNewStudent'
+import EditStudentDetails from './StudentTracking/EditStudentDetails'
+import DeleteStudent from './StudentTracking/DeleteStudent'
 
 
 
@@ -20,6 +23,9 @@ function App() {
                 <Route exact path='/studentsignup' component={StudentSignUp} />
                 <Route exact path='/studentLogin' component={StudentLogin} />
                 <Route exact path='/viewallstudents' component={MainPage} />
+                <Route exact path='/addnewstudent' component={AddNewStudent} />
+                <Route exact path='/editstudentdetails' component={EditStudentDetails} />
+                <Route exact path='/deletestudent' component={DeleteStudent} />
                 <Route path='*' render={() => <h2> Sorry, page not found </h2>} />
             </Switch>
 

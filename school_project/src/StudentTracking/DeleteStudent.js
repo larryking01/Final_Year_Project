@@ -31,8 +31,7 @@ const useStyles = makeStyles(theme => ({
 
 
 
-
-export default function MainPage() {
+export default function DeleteStudent() {
 
     // initializing styling
     const classes = useStyles()
@@ -41,12 +40,8 @@ export default function MainPage() {
     const router = useHistory()
 
 
-
-
-
-
     return (
-        <div style={{ display: 'flex'}}>
+        <div style={{display: 'flex'}}>
             <Drawer variant='persistent'
                     anchor='left'
                     open={true}
@@ -64,7 +59,7 @@ export default function MainPage() {
                      </div>
                      
                     <div onClick={() => router.push('/addnewstudent')}>
-                     <ListItem button className={classes.listItem} >
+                     <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
                                 <PersonAddIcon />
                          </ListItemIcon>
@@ -103,15 +98,12 @@ export default function MainPage() {
                  
             </Drawer>
 
-            <div style={{flexDirection: 'column', marginLeft: 100}}>
-                <div>
-                View all students here 
-                </div>
-                <div>
-                View all students here 
-                </div>
+            <div>
+                Delete students here 
             </div>
+
             
+
         </div>
     )
 }
