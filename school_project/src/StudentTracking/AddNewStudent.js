@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 
 
 import { makeStyles } from '@material-ui/core/styles'
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, 
          Typography, TextField, Button } from '@material-ui/core'
+import { Autocomplete } from '@material-ui/lab'
 import PersonIcon from '@material-ui/icons/Person'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import EditIcon from '@material-ui/icons/Edit'
@@ -62,7 +63,7 @@ const useStyles = makeStyles(theme => ({
         marginTop: '30px'
     },
     courseAndMobileNumberDiv: {
-        marginTop: '30px'
+        marginTop: '-10px'
     },
     pictureDiv: {
         position: 'relative',
@@ -84,6 +85,16 @@ const useStyles = makeStyles(theme => ({
         position: 'relative',
         right: '12px',
         top: '5px'
+    },
+    sexAutocomplete: {
+        position: 'relative',
+        left: '105px',
+    },
+    levelAutocomplete: {
+        position: 'relative',
+        left: '432px',
+        bottom: '50px'
+
     }
 }))
 
@@ -93,11 +104,111 @@ const useStyles = makeStyles(theme => ({
 
 export default function AddNewStudent() {
 
+    // handling state for each of the form components.
+    const [ firstName, setFirstName ] = useState('')
+    const [ lastName, setLastName ] = useState('')
+    const [ indexNumber, setIndexNumber ] = useState('')
+    const [ roomNumber, setRoomNumber ] = useState('')
+    const [ sex, setSex ] = useState('')
+    const [ level, setLevel ] = useState('')
+    const [ course, setCourse ] = useState('')
+    const [ mobileNumber, setMobileNumber ] = useState('')
+    const [ selectedPicture, setSelectedPicture ] = useState(null)
+
+    // updating state for the first name component.
+    const handleFirstNameComponentState = ( event ) => {
+        setFirstName(event.target.value)
+    }
+
+    // updating state for the last name component.
+    const handleLastNameComponent = ( event ) => {
+        setLastName(event.target.value)
+    }
+
+    // updating the index number component.
+    const handleIndexNumberComponent = ( event ) => {
+        setIndexNumber(event.target.value)
+    }
+
+    // updating room number component.
+    const handleRoomNumberComponent = ( event ) => {
+        setRoomNumber(event.target.value)
+    }
+
+    // updating the sex component.
+    const handleSexComponent = ( event ) => {
+        setSex(event.target.value)
+    }
+
+    // updating the level component.
+    const handleLevelComponent = ( event ) => {
+        setLevel(event.target.value)
+    }
+
+    // updating the course component.
+    const handleCourseComponent = ( event ) => {
+        setCourse(event.target.value)
+    }
+
+    // updating the mobile number component.
+    const handleMobileNumberComponent = ( event ) => {
+        setMobileNumber(event.target.value)
+    }
+
+    // handling form submission.
+    const handleFormSubmit = ( event ) => {
+        event.preventDefault()
+        let studentAdded = {
+            firstName: firstName,
+            lastName: lastName,
+            indexNumber: indexNumber,
+            roomNumber: roomNumber,
+            sex: sex,
+            level: level,
+            course: course,
+            mobileNumber: mobileNumber
+        }
+
+        console.log(`first name = ${studentAdded.firstName}`)
+        console.log(`last name = ${studentAdded.lastName}`)
+        console.log(`index number = ${studentAdded.indexNumber}`)
+        console.log(`room number = ${studentAdded.roomNumber}`)
+        console.log(`sex = ${studentAdded.sex}`)
+        console.log(`level = ${studentAdded.level}`)
+        console.log(`course = ${studentAdded.course}`)
+        console.log(`phone number = ${studentAdded.mobileNumber}`)
+
+
+        
+        
+    }
+
+
+
+
+
+
+
     // initializing styling
     const classes = useStyles()
 
     // for routing
     const router = useHistory()
+
+    // the array to hold the sex values.
+    let sexValuesArray = [
+        { gender: 'Male' },
+        { gender: 'Female'}
+    ]
+
+    // the array to hold the values of the level.
+    let levelValuesArray = [
+        { level: '100' },
+        { level: '200'},
+        { level: '300'},
+        { level: '400'}
+    ]
+    
 
 
     return (
@@ -160,9 +271,9 @@ export default function AddNewStudent() {
 
             {/* the form for adding a new student */}
             <div className={classes.addNewStudentForm}>
-                <form onSubmit={() => {}} className={classes.actualForm}>
+                <form onSubmit={ handleFormSubmit } className={classes.actualForm}>
                     <Typography variant='h14'>
-                        Enter the details of the student and click Add.
+                        Enter the details of the student.
                     </Typography>
 
                     {/* the first name and last name div */}
@@ -172,6 +283,8 @@ export default function AddNewStudent() {
                           label='First Name'
                           required={ true }
                           className={classes.firstNameTextField}
+                          onChange={ handleFirstNameComponentState }
+                          value={ firstName }
                        />
 
                        <TextField 
@@ -179,6 +292,8 @@ export default function AddNewStudent() {
                         label='Last Name'
                         required={ true }
                         className={classes.lastNameTextField}
+                        onChange={ handleLastNameComponent } 
+                        value={ lastName }
                        />
 
                     </div>
@@ -190,6 +305,8 @@ export default function AddNewStudent() {
                           label='Index Number'
                           required={ true }
                           className={classes.firstNameTextField}
+                          onChange={ handleIndexNumberComponent }
+                          value={ indexNumber }
                        />
 
                         <TextField 
@@ -197,27 +314,41 @@ export default function AddNewStudent() {
                           label='Room Number'
                           required={ true }
                           className={classes.lastNameTextField}
+                          onChange={ handleRoomNumberComponent }
+                          value={ roomNumber }
                        />
-
                        
-
                     </div>
 
                     {/* the level and sex div */}
                     <div className={classes.levelAndSexDiv}>
-                       <TextField 
-                          variant='outlined'
-                          label='Level'
-                          required={ true }
-                          className={classes.firstNameTextField}
-                       />
+                        <Autocomplete 
+                            id='sex autocomplete'
+                            options={ sexValuesArray }
+                            getOptionLabel = { (option) => option.gender }
+                            renderInput = { (params) => (
+                                <TextField {...params} label='Sex' variant='filled' />
+                            ) }
+                            style={{width: 200}}
+                            className={classes.sexAutocomplete}
+                            size='small'
+                            onChange={ handleSexComponent }
+                            value={ sex }
+                        />
 
-                        <TextField 
-                          variant='outlined'
-                          label='Sex'
-                          required={ true }
-                          className={classes.lastNameTextField}
-                       />
+                        <Autocomplete 
+                            id='level autocomplete'
+                            options={ levelValuesArray }
+                            getOptionLabel={ (option) => option.level }
+                            renderInput={ (params) => (
+                                <TextField {...params} label='Level' variant='filled' />
+                            )}
+                            style={{width: 200}}
+                            className={classes.levelAutocomplete}
+                            size='small'
+                            onChange={ handleLevelComponent }
+                            value={ level }
+                        />
 
                     </div>
 
@@ -228,6 +359,8 @@ export default function AddNewStudent() {
                           label='Course'
                           required={ true }
                           className={classes.firstNameTextField}
+                          onChange={ handleCourseComponent }
+                          value={ course }
                        />
 
                        <TextField 
@@ -235,6 +368,8 @@ export default function AddNewStudent() {
                         label='Mobile Number'
                         required={ true }
                         className={classes.lastNameTextField}
+                        onChange={ handleMobileNumberComponent }
+                        value={ mobileNumber }
                        />
 
                     </div>
@@ -257,7 +392,7 @@ export default function AddNewStudent() {
                             size='medium'
                             color='primary'
                             startIcon={ <SaveIcon /> }
-                            onClick={() => {}}
+                            onClick={ handleFormSubmit }
                         >
                             Add Student
                         </Button>
