@@ -109,11 +109,22 @@ export default function AddNewStudent() {
     const [ lastName, setLastName ] = useState('')
     const [ indexNumber, setIndexNumber ] = useState('')
     const [ roomNumber, setRoomNumber ] = useState('')
-    const [ sex, setSex ] = useState('')
-    const [ level, setLevel ] = useState('')
     const [ course, setCourse ] = useState('')
     const [ mobileNumber, setMobileNumber ] = useState('')
     const [ selectedPicture, setSelectedPicture ] = useState(null)
+
+    // handling the state for the sex autocomplete component.
+    const [ sexValue, setSexValue ] = useState('Male')
+    const [ sexInputValue, setSexInputValue ] = useState('')
+
+
+    // handling state for the level autocomplete component.
+    const [ levelValue, setLevelValue ] = useState('100')
+    const [ levelInputValue, setLevelInputValue ] = useState('')
+
+
+
+
 
     // updating state for the first name component.
     const handleFirstNameComponentState = ( event ) => {
@@ -135,15 +146,17 @@ export default function AddNewStudent() {
         setRoomNumber(event.target.value)
     }
 
-    // updating the sex component.
-    const handleSexComponent = ( event ) => {
-        setSex(event.target.value)
-    }
+    /* updating the sex component.
+    const handleSexComponent = ( event, value ) => {
+        setSex(value.gender)
+        console.log(`sex value = ${sex}`)
+    } */
 
-    // updating the level component.
-    const handleLevelComponent = ( event ) => {
+    /* updating the level component.
+    const handleLevelComponent = ( event, value ) => {
         setLevel(event.target.value)
-    }
+        console.log(`level value = ${value}`)
+    } */
 
     // updating the course component.
     const handleCourseComponent = ( event ) => {
@@ -159,27 +172,25 @@ export default function AddNewStudent() {
     const handleFormSubmit = ( event ) => {
         event.preventDefault()
         let studentAdded = {
-            firstName: firstName,
-            lastName: lastName,
-            indexNumber: indexNumber,
-            roomNumber: roomNumber,
-            sex: sex,
-            level: level,
-            course: course,
-            mobileNumber: mobileNumber
+            firstName,
+            lastName,
+            indexNumber,
+            roomNumber,
+            course,
+            mobileNumber,
+            sexInputValue,
+            levelInputValue
         }
 
         console.log(`first name = ${studentAdded.firstName}`)
         console.log(`last name = ${studentAdded.lastName}`)
         console.log(`index number = ${studentAdded.indexNumber}`)
         console.log(`room number = ${studentAdded.roomNumber}`)
-        console.log(`sex = ${studentAdded.sex}`)
-        console.log(`level = ${studentAdded.level}`)
         console.log(`course = ${studentAdded.course}`)
-        console.log(`phone number = ${studentAdded.mobileNumber}`)
+        console.log(`mobile number = ${studentAdded.mobileNumber}`)
+        console.log(`sex = ${studentAdded.sexInputValue}`)
+        console.log(`level = ${studentAdded.levelInputValue}`)
 
-
-        
         
     }
 
@@ -332,8 +343,15 @@ export default function AddNewStudent() {
                             style={{width: 200}}
                             className={classes.sexAutocomplete}
                             size='small'
-                            onChange={ handleSexComponent }
-                            value={ sex }
+                            value={ sexValue }
+                            onChange={(event, newValue) => {
+                                setSexValue(newValue)
+                            }}
+                            inputValue={ sexInputValue }
+                            onInputChange={(event, newInputValue) => {
+                                setSexInputValue(newInputValue)
+                            }}
+                                
                         />
 
                         <Autocomplete 
@@ -346,8 +364,15 @@ export default function AddNewStudent() {
                             style={{width: 200}}
                             className={classes.levelAutocomplete}
                             size='small'
-                            onChange={ handleLevelComponent }
-                            value={ level }
+                            value={ levelValue }
+                            onChange={(event, newValue) => {
+                                setLevelValue(newValue)
+                            }}
+                            inputValue={ levelInputValue }
+                            onInputChange={(event, newInputValue) => {
+                                setLevelInputValue(newInputValue)
+                            }}
+                            
                         />
 
                     </div>
