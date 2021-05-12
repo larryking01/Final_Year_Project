@@ -15,8 +15,8 @@ import { projectFirestore, timestamp } from '../firebaseSetup/firebaseConfig'
 const useStyles = makeStyles({
     loginContainer: {
         backgroundColor: 'white',
-        width: 620,
-        height: 520,
+        width: 580,
+        height: 470,
         borderRadius: '5%',
         textAlign: 'center'
     },
@@ -31,10 +31,19 @@ const useStyles = makeStyles({
     signInButton: {
         marginTop: 40,
         width: 270,
-        backgroundColor: 'rgba(105, 13, 170, 0.541)'
+        backgroundColor: 'rgba(105, 13, 170, 0.541)',
+        height: 35,
+        fontSize: 16, 
+        cursor: 'pointer',
+        border: 'none',
+        '&:hover': {
+            backgroundColor: 'blue',
+            color: 'white'
+        }
     },
     headerText: {
-
+        position: 'relative',
+        top: 40
     }
 })
 
@@ -55,6 +64,7 @@ const StaffLogin = () => {
     const [staffID, setStaffID] = useState('')
     const [staffPIN, setStaffPIN] = useState('')
     const [loginsArray, setLoginsArray] = useState([])
+    const [verifyingComplete, setVerifyingComplete] = useState(true)
 
     // function to update staff ID
     const updateStaffID = (event) => {
@@ -68,75 +78,63 @@ const StaffLogin = () => {
 
 
 
-    // dummy function to add a staff ID and PIN to the staff login collection.
-    const HandleButtonClick = () => {
-        let temporaryArray = []
+    // function to verify staff credentials.
+    const HandleFormSubmit = (event) => {
        
-        if(staffID.length < 1 && staffPIN.length < 1) {
-            // modal goes in here later.
-            alert('You need to enter a valid staff ID and pin to continue')
-        } else if(staffID.length < 1 && staffPIN.length > 1) {
-            alert('No staff ID entered. Enter a valid staff ID to continue')
-        } else if(staffID.length > 1 && staffPIN.length < 1) {
-            alert('No PIN entered. Enter a matching pin to continue')
-        } else {
-            let staffLoginCollection = projectFirestore.collection('Staff Login Collection')
-            staffLoginCollection.get().then(querySnapshot => {
-                querySnapshot.forEach(doc => {
-                    temporaryArray.push({...doc.data() })
+        event.preventDefault()
+        setVerifyingComplete(false)
+        let staffLoginCollection = projectFirestore.collection('Staff Login Collection')
+        staffLoginCollection.where('staffID', '==', staffID)
+        .get().then( querySnapshot => {
+            if(querySnapshot.empty) {
+                // modal goes here later.
+                setVerifyingComplete(true)
+                alert(`Invalid staff ID. No staff with the ID ${staffID} exists`)
+            }
+            else {
+                staffLoginCollection.where('staffID', '==', staffID).where('pin', '==', staffPIN)
+                .get().then( querySnapshot => {
+                    if(querySnapshot.empty) {
+                        // modal goes here later.
+                        setVerifyingComplete(true)
+                        alert(`Invalid pin for staff ID ${staffID}. Enter the correct pin to continue`)
+                    } 
+                    else {
+                        setVerifyingComplete(true)
+                        // modal goes here later
+                        alert('verification successful !!')
+                        router.push('/viewallstudents')
+                    }
                 })
-                setLoginsArray(temporaryArray)
-                console.log(loginsArray)
-
-                // verifying that there is a matching user
-                let verify = loginsArray.filter(eachItem => ( 
-                    eachItem.staffID === staffID && eachItem.pin === staffPIN))
-                if(verify.length > 0) {
-                    // link to main page
-                    alert('verification successful')
-                    router.push('/viewallstudents')
-
-                }
-                else {
-                    // modal goes here
-                    alert('Your staff ID and pin does not match. Please make sure you have entered the right credentials to continue')
-                }
-
-            })
-     
-        }
-
+            }
+        })
+        
     }
 
     // handling when the enter key is pressed.
     const HandleEnterPressed = (event) => {
         if(event.key === 'Enter') {
-            HandleButtonClick()
+            HandleFormSubmit(event)
         }
     }
     
 
 
-    
-
-
-
-
-
     return (
         <div className='parentContainer'>
             <div className={classes.loginContainer}>
+                <form onSubmit={ HandleFormSubmit }>
                 <Typography variant='h4' className={classes.headerText}>
                     Staff Login 
                 </Typography>
-
 
                 <div>
                 <TextField className={classes.staffIDTextField}
                            variant='outlined' 
                            label='Staff ID'
                            color='primary'
-                           type='text'  
+                           type='text' 
+                           required={ true } 
                            onChange={ updateStaffID }
                            value={ staffID }
                            onKeyPress={HandleEnterPressed}
@@ -149,6 +147,7 @@ const StaffLogin = () => {
                            label='PIN'
                            color='primary'
                            type='password'  
+                           required={ true }
                            onChange={ updateStaffPIN }
                            value={ staffPIN }
                            onKeyPress={HandleEnterPressed}
@@ -157,17 +156,16 @@ const StaffLogin = () => {
                 </div>
 
                 <div>
-                <Button variant='contained' className={classes.signInButton}
-                        color='primary' onClick={ HandleButtonClick } >
+                <button type='submit' className={classes.signInButton} >
                     Continue
-                </Button>
+                </button>
                 </div>
 
-               
-                    
+                { !verifyingComplete && <p> Verifying your credentials. Please wait..... </p>}
+
+                </form>
             </div>
             
-
         </div>
     )
 }

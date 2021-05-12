@@ -1,18 +1,18 @@
 import React, { useState } from 'react'
 import { useHistory, Link } from 'react-router-dom'
+import { projectFirestore } from '../firebaseSetup/firebaseConfig'
+import './addStudentBtnStyles.css'
 
 
 import { makeStyles } from '@material-ui/core/styles'
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, 
-         Typography, TextField, Button } from '@material-ui/core'
+         Typography, TextField } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab'
 import PersonIcon from '@material-ui/icons/Person'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import RoomIcon from '@material-ui/icons/Room'
-import SaveIcon from '@material-ui/icons/Save'
-import CancelIcon from '@material-ui/icons/Cancel'
 
 
 // setting up styling.
@@ -146,11 +146,17 @@ export default function AddNewStudent() {
         setRoomNumber(event.target.value)
     }
 
-    /* updating the sex component.
-    const handleSexComponent = ( event, value ) => {
-        setSex(value.gender)
-        console.log(`sex value = ${sex}`)
-    } */
+    // resetting all components when cancel button is clicked.
+    const handleCancelBtnClick = ( ) => {
+        setFirstName('')
+        setLastName('')
+        setCourse('')
+        setIndexNumber('')
+        setRoomNumber('')
+        setMobileNumber('')
+        setSexInputValue('')
+        setLevelInputValue('')
+    } 
 
     /* updating the level component.
     const handleLevelComponent = ( event, value ) => {
@@ -171,33 +177,36 @@ export default function AddNewStudent() {
     // handling form submission.
     const handleFormSubmit = ( event ) => {
         event.preventDefault()
-        let studentAdded = {
-            firstName,
-            lastName,
-            indexNumber,
-            roomNumber,
-            course,
-            mobileNumber,
+
+        let newStudent = {
+            firstName: firstName[0].toUpperCase() + firstName.substring(1).trim(),
+            lastName: lastName[0].toUpperCase() + lastName.substring(1).trim(),
+            indexNumber: indexNumber.trim(),
+            roomNumber: roomNumber.trim(),
+            course: course[0].toUpperCase() + course.substring(1).trim(),
+            mobileNumber: mobileNumber.trim(),
             sexInputValue,
             levelInputValue
         }
 
-        console.log(`first name = ${studentAdded.firstName}`)
-        console.log(`last name = ${studentAdded.lastName}`)
-        console.log(`index number = ${studentAdded.indexNumber}`)
-        console.log(`room number = ${studentAdded.roomNumber}`)
-        console.log(`course = ${studentAdded.course}`)
-        console.log(`mobile number = ${studentAdded.mobileNumber}`)
-        console.log(`sex = ${studentAdded.sexInputValue}`)
-        console.log(`level = ${studentAdded.levelInputValue}`)
 
-        
+        // initializing the firebase collection to store added students.
+        let addedStudentsCollection = projectFirestore.collection('Added Students Collection')
+        // preventing the addition of duplicate records
+        addedStudentsCollection.where('indexNumber', '==', indexNumber)
+        .get().then( querySnapshot => {
+            if(querySnapshot.empty) {
+                addedStudentsCollection.add( newStudent ).then(doc => {
+                    console.log(`document added with id ${doc.id} `)
+                    
+                })
+            } else {
+                // modal goes here later.
+                alert(`Failed to add student. Student with the id ${indexNumber} already exists`)
+            }
+        })
+
     }
-
-
-
-
-
 
 
     // initializing styling
@@ -338,7 +347,7 @@ export default function AddNewStudent() {
                             options={ sexValuesArray }
                             getOptionLabel = { (option) => option.gender }
                             renderInput = { (params) => (
-                                <TextField {...params} label='Sex' variant='filled' />
+                                <TextField {...params} required={true} label='Sex' variant='filled' />
                             ) }
                             style={{width: 200}}
                             className={classes.sexAutocomplete}
@@ -359,7 +368,7 @@ export default function AddNewStudent() {
                             options={ levelValuesArray }
                             getOptionLabel={ (option) => option.level }
                             renderInput={ (params) => (
-                                <TextField {...params} label='Level' variant='filled' />
+                                <TextField {...params} required={true} label='Level' variant='filled' />
                             )}
                             style={{width: 200}}
                             className={classes.levelAutocomplete}
@@ -372,7 +381,7 @@ export default function AddNewStudent() {
                             onInputChange={(event, newInputValue) => {
                                 setLevelInputValue(newInputValue)
                             }}
-                            
+                              
                         />
 
                     </div>
@@ -410,8 +419,8 @@ export default function AddNewStudent() {
                     </div>
 
 
-                    { /* the div for the button to add the student to database */}
-                        <Button 
+                    { /* the div for the button to add the student to database 
+                        <Button type='submit'
                             className={classes.addStudentButton}
                             variant='contained'
                             size='medium'
@@ -420,10 +429,10 @@ export default function AddNewStudent() {
                             onClick={ handleFormSubmit }
                         >
                             Add Student
-                        </Button>
+                    </Button> */}
                    
 
-                    { /* the cancel button  */}
+                    { /* the cancel button  
                         <Button
                             className={classes.cancelAddStudentButton}
                             variant='contained'
@@ -434,7 +443,16 @@ export default function AddNewStudent() {
                         
                         >
                             Cancel
-                        </Button>
+                    </Button> */}
+
+                    <div className='actionButtonsDiv'>
+                        <button type='submit' className='addStudentBtn'> Add student  </button>
+
+                        <button type='button' className='cancelAddStudentBtn' onClick={ handleCancelBtnClick }>
+                             Cancel  
+                        </button>
+                    </div>
+                        
                  
                 </form>
                 

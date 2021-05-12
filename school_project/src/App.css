@@ -18,13 +18,16 @@
    justify-content: center;
    align-items: center;
    border-radius: 5%;
-   max-width: 720px;
+   max-width: 630px;
    min-width: 300px;
-   height: 550px;
+   height: 520px;
    position: relative;
    left: 270px;
    top: 30px;
    box-shadow: 2px 2px 14px grey;
 }
+
+
+
 
 
