@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory, Link } from 'react-router-dom'
+import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -9,6 +10,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import RoomIcon from '@material-ui/icons/Room'
+import MaterialTable from 'material-table'
 
 
 // setting up styling.
@@ -39,6 +41,35 @@ export default function MainPage() {
 
     // for routing
     const router = useHistory()
+
+    // handling state.
+    const [ addedStudentsArray, setAddedStudentsArray ] = useState([])
+
+    // the use effect to fetch all added students.
+    useEffect(() => {
+        projectFirestore.collection('Added Students Collection').onSnapshot(snapShot => {
+            let temporaryArray = []
+            snapShot.forEach(document => {
+                temporaryArray.push({ id: document.id, ...document.data()})
+            })
+            setAddedStudentsArray(temporaryArray)
+        })
+        
+    }, [ ])
+
+
+    // setting up the columns of the table.
+    const tableColumns = [
+        { title: 'Index Number', field: 'indexNumber'},
+        { title: 'First Name', field: 'firstName'},
+        { title: 'Last Name', field: 'lastName'},
+        { title: 'Sex', field: 'sexInputValue'},
+        { title: 'Room Number', field: 'roomNumber'},
+        { title: 'Course', field: 'course'},
+        { title: 'Level', field: 'levelInputValue'},
+        { title: 'Mobile Number', field: 'mobileNumber'}
+    ]
+
 
 
 
@@ -104,13 +135,13 @@ export default function MainPage() {
             </Drawer>
 
             <div style={{flexDirection: 'column', marginLeft: 100}}>
-                <div>
-                View all students here 
-                </div>
-                <div>
-                View all students here 
-                </div>
+                <MaterialTable 
+                    title='List Of Students'
+                    data={ addedStudentsArray }
+                    columns={ tableColumns } 
+                />
             </div>
+                
             
         </div>
     )

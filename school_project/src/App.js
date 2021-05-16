@@ -16,7 +16,7 @@ import DeleteStudent from './StudentTracking/DeleteStudent'
 function App() {
   return (
     <div className="App">
-        <BrowserRouter>
+        <BrowserRouter> 
             <Switch>
                 <Route exact path='/' component={SelectUser} />
                 <Route exact path='/stafflogin' component={StaffLogin} />

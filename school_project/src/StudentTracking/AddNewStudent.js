@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory, Link } from 'react-router-dom'
-import { projectFirestore } from '../firebaseSetup/firebaseConfig'
+import { projectFirestore, projectStorage } from '../firebaseSetup/firebaseConfig'
 import './addStudentBtnStyles.css'
 
 
@@ -94,7 +94,13 @@ const useStyles = makeStyles(theme => ({
         position: 'relative',
         left: '432px',
         bottom: '50px'
-
+    },
+    errorSpan: {
+        color: 'red',
+        position: 'relative',
+        left: '70px',
+        top: '5px',
+        fontSize: '13px'
     }
 }))
 
@@ -111,7 +117,51 @@ export default function AddNewStudent() {
     const [ roomNumber, setRoomNumber ] = useState('')
     const [ course, setCourse ] = useState('')
     const [ mobileNumber, setMobileNumber ] = useState('')
-    const [ selectedPicture, setSelectedPicture ] = useState(null)
+
+    // handling state for the uploaded student picture.
+    const [ studentPicture, setStudentPicture ] = useState(null)
+    const [ error, setError ] = useState(null)
+    const [ imageUrl, setImageUrl ] = useState(null)
+    //const [ progress, setProgress ] = useState( 0 ) 
+
+    let acceptedImageTypes = [ 'image/png', 'image/jpeg', 'image/jpg']
+
+    const handlePictureSelected = ( event ) => {
+        let selectedPicture = event.target.files[0]
+
+        if( selectedPicture && acceptedImageTypes.includes(selectedPicture.type) ) {
+            setStudentPicture(selectedPicture)
+            setError('')
+        } else {
+            // modal may go here later.
+            setStudentPicture(null)
+            setError('Please select an image file (with a .png or .jpg extension)')
+        }
+
+    }
+
+
+     /* the useEffect to add the selected student image to firebase storage
+     useEffect(() => {
+        // uploading the selected picture into firebase storage.
+        let cloudStorage = projectStorage.ref('Student Images').child(`${studentPicture.name}`)
+        cloudStorage.put(studentPicture).on('state_changed', (snap) => {
+            let percentageUploaded = (snap.bytesTransferred / snap.totalBytes) * 100
+            setProgress(percentageUploaded) 
+        }, (error) => {
+            console.log(error)
+        }, async () => {
+            const url = await cloudStorage.getDownloadURL()
+            setImageUrl(url)
+            console.log(`downloaded url = ${url}`)
+        })
+    }, [studentPicture])
+    */
+
+    
+
+
+
 
     // handling the state for the sex autocomplete component.
     const [ sexValue, setSexValue ] = useState('Male')
@@ -121,9 +171,6 @@ export default function AddNewStudent() {
     // handling state for the level autocomplete component.
     const [ levelValue, setLevelValue ] = useState('100')
     const [ levelInputValue, setLevelInputValue ] = useState('')
-
-
-
 
 
     // updating state for the first name component.
@@ -156,14 +203,10 @@ export default function AddNewStudent() {
         setMobileNumber('')
         setSexInputValue('')
         setLevelInputValue('')
+        setStudentPicture(null)
     } 
 
-    /* updating the level component.
-    const handleLevelComponent = ( event, value ) => {
-        setLevel(event.target.value)
-        console.log(`level value = ${value}`)
-    } */
-
+    
     // updating the course component.
     const handleCourseComponent = ( event ) => {
         setCourse(event.target.value)
@@ -178,6 +221,7 @@ export default function AddNewStudent() {
     const handleFormSubmit = ( event ) => {
         event.preventDefault()
 
+        if(imageUrl) {
         let newStudent = {
             firstName: firstName[0].toUpperCase() + firstName.substring(1).trim(),
             lastName: lastName[0].toUpperCase() + lastName.substring(1).trim(),
@@ -186,7 +230,8 @@ export default function AddNewStudent() {
             course: course[0].toUpperCase() + course.substring(1).trim(),
             mobileNumber: mobileNumber.trim(),
             sexInputValue,
-            levelInputValue
+            levelInputValue,
+            imageUrl
         }
 
 
@@ -198,13 +243,20 @@ export default function AddNewStudent() {
             if(querySnapshot.empty) {
                 addedStudentsCollection.add( newStudent ).then(doc => {
                     console.log(`document added with id ${doc.id} `)
-                    
+                    alert('student added ') 
+                    // resetting all components.
+                    handleCancelBtnClick()
+                
                 })
             } else {
                 // modal goes here later.
                 alert(`Failed to add student. Student with the id ${indexNumber} already exists`)
             }
         })
+        
+    } else {
+        console.log('failed to add student')
+    }
 
     }
 
@@ -229,7 +281,6 @@ export default function AddNewStudent() {
         { level: '400'}
     ]
     
-
 
     return (
         <div style={{display: 'flex'}}>
@@ -410,40 +461,16 @@ export default function AddNewStudent() {
 
                     {/* the upload picture div */}
                     <div className={classes.pictureDiv}>
-                        <input type='file' />
+                        <input type='file' onChange={ handlePictureSelected } required={ true } />
                         <div className={classes.uploadPictureText}>
                         <Typography variant='h9'>
                             Upload student picture.
                         </Typography>
                         </div>
+                        { error && <span className={classes.errorSpan}> { error } </span> } 
+                        
                     </div>
 
-
-                    { /* the div for the button to add the student to database 
-                        <Button type='submit'
-                            className={classes.addStudentButton}
-                            variant='contained'
-                            size='medium'
-                            color='primary'
-                            startIcon={ <SaveIcon /> }
-                            onClick={ handleFormSubmit }
-                        >
-                            Add Student
-                    </Button> */}
-                   
-
-                    { /* the cancel button  
-                        <Button
-                            className={classes.cancelAddStudentButton}
-                            variant='contained'
-                            size='medium'
-                            color='primary'
-                            startIcon={ <CancelIcon /> }
-                            onClick={() => {}}
-                        
-                        >
-                            Cancel
-                    </Button> */}
 
                     <div className='actionButtonsDiv'>
                         <button type='submit' className='addStudentBtn'> Add student  </button>
