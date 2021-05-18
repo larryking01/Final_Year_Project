@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 import { projectFirestore, projectStorage } from '../firebaseSetup/firebaseConfig'
+import useUploadPictureToStorage from '../firebaseSetup/uploadPictureToStorage' // hook to upload student picture to storage.
 import './addStudentBtnStyles.css'
 
 
@@ -117,21 +118,24 @@ export default function AddNewStudent() {
     const [ roomNumber, setRoomNumber ] = useState('')
     const [ course, setCourse ] = useState('')
     const [ mobileNumber, setMobileNumber ] = useState('')
+    const [ addStudentComplete, setAddStudentComplete ] = useState(true)
 
     // handling state for the uploaded student picture.
     const [ studentPicture, setStudentPicture ] = useState(null)
     const [ error, setError ] = useState(null)
+    const [ pictureUploadError, setPictureUploadError ] = useState(null)
     const [ imageUrl, setImageUrl ] = useState(null)
-    //const [ progress, setProgress ] = useState( 0 ) 
+    const [ progress, setProgress ] = useState( 0 ) 
 
-    let acceptedImageTypes = [ 'image/png', 'image/jpeg', 'image/jpg']
+    let acceptedImageTypes = [ 'image/png', 'image/jpeg', 'image/jpg'] 
 
     const handlePictureSelected = ( event ) => {
         let selectedPicture = event.target.files[0]
 
         if( selectedPicture && acceptedImageTypes.includes(selectedPicture.type) ) {
-            setStudentPicture(selectedPicture)
             setError('')
+            setStudentPicture( selectedPicture )
+
         } else {
             // modal may go here later.
             setStudentPicture(null)
@@ -140,29 +144,7 @@ export default function AddNewStudent() {
 
     }
 
-
-     /* the useEffect to add the selected student image to firebase storage
-     useEffect(() => {
-        // uploading the selected picture into firebase storage.
-        let cloudStorage = projectStorage.ref('Student Images').child(`${studentPicture.name}`)
-        cloudStorage.put(studentPicture).on('state_changed', (snap) => {
-            let percentageUploaded = (snap.bytesTransferred / snap.totalBytes) * 100
-            setProgress(percentageUploaded) 
-        }, (error) => {
-            console.log(error)
-        }, async () => {
-            const url = await cloudStorage.getDownloadURL()
-            setImageUrl(url)
-            console.log(`downloaded url = ${url}`)
-        })
-    }, [studentPicture])
-    */
-
     
-
-
-
-
     // handling the state for the sex autocomplete component.
     const [ sexValue, setSexValue ] = useState('Male')
     const [ sexInputValue, setSexInputValue ] = useState('')
@@ -203,6 +185,7 @@ export default function AddNewStudent() {
         setMobileNumber('')
         setSexInputValue('')
         setLevelInputValue('')
+        setStudentPicture('')
         setStudentPicture(null)
     } 
 
@@ -217,11 +200,31 @@ export default function AddNewStudent() {
         setMobileNumber(event.target.value)
     }
 
+
     // handling form submission.
     const handleFormSubmit = ( event ) => {
         event.preventDefault()
+        setAddStudentComplete(false) 
 
-        if(imageUrl) {
+            // the reference to the image file.
+            let storageReference = projectStorage.ref()
+            let uploadTask = storageReference.child('images').put(studentPicture)
+            uploadTask.on('state_changed', ( snapshot ) => {
+                let percentage = ( snapshot.bytesTransferred / snapshot.totalBytes ) * 100
+                setProgress(percentage)
+            }, (err) => {
+                setPictureUploadError(err)
+                console.log(`failed to upload picture due to error: ${error}`)
+            }, () => {
+                uploadTask.snapshot.ref.getDownloadURL().then(downloadUrl => {
+                    console.log(`progress = ${progress}`)
+                    console.log(`image url = ${downloadUrl}`)
+                    setImageUrl(downloadUrl)
+                })
+                
+        // initializing the firebase collection to store added students.
+        if( progress === 100 && imageUrl ) {
+        // the student to store in the database.
         let newStudent = {
             firstName: firstName[0].toUpperCase() + firstName.substring(1).trim(),
             lastName: lastName[0].toUpperCase() + lastName.substring(1).trim(),
@@ -234,8 +237,6 @@ export default function AddNewStudent() {
             imageUrl
         }
 
-
-        // initializing the firebase collection to store added students.
         let addedStudentsCollection = projectFirestore.collection('Added Students Collection')
         // preventing the addition of duplicate records
         addedStudentsCollection.where('indexNumber', '==', indexNumber)
@@ -243,6 +244,7 @@ export default function AddNewStudent() {
             if(querySnapshot.empty) {
                 addedStudentsCollection.add( newStudent ).then(doc => {
                     console.log(`document added with id ${doc.id} `)
+                    setAddStudentComplete(true)
                     alert('student added ') 
                     // resetting all components.
                     handleCancelBtnClick()
@@ -253,14 +255,15 @@ export default function AddNewStudent() {
                 alert(`Failed to add student. Student with the id ${indexNumber} already exists`)
             }
         })
+       } else {
+           alert('failed to add student. \nPlease make sure you have a good network connection and try again')
+       }
         
-    } else {
-        console.log('failed to add student')
-    }
+        }) 
 
     }
 
-
+          
     // initializing styling
     const classes = useStyles()
 
@@ -468,6 +471,7 @@ export default function AddNewStudent() {
                         </Typography>
                         </div>
                         { error && <span className={classes.errorSpan}> { error } </span> } 
+                        { !addStudentComplete && <span> Adding student... </span>}
                         
                     </div>
 
