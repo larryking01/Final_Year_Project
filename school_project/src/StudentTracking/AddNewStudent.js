@@ -208,22 +208,22 @@ export default function AddNewStudent() {
 
             // the reference to the image file.
             let storageReference = projectStorage.ref()
-            let uploadTask = storageReference.child('images').put(studentPicture)
+            let uploadTask = storageReference.child(`Uploaded Student Pictures/${studentPicture.name}`).put(studentPicture)
             uploadTask.on('state_changed', ( snapshot ) => {
                 let percentage = ( snapshot.bytesTransferred / snapshot.totalBytes ) * 100
                 setProgress(percentage)
             }, (err) => {
                 setPictureUploadError(err)
                 console.log(`failed to upload picture due to error: ${error}`)
-            }, () => {
-                uploadTask.snapshot.ref.getDownloadURL().then(downloadUrl => {
+            }, async () => {
+                await uploadTask.snapshot.ref.getDownloadURL().then(downloadUrl => {
                     console.log(`progress = ${progress}`)
                     console.log(`image url = ${downloadUrl}`)
                     setImageUrl(downloadUrl)
                 })
                 
         // initializing the firebase collection to store added students.
-        if( progress === 100 && imageUrl ) {
+        if( imageUrl ) {
         // the student to store in the database.
         let newStudent = {
             firstName: firstName[0].toUpperCase() + firstName.substring(1).trim(),
@@ -248,7 +248,6 @@ export default function AddNewStudent() {
                     alert('student added ') 
                     // resetting all components.
                     handleCancelBtnClick()
-                
                 })
             } else {
                 // modal goes here later.

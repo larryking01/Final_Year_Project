@@ -53,6 +53,8 @@ export default function MainPage() {
                 temporaryArray.push({ id: document.id, ...document.data()})
             })
             setAddedStudentsArray(temporaryArray)
+            //addedStudentsArray.forEach(student => console.log(student))
+            
         })
         
     }, [ ])
@@ -60,6 +62,8 @@ export default function MainPage() {
 
     // setting up the columns of the table.
     const tableColumns = [
+        { title: 'Student Picture', field: 'imageUrl', 
+        render: item => <img src={item.imageUrl} alt='' border='1' width='90'  /> },
         { title: 'Index Number', field: 'indexNumber'},
         { title: 'First Name', field: 'firstName'},
         { title: 'Last Name', field: 'lastName'},
@@ -68,12 +72,8 @@ export default function MainPage() {
         { title: 'Course', field: 'course'},
         { title: 'Level', field: 'levelInputValue'},
         { title: 'Mobile Number', field: 'mobileNumber'}
+        
     ]
-
-
-
-
-
 
 
     return (
