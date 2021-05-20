@@ -32,17 +32,16 @@ const useStyles = makeStyles(theme => ({
 
 
 
-export default function EditStudentDetails() {
+export default function PersistentDrawer() {
 
-    // initializing styling
-    const classes = useStyles()
+     // initializing styling
+     const classes = useStyles()
 
-    // for routing
-    const router = useHistory()
-
-
+     // for routing
+     const router = useHistory()
+ 
     return (
-        <div style={{display: 'flex'}}>
+        <div>
             <Drawer variant='persistent'
                     anchor='left'
                     open={true}
@@ -68,21 +67,21 @@ export default function EditStudentDetails() {
                      </ListItem>
                      </div>
 
-                    <div onClick={() => router.push('/editstudentdetails')}>
+                    <div onClick={() => router.push('/newvisitor')}>
                      <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
                                 <EditIcon />
                          </ListItemIcon>
-                         <ListItemText primary={'Edit student details'} />
+                         <ListItemText primary={'New Visitor'} />
                      </ListItem>
                      </div>
 
-                    <div onClick={() => router.push('/deletestudent')}>
+                    <div onClick={() => router.push('/managevisitors')}>
                      <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
                                 <DeleteIcon />
                          </ListItemIcon>
-                         <ListItemText primary={'Delete student'} />
+                         <ListItemText primary={'Manage Visitors'} />
                      </ListItem>
                      </div>
                      <hr />
@@ -98,11 +97,7 @@ export default function EditStudentDetails() {
                  </List>
                  
             </Drawer>
-
-
-            <div>
-                Edit students here 
-            </div>
+            
         </div>
     )
 }

@@ -1,49 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory, Link } from 'react-router-dom'
 import { projectFirestore } from '../firebaseSetup/firebaseConfig'
-
-
-import { makeStyles } from '@material-ui/core/styles'
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core'
-import PersonIcon from '@material-ui/icons/Person'
-import PersonAddIcon from '@material-ui/icons/PersonAdd'
-import EditIcon from '@material-ui/icons/Edit'
-import DeleteIcon from '@material-ui/icons/Delete'
-import RoomIcon from '@material-ui/icons/Room'
 import MaterialTable from 'material-table'
 
-
-// setting up styling.
-const useStyles = makeStyles(theme => ({
-    drawerPaper: {
-        width: 'inherit',
-        opacity: 1,
-        color: 'white',
-        backgroundColor: '#2E2A3B'
-    },
-    listItem: {
-        '&:hover': {
-            backgroundColor: '#13131A'
-        }
-    }, 
-    listItemIcon: {
-        color: 'white'
-    }
-}))
-
+import SwipeableDrawer from './SwipeableDrawer'
+//import PersistentDrawer from './PersistentDrawer'
 
 
 
 export default function MainPage() {
 
-    // initializing styling
-    const classes = useStyles()
-
-    // for routing
-    const router = useHistory()
-
     // handling state.
     const [ addedStudentsArray, setAddedStudentsArray ] = useState([])
+    const [ selectedRow, setSelectedRow ] = useState(null)
 
     // the use effect to fetch all added students.
     useEffect(() => {
@@ -62,7 +30,7 @@ export default function MainPage() {
 
     // setting up the columns of the table.
     const tableColumns = [
-        { title: 'Student Picture', field: 'imageUrl', 
+        { title: 'Student Picture', field: 'imageUrl', editable : 'never',
         render: item => <img src={item.imageUrl} alt='' border='1' width='90'  /> },
         { title: 'Index Number', field: 'indexNumber'},
         { title: 'First Name', field: 'firstName'},
@@ -78,67 +46,44 @@ export default function MainPage() {
 
     return (
         <div style={{ display: 'flex'}}>
-            <Drawer variant='persistent'
-                    anchor='left'
-                    open={true}
-                    style={{width: '220px'}}
-                    classes={{paper: classes.drawerPaper }}
-             >
-                 <List>
-                     <div onClick={() => router.push('/viewallstudents')}>
-                     <ListItem button className={classes.listItem}>
-                         <ListItemIcon className={classes.listItemIcon}>
-                             <PersonIcon />
-                         </ListItemIcon>
-                         <ListItemText primary={'View all students'} />
-                     </ListItem>
-                     </div>
-                     
-                    <div onClick={() => router.push('/addnewstudent')}>
-                     <ListItem button className={classes.listItem} >
-                         <ListItemIcon className={classes.listItemIcon}>
-                                <PersonAddIcon />
-                         </ListItemIcon>
-                         <ListItemText primary={'Add new student'} />
-                     </ListItem>
-                     </div>
+            
+            <SwipeableDrawer /> 
 
-                    <div onClick={() => router.push('/editstudentdetails')}>
-                     <ListItem button className={classes.listItem}>
-                         <ListItemIcon className={classes.listItemIcon}>
-                                <EditIcon />
-                         </ListItemIcon>
-                         <ListItemText primary={'Edit student details'} />
-                     </ListItem>
-                     </div>
-
-                    <div onClick={() => router.push('/deletestudent')}>
-                     <ListItem button className={classes.listItem}>
-                         <ListItemIcon className={classes.listItemIcon}>
-                                <DeleteIcon />
-                         </ListItemIcon>
-                         <ListItemText primary={'Delete student'} />
-                     </ListItem>
-                     </div>
-                     <hr />
-
-
-                     <ListItem button className={classes.listItem}>
-                         <ListItemIcon className={classes.listItemIcon}>
-                                <RoomIcon />
-                         </ListItemIcon>
-                         <ListItemText primary={'Looking for NSS accomodation? Click here'} />
-                     </ListItem>
-
-                 </List>
-                 
-            </Drawer>
-
-            <div style={{flexDirection: 'column', marginLeft: 100}}>
+            <div style={{flexDirection: 'column', marginLeft: 20}}>
                 <MaterialTable 
                     title='List Of Students'
                     data={ addedStudentsArray }
                     columns={ tableColumns } 
+                    onRowClick={ ((event, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
+                    options={{
+                        headerStyle: {
+                            backgroundColor: '#01579b',
+                            color: '#FFF'
+                        },
+                        rowStyle: rowData => ({
+                            backgroundColor: ( selectedRow === rowData.tableData.id) ? 'darkgrey' : '#FFF'
+                            //color: ( selectedRow === rowData.tableData.id) ? 'black' : 'black'
+                        }),
+                        actionsColumnIndex: -1
+                    }}
+                    editable={{
+                        onRowUpdate: ( newData, oldData ) => new Promise((resolve, reject) => {
+                            console.log(`old data = ${oldData}`)
+                            console.log(`new data = ${newData}`)
+
+                            resolve()
+                        }),
+                        onRowDelete: (selectedRow) => new Promise((resolve, reject) => {
+                            console.log(`deleted row = ${selectedRow}`)
+                            resolve()
+                        })
+
+                       
+                    }}
+
+
+
+
                 />
             </div>
                 

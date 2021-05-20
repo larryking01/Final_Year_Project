@@ -1,37 +1,18 @@
-import React, { useState, useEffect } from 'react'
-import { useHistory, Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { projectFirestore, projectStorage } from '../firebaseSetup/firebaseConfig'
-import useUploadPictureToStorage from '../firebaseSetup/uploadPictureToStorage' // hook to upload student picture to storage.
 import './addStudentBtnStyles.css'
-
+import PersistentDrawer from './PersistentDrawer'
+//import SwipeableDrawer from './SwipeableDrawer'
 
 import { makeStyles } from '@material-ui/core/styles'
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, 
-         Typography, TextField } from '@material-ui/core'
+import { Typography, TextField } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab'
-import PersonIcon from '@material-ui/icons/Person'
-import PersonAddIcon from '@material-ui/icons/PersonAdd'
-import EditIcon from '@material-ui/icons/Edit'
-import DeleteIcon from '@material-ui/icons/Delete'
-import RoomIcon from '@material-ui/icons/Room'
 
 
 // setting up styling.
 const useStyles = makeStyles(theme => ({
-    drawerPaper: {
-        width: 'inherit',
-        opacity: 1,
-        color: 'white',
-        backgroundColor: '#2E2A3B'
-    },
-    listItem: {
-        '&:hover': {
-            backgroundColor: '#13131A'
-        }
-    }, 
-    listItemIcon: {
-        color: 'white'
-    },
+    
     addNewStudentForm: {
         width:'790px',
         height: '530px',
@@ -286,62 +267,9 @@ export default function AddNewStudent() {
 
     return (
         <div style={{display: 'flex'}}>
-            <Drawer variant='persistent'
-                    anchor='left'
-                    open={true}
-                    style={{width: '200px'}}
-                    classes={{paper: classes.drawerPaper }}
-             >
-                 <List>
-                     <div onClick={() => router.push('/viewallstudents')}>
-                     <ListItem button className={classes.listItem}>
-                         <ListItemIcon className={classes.listItemIcon}>
-                             <PersonIcon />
-                         </ListItemIcon>
-                         <ListItemText primary={'View all students'} />
-                     </ListItem>
-                     </div>
-                     
-                    <div onClick={() => router.push('/addnewstudent')}>
-                     <ListItem button className={classes.listItem}>
-                         <ListItemIcon className={classes.listItemIcon}>
-                                <PersonAddIcon />
-                         </ListItemIcon>
-                         <ListItemText primary={'Add new student'} />
-                     </ListItem>
-                     </div>
 
-                    <div onClick={() => router.push('/editstudentdetails')}>
-                     <ListItem button className={classes.listItem}>
-                         <ListItemIcon className={classes.listItemIcon}>
-                                <EditIcon />
-                         </ListItemIcon>
-                         <ListItemText primary={'Edit student details'} />
-                     </ListItem>
-                     </div>
-
-                    <div onClick={() => router.push('/deletestudent')}>
-                     <ListItem button className={classes.listItem}>
-                         <ListItemIcon className={classes.listItemIcon}>
-                                <DeleteIcon />
-                         </ListItemIcon>
-                         <ListItemText primary={'Delete student'} />
-                     </ListItem>
-                     </div>
-                     <hr />
-
-                     <ListItem button className={classes.listItem}>
-                         <ListItemIcon className={classes.listItemIcon}>
-                                <RoomIcon />
-                         </ListItemIcon>
-                         <ListItemText primary={'Looking for NSS accomodation? Click here'} />
-                     </ListItem>
-
-                 </List>
-            </Drawer>
-
-
-
+            <PersistentDrawer />
+            
             {/* the form for adding a new student */}
             <div className={classes.addNewStudentForm}>
                 <form onSubmit={ handleFormSubmit } className={classes.actualForm}>
