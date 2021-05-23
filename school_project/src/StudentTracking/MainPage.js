@@ -12,6 +12,8 @@ export default function MainPage() {
     // handling state.
     const [ addedStudentsArray, setAddedStudentsArray ] = useState([])
     const [ selectedRow, setSelectedRow ] = useState(null)
+    const [ oldDataObject, setOldDataObject ] = useState({})
+    const [ updatedDataObject, setUpdatedDataObject ] = useState({})
 
     // the use effect to fetch all added students.
     useEffect(() => {
@@ -67,18 +69,45 @@ export default function MainPage() {
                         actionsColumnIndex: -1
                     }}
                     editable={{
-                        onRowUpdate: ( newData, oldData ) => new Promise((resolve, reject) => {
-                            console.log(`old data = ${oldData}`)
-                            console.log(`new data = ${newData}`)
-
-                            resolve()
+                        onRowUpdate: ( updatedData, oldData ) => new Promise((resolve, reject) => {
+                           let docToUpdate = projectFirestore.collection('Added Students Collection').doc(oldData.id)
+                               docToUpdate.update({
+                                  firstName: updatedData.firstName,
+                                  lastName: updatedData.lastName,
+                                  indexNumber: updatedData.indexNumber,
+                                  course: updatedData.course,
+                                  levelInputValue: updatedData.levelInputValue,
+                                  mobileNumber: updatedData.mobileNumber,
+                                  roomNumber: updatedData.roomNumber,
+                                  sexInputValue: updatedData.sexInputValue
+                               }).then(() => {
+                                   // modal goes here later.
+                                   alert(`document with id ${oldData.id} updated successfully`)
+                               }).catch(error => {
+                                   // modal goes here later.
+                                   alert('failed to update document')
+                                   console.log(`update failed due to error: ${error}`)
+                               })
+                               
+                            setTimeout(()=>{
+                                resolve()
+                            }, 700)
+                            
                         }),
                         onRowDelete: (selectedRow) => new Promise((resolve, reject) => {
-                            console.log(`deleted row = ${selectedRow}`)
-                            resolve()
+                            let docToDelete = projectFirestore.collection('Added Students Collection').doc(selectedRow.id)
+                            docToDelete.delete().then(() => {
+                                alert(`document with the id ${selectedRow.id} deleted successfully`)
+                            }).catch(error => {
+                                alert('failed to delete document due to error')
+                                console.log(`error = ${error}`)
+                            })
+
+                            setTimeout(()=>{
+                                resolve()
+                            }, 700)
                         })
 
-                       
                     }}
 
 
