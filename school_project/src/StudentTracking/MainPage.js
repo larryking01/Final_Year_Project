@@ -12,8 +12,7 @@ export default function MainPage() {
     // handling state.
     const [ addedStudentsArray, setAddedStudentsArray ] = useState([])
     const [ selectedRow, setSelectedRow ] = useState(null)
-    const [ oldDataObject, setOldDataObject ] = useState({})
-    const [ updatedDataObject, setUpdatedDataObject ] = useState({})
+    
 
     // the use effect to fetch all added students.
     useEffect(() => {

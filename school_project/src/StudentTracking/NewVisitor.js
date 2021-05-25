@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
+import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 
 import PersistentDrawer from './PersistentDrawer'
 //import SwipeableDrawer from './SwipeableDrawer'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
-import { DatePicker, TimePicker, MuiPickersUtilsProvider, KeyboardDatePicker, KeyboardTimePicker } from '@material-ui/pickers'
+import { DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns';
 
 import './addVisitorBtnStyles.css'
@@ -16,7 +17,7 @@ import './addVisitorBtnStyles.css'
 const useStyles = makeStyles( theme => ({
     parentContainer: {
         width: '500px',
-        height: '530px',
+        height: '545px',
         position: 'relative',
         left: '200px',
         top: '20px',
@@ -73,6 +74,10 @@ const useStyles = makeStyles( theme => ({
     timePicker: {
         position: 'relative',
         left: '20px'
+    },
+    visitorAddStatus: {
+        position: 'relative',
+        top: '115px'
     }
 }))
 
@@ -89,13 +94,13 @@ export default function NewVisitor() {
     const [ visitorIndexNumber, setVisitorIndexNumber ] = useState('')
     const [ visitingRoom, setVisitingRoom ] = useState('')
     const [ roomMemberGettingVisited, setRoomMemberGettingVisited ] = useState('')
+    const [ visitorAddedComplete, setVisitorAddedComplete ] = useState( true )
 
     // state for date and time
     const [ selectedDateAndTime, setSelectedDateAndTime ] = useState(new Date());
     //const [ selectedTime, handleTimeChange ] = useState();
 
     const updateDateAndTime = ( date ) => {
-        
         setSelectedDateAndTime( date )
     }
 
@@ -118,17 +123,46 @@ export default function NewVisitor() {
     }
 
 
+    // handling cancel button click.
+    const handleCancelBtnClick = ( ) => {
+        setVisitorFullName('')
+        setVisitorIndexNumber('')
+        setRoomMemberGettingVisited('')
+        setVisitingRoom('')
+    }
+
     // handling form submit.
     const handleFormSubmit = ( event ) => {
         event.preventDefault()
+        setVisitorAddedComplete( false )
+    
+        let newVisitor = {
+            visitorFullName,
+            visitorIndexNumber,
+            visitingRoom,
+            roomMemberGettingVisited,
+            dateOfVisit: selectedDateAndTime.toDateString(),
+            timeOfVisit: selectedDateAndTime.toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+            })
+        }
 
-        console.log(`visitor details = `)
-        console.log(`full name = ${visitorFullName}`)
-        console.log(`index number = ${visitorIndexNumber}`)
-        console.log(`visiting room = ${visitingRoom}`)
-        console.log(`person getting visited = ${roomMemberGettingVisited}`)
-        console.log(`date of visit = ${ selectedDateAndTime.toDateString()}`)
-        console.log(`time of visit = ${ selectedDateAndTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'})}`)
+
+        // saving the student details into the firebase database.
+        projectFirestore.collection('Added Visitors Collection').add( newVisitor )
+        .then( doc => {
+            // modal goes here later.
+            console.log(`visitor added with id ${ doc.id }`)
+            alert('visitor saved successfully')
+            setVisitorAddedComplete( true )
+            handleCancelBtnClick()
+        })
+        .catch(error => {
+            console.log(`visitor could not be added due to error: ${error}`)
+            alert('failed to save visitor due to error')
+            setVisitorAddedComplete( true )
+        })
         
     }
 
@@ -223,10 +257,14 @@ export default function NewVisitor() {
             
                 </div>
 
+                { !visitorAddedComplete && <span className={ classes.visitorAddStatus }>
+                     Saving visitor... Please wait
+                </span>}
+
                 <div className={ classes.buttonsDiv}>
                     <button type='submit' className='addVisitorButton'> Add Visitor </button>
 
-                    <button type='button' className='cancelAddVisitorButton'> Cancel </button>
+                    <button type='button' className='cancelAddVisitorButton' onClick={ handleCancelBtnClick } > Cancel </button>
 
                 </div>
 
