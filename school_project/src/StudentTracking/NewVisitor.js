@@ -145,7 +145,8 @@ export default function NewVisitor() {
             timeOfVisit: selectedDateAndTime.toLocaleTimeString([], {
                 hour: '2-digit',
                 minute: '2-digit'
-            })
+            }),
+            timeOfDeparture: 'Not available yet'
         }
 
 

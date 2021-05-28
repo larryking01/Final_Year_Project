@@ -23,7 +23,6 @@ export default function MainPage() {
             })
             setAddedStudentsArray(temporaryArray)
             //addedStudentsArray.forEach(student => console.log(student))
-            
         })
         
     }, [ ])
@@ -31,7 +30,7 @@ export default function MainPage() {
 
     // setting up the columns of the table.
     const tableColumns = [
-        { title: 'Student Picture', field: 'imageUrl', editable : 'never',
+        { title: 'Student Picture', field: 'imageUrl', editable: 'never',
         render: item => <img src={item.imageUrl} alt='' border='1' width='90'  /> },
         { title: 'Index Number', field: 'indexNumber'},
         { title: 'First Name', field: 'firstName'},
@@ -52,7 +51,7 @@ export default function MainPage() {
 
             <div style={{flexDirection: 'column', marginLeft: 20}}>
                 <MaterialTable 
-                    title='List Of Students'
+                    title='List Of Resident Students'
                     data={ addedStudentsArray }
                     columns={ tableColumns } 
                     onRowClick={ ((event, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
