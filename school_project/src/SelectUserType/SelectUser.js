@@ -99,7 +99,7 @@ export default function SelectUser(props) {
     // function to handle when the continue button is clicked.
     function HandleContinueButtonClick() {
         if(studentChecked) {
-            router.push('/studentlogin')
+            router.push('/submitcomplaint')
         } else if(staffChecked) {
             router.push('/stafflogin')
         } else {
