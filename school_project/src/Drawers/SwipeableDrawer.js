@@ -10,6 +10,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 
+
 // styling
 import { makeStyles } from '@material-ui/core/styles'
 import PersonIcon from '@material-ui/icons/Person'
@@ -17,6 +18,9 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import RoomIcon from '@material-ui/icons/Room'
+import BookIcon from '@material-ui/icons/Book'
+
+
 
 // setting up styling.
 const useStyles = makeStyles(theme => ({
@@ -53,17 +57,17 @@ export default function Swipeabledrawer() {
 
     return (
        <div>
+
            <IconButton 
                 edge='start'
                 color='inherit'
                 aria-label='Open drawer'
                 onClick={ () => setOpen(true)}
            >
-              <div onClick={() => setOpen(true)}>
                 <MenuIcon> </MenuIcon>
-              </div>
                
            </IconButton>
+       
         
 
            <SwipeableDrawer
@@ -110,11 +114,23 @@ export default function Swipeabledrawer() {
                      <div onClick={() => router.push('/managevisitors')}>
                      <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
-                                <DeleteIcon />
+                                <PersonIcon />
                          </ListItemIcon>
                          <ListItemText primary={'Manage Visitors'} />
                      </ListItem>
                      </div>
+
+                     <div onClick={() => router.push('/viewallcomplaints')}>
+                     <ListItem button className={classes.listItem}>
+                         <ListItemIcon className={classes.listItemIcon}>
+                                <BookIcon />
+                         </ListItemIcon>
+                         <ListItemText primary={'View All Complaints'} />
+                     </ListItem>
+                     </div>
+
+
+                     
                      <hr />
 
                      <ListItem button className={classes.listItem}>

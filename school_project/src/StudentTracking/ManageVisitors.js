@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import MaterialTable from 'material-table'
-import PersistentDrawer from './PersistentDrawer'
-//import SwipeableDrawer from './SwipeableDrawer'
+import PersistentDrawer from '../Drawers/PersistentDrawer'
+//import SwipeableDrawer from '../Drawers/SwipeableDrawer'
+import BookIcon from '@material-ui/icons/Book'
+import Button from '@material-ui/core/Button'
+import CheckIcon from '@material-ui/icons/Check'
+import DoneAllIcon from '@material-ui/icons/DoneAll'
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline'
+
 
 import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 
@@ -58,10 +64,11 @@ export default function ManageVisitors() {
                             color: '#FFF'
                         },
                         rowStyle: rowData => ({
-                            backgroundColor: ( selectedRow === rowData.tableData.id) ? 'darkgrey' : '#FFF'
+                            backgroundColor: ( rowData.tableData.id % 2 === 1 ) ? '#b3b3ff' : '#FFF'
                             //color: ( selectedRow === rowData.tableData.id) ? 'black' : 'black'
                         }),
-                        actionsColumnIndex: -1
+                        actionsColumnIndex: -1,
+                        exportButton: true
                     }}
                     editable={{
                         onRowUpdate: ( updatedData, oldData ) => new Promise((resolve, reject) => {
@@ -72,7 +79,8 @@ export default function ManageVisitors() {
                                    visitingRoom: updatedData.visitingRoom,
                                    roomMemberGettingVisited: updatedData.roomMemberGettingVisited,
                                    dateOfVisit: updatedData.dateOfVisit,
-                                   timeOfVisit: updatedData.timeOfVisit
+                                   timeOfVisit: updatedData.timeOfVisit,
+                                   timeOfDeparture: updatedData.timeOfDeparture
                                 }).then(() => {
                                     // modal goes here later.
                                     alert(`document with id ${oldData.id} updated successfully`)
@@ -100,6 +108,37 @@ export default function ManageVisitors() {
                             }, 700)
                         })
                     }}
+
+                    actions={
+                        [
+                            {
+                                icon: () => ( <CheckIcon /> ),
+                                tooltip: 'Mark Visiting Complete',
+                                onClick: ( event, rowData ) => {
+                                    // setting up the time.
+                                    let currentTime = new Date()
+                                    
+                                    // updating the document to show time of departure.
+                                    let docToUpdate = projectFirestore.collection('Added Visitors Collection').doc( rowData.id )
+                                    docToUpdate.update({
+                                            timeOfDeparture : currentTime.toLocaleTimeString([], {
+                                                hour: '2-digit',
+                                                minute: '2-digit'
+                                            })
+                                    }).then(() => {
+                                        // modal goes here later.
+                                        alert(`document with id ${rowData.id} updated successfully`)
+                                    }).catch( error => {
+                                        // modal goes here later.
+                                        alert('failed to update document')
+                                        console.log(`update failed due to error: ${error}`)
+                                    })
+
+
+                                }
+                            }
+                        ]
+                    }
                     
 
 

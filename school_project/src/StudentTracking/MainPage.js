@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 import MaterialTable from 'material-table'
 
-import SwipeableDrawer from './SwipeableDrawer'
-//import PersistentDrawer from './PersistentDrawer'
+import SwipeableDrawer from '../Drawers/SwipeableDrawer'
+//import PersistentDrawer from '../Drawers/PersistentDrawer'
 
 
 
@@ -61,8 +61,9 @@ export default function MainPage() {
                             color: '#FFF'
                         },
                         rowStyle: rowData => ({
-                            backgroundColor: ( selectedRow === rowData.tableData.id) ? 'darkgrey' : '#FFF'
+                            //backgroundColor: ( selectedRow === rowData.tableData.id) ? 'darkgrey' : '#FFF'
                             //color: ( selectedRow === rowData.tableData.id) ? 'black' : 'black'
+                            backgroundColor: ( rowData.tableData.id % 2 === 1 ) ? '#b3b3ff' : '#FFF'
                         }),
                         actionsColumnIndex: -1
                     }}

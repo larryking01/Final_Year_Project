@@ -5,6 +5,13 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import Typography from '@material-ui/core/Typography'
 import { DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns';
+import StudentComplaintPersistentDrawer from '../Drawers/StudentComplaintPersistentDrawer'
+//import StudentComplaintSwipeabledrawer from '../Drawers/StudentComplaintSwipeableDrawer'
+
+
+// for firebase.
+import { projectFirestore } from '../firebaseSetup/firebaseConfig'
+
 
 // for styling.
 import { makeStyles } from '@material-ui/core/styles'
@@ -12,13 +19,14 @@ import './complaintFormBtns.css'
 
 
 
+
 const useStyles = makeStyles( theme => ({
     submitComplaintForm: {
         width:'790px',
-        height: '500px',
+        height: '520px',
         position: 'relative',
         top: '30px',
-        left: '180px',
+        left: '70px',
         boxShadow: '2px 2px 8px',
         borderRadius: '3%',
         textAlign: 'center'
@@ -101,6 +109,14 @@ const useStyles = makeStyles( theme => ({
     secondaryFormButtonsDiv: {
         position: 'relative',
         top: '90px'
+    },
+    complaintStatusSpan: {
+        position: 'relative',
+        top: '155px'
+    },
+    secondarycomplaintStatusSpan: {
+        position: 'relative',
+        top: '100px'
     }
 
 }))
@@ -117,6 +133,7 @@ export default function SubmitComplaint() {
 
     // handling state.
     const [ specifyOtherComplaintType, setSpecifyOtherComplaintType ] = useState(false)
+    const [ otherComplaintType, setOtherComplaintType ] = useState('')
 
     // the autocomplete.
     const [ complaintType, setComplaintType ] = useState('Electrical')
@@ -124,6 +141,127 @@ export default function SubmitComplaint() {
 
     // state for date and time
     const [ selectedDateAndTime, setSelectedDateAndTime ] = useState(new Date());
+
+
+    // the remaining components.
+    const [ studentFullName, setStudentFullName ] = useState('')
+    const [ studentIndexNumber, setStudentIndexNumber ] = useState('')
+    const [ roomNumber, setRoomNumber ] = useState('')
+    const [ mobileNumber, setMobileNumber ] = useState('')
+    const [ complaintDescription, setComplaintDescription ] = useState('')
+    const [ complaintSubmitting, setComplaintSubmitting ] = useState( false )
+
+
+    // the onChange handlers.
+    const handleStudentFullNameChange = ( event ) => {
+        setStudentFullName( event.target.value )
+    }
+
+    const handleStudentIndexNumberChange = ( event ) => {
+        setStudentIndexNumber( event.target.value )
+    }
+
+    const handleRoomNumberChange = ( event ) => {
+        setRoomNumber( event.target.value )
+    }
+
+    const handleMobileNumberChange = ( event ) => {
+        setMobileNumber( event.target.value )
+    }
+
+    const handleComplaintDescriptionChange = ( event ) => {
+        setComplaintDescription( event.target.value )
+    }
+
+    const updateSelectedDateAndTime = ( date ) => {
+        setSelectedDateAndTime( date )
+    }
+
+    const handleOtherComplaintTypeChange = ( event ) => {
+        setOtherComplaintType( event.target.value )
+    }
+
+
+    // handling cancel Btn click.
+    const handleCancelButtonClick = ( event ) => {
+        setStudentFullName('')
+        setStudentIndexNumber('')
+        setRoomNumber('')
+        setMobileNumber('')
+        setComplaintTypeInputValue('')
+        setOtherComplaintType('')
+        setComplaintDescription('')
+
+    }
+
+
+    // submitting the form.
+    const handleFormSubmit = ( event ) => {
+        event.preventDefault()
+
+        setComplaintSubmitting( true )
+        console.log(`full name = ${studentFullName}`)
+        console.log(`index number = ${studentIndexNumber}`)
+        console.log(`room number = ${roomNumber}`)
+        console.log(`mobile number = ${mobileNumber}`)
+        console.log(`complaint type = ${specifyOtherComplaintType ? otherComplaintType : complaintTypeInputValue}`)
+        console.log(`complaint description = ${complaintDescription.trim()}`)
+        console.log(`other complaint type = ${otherComplaintType}`)
+        console.log(` date = ${selectedDateAndTime.toDateString()}`)
+        console.log(`time = ${ selectedDateAndTime.toLocaleString([], {
+            hour: '2-digit',
+            minute: '2-digit'
+        })}`)
+
+
+        // saving the complaint details into the firestore database.
+        let complaintSubmitted = {
+            studentFullName,
+            studentIndexNumber : studentIndexNumber.trim(),
+            roomNumber : roomNumber.trim(),
+            mobileNumber : mobileNumber.trim(),
+            complaintTypeInputValue : specifyOtherComplaintType ? otherComplaintType : complaintTypeInputValue,
+            complaintDescription : complaintDescription.trim(),
+            date: selectedDateAndTime.toDateString(),
+            time: selectedDateAndTime.toLocaleString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+            }),
+            complaintStatus : 'Pending'
+        }
+
+        
+        projectFirestore.collection('Submitted Complaints Collection').add(complaintSubmitted)
+        .then(doc => {
+            console.log(`complaint submitted with id ${ doc.id }`)
+            // modal here later.
+            alert(`complaint submitted`)
+            setComplaintSubmitting( false )
+            handleCancelButtonClick()
+        })
+        .catch(error => {
+            // modal here later
+            alert('failed to submit complaint due to error ', error)
+            setComplaintSubmitting( false )
+            
+        })
+
+
+
+    }
+
+
+
+
+    
+
+
+
+
+
+
+
+
 
 
     // specifying the possible types of complaints
@@ -143,6 +281,7 @@ export default function SubmitComplaint() {
             //console.log( specifyOtherComplaintType )
         } else {
             setSpecifyOtherComplaintType(false)
+            setOtherComplaintType('')
         }
     }, [ complaintTypeInputValue ]) 
 
@@ -151,11 +290,15 @@ export default function SubmitComplaint() {
 
 
     return (
+        <div style={{ display: 'flex' }}>
+
+            <StudentComplaintPersistentDrawer />
+
+        
         <div className={ classes.submitComplaintForm }>
-            <form>
+            <form onSubmit={ handleFormSubmit }>
                 <MuiPickersUtilsProvider utils={ DateFnsUtils }>
 
-               
                  <Typography variant='h6'>
                         Submit Complaint
                  </Typography>
@@ -166,8 +309,8 @@ export default function SubmitComplaint() {
                             label='Student Full Name'
                             required={ true }
                             className={ classes.fullNameTextField }
-                            
-
+                            onChange={ handleStudentFullNameChange }
+                            value={ studentFullName }
                         />
 
                         <TextField
@@ -175,6 +318,8 @@ export default function SubmitComplaint() {
                             label='Student Index Number'
                             required={ true }
                             className={ classes.indexNumberTextField }
+                            onChange={ handleStudentIndexNumberChange }
+                            value={ studentIndexNumber }
 
                         />
 
@@ -186,6 +331,8 @@ export default function SubmitComplaint() {
                             label='Room Number'
                             required={ true }
                             className={ classes.roomNumberTextField }
+                            onChange={ handleRoomNumberChange }
+                            value={ roomNumber }
 
                         />
 
@@ -194,7 +341,8 @@ export default function SubmitComplaint() {
                             label='Mobile Number'
                             required={ true }
                             className={ classes.mobileNumberTextField }
-
+                            onChange={ handleMobileNumberChange }
+                            value={ mobileNumber }
                         />
 
 
@@ -229,7 +377,9 @@ export default function SubmitComplaint() {
                                                          variant='standard'
                                                          label='Please specify complaint type'
                                                          required={ true }
-                                                         className={ classes.specifyOtherComplaintTypeTextField }   
+                                                         className={ classes.specifyOtherComplaintTypeTextField } 
+                                                         onChange={ handleOtherComplaintTypeChange }
+                                                         value={ otherComplaintType }  
                                                 /> 
                         }
                  </div>
@@ -240,7 +390,8 @@ export default function SubmitComplaint() {
                                        required={ true }
                                        placeholder='Complaint Description'
                                        rowsMin={ 3 }
-                                       onChange={(event) => console.log(event.target.value)}
+                                       onChange={ handleComplaintDescriptionChange }
+                                       value={ complaintDescription }
                      />
                  </div>
 
@@ -254,8 +405,8 @@ export default function SubmitComplaint() {
                                 margin="normal"
                                 id="date-picker-inline"
                                 label="Select Date"
-                                //value={ selectedDateAndTime }
-                                //onChange={ updateDateAndTime }
+                                value={ selectedDateAndTime }
+                                onChange={ updateSelectedDateAndTime }
                                 className={ classes.datePicker }
                                 KeyboardButtonProps={{
                                     'aria-label': 'change date',
@@ -266,8 +417,8 @@ export default function SubmitComplaint() {
                                 id="time-picker"
                                 label="Pick Time"
                                 required={ true }
-                                //value={ selectedDateAndTime }
-                                //onChange={ updateDateAndTime }
+                                value={ selectedDateAndTime }
+                                onChange={ updateSelectedDateAndTime }
                                 className={ classes.timePicker }
                                 KeyboardButtonProps={{
                                   'aria-label': 'change time',
@@ -281,9 +432,14 @@ export default function SubmitComplaint() {
                 <div className={ specifyOtherComplaintType? classes.secondaryFormButtonsDiv : classes.formButtonsDiv}>
                 <button type='submit' className='submitComplaintButton' > Submit Complaint </button>
 
-                <button type='button' className='cancelButton'> Cancel </button>
+                <button type='button' className='cancelButton' onClick={ handleCancelButtonClick }> Cancel </button>
 
                 </div>
+
+                
+                { complaintSubmitting && <span className={ specifyOtherComplaintType? classes.secondarycomplaintStatusSpan : classes.complaintStatusSpan}> 
+                     Submitting complaint....</span> }
+                
 
 
 
@@ -304,6 +460,8 @@ export default function SubmitComplaint() {
             </form>
             
             
+        </div>
+
         </div>
     )
 }

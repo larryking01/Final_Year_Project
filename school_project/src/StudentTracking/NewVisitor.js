@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 
-import PersistentDrawer from './PersistentDrawer'
-//import SwipeableDrawer from './SwipeableDrawer'
+import PersistentDrawer from '../Drawers/PersistentDrawer'
+//import SwipeableDrawer from '../Drawers/SwipeableDrawer'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
@@ -98,13 +98,11 @@ export default function NewVisitor() {
 
     // state for date and time
     const [ selectedDateAndTime, setSelectedDateAndTime ] = useState(new Date());
-    //const [ selectedTime, handleTimeChange ] = useState();
+    
 
     const updateDateAndTime = ( date ) => {
         setSelectedDateAndTime( date )
     }
-
-
 
     const updateVisitorFullName = ( event ) => {
           setVisitorFullName( event.target.value )
@@ -131,6 +129,7 @@ export default function NewVisitor() {
         setVisitingRoom('')
     }
 
+
     // handling form submit.
     const handleFormSubmit = ( event ) => {
         event.preventDefault()
@@ -138,8 +137,8 @@ export default function NewVisitor() {
     
         let newVisitor = {
             visitorFullName,
-            visitorIndexNumber,
-            visitingRoom,
+            visitorIndexNumber : visitorIndexNumber.trim(),
+            visitingRoom : visitingRoom.trim(),
             roomMemberGettingVisited,
             dateOfVisit: selectedDateAndTime.toDateString(),
             timeOfVisit: selectedDateAndTime.toLocaleTimeString([], {

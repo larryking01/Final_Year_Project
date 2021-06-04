@@ -11,6 +11,7 @@ import MainPage from './StudentTracking/MainPage'
 import AddNewStudent from './StudentTracking/AddNewStudent'
 import NewVisitor from './StudentTracking/NewVisitor'
 import ManageVisitors from './StudentTracking/ManageVisitors'
+import ViewAllComplaints from './StudentTracking/ViewAllComplaints'
 
 
 
@@ -28,6 +29,7 @@ function App() {
                 <Route exact path='/addnewstudent' component={ AddNewStudent } />
                 <Route exact path='/newvisitor' component={ NewVisitor } />
                 <Route exact path='/managevisitors' component={ ManageVisitors } />
+                <Route exact path='/viewallcomplaints' component={ ViewAllComplaints } />
                 <Route path='*' render={() => <h2> Sorry, page not found </h2>} />
             </Switch>
 
