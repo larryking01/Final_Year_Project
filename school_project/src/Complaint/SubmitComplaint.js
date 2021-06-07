@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import TextField from '@material-ui/core/TextField'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
@@ -7,6 +8,7 @@ import { DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pi
 import DateFnsUtils from '@date-io/date-fns';
 import StudentComplaintPersistentDrawer from '../Drawers/StudentComplaintPersistentDrawer'
 //import StudentComplaintSwipeabledrawer from '../Drawers/StudentComplaintSwipeableDrawer'
+
 
 
 // for firebase.
@@ -125,10 +127,17 @@ const useStyles = makeStyles( theme => ({
 
 
 
-export default function SubmitComplaint() {
+export default function SubmitComplaint(props) {
+
+    // destructuring props.
+    const { handleLogout, user } = props 
 
     // initializing styling
     const classes = useStyles()
+
+
+    // initializing routing
+    const router = useHistory()
 
 
     // handling state.
@@ -251,19 +260,6 @@ export default function SubmitComplaint() {
     }
 
 
-
-
-    
-
-
-
-
-
-
-
-
-
-
     // specifying the possible types of complaints
     let complaintTypesArray = [
         { complaintType: 'Electrical' },
@@ -285,14 +281,30 @@ export default function SubmitComplaint() {
         }
     }, [ complaintTypeInputValue ]) 
 
+    
+
+    // function to push sign in.
+    const goToSignIn = () => {
+        // modal here later.
+        alert('You are logging out')
+        router.push('/signin')
+    }
 
 
 
 
+
+    
     return (
+        <div>
+            {
+                user ? 
+            
         <div style={{ display: 'flex' }}>
-
-            <StudentComplaintPersistentDrawer />
+            
+            <StudentComplaintPersistentDrawer handleLogout={ handleLogout } 
+                                              user={ user }
+                                              />
 
         
         <div className={ classes.submitComplaintForm }>
@@ -440,22 +452,6 @@ export default function SubmitComplaint() {
                 { complaintSubmitting && <span className={ specifyOtherComplaintType? classes.secondarycomplaintStatusSpan : classes.complaintStatusSpan}> 
                      Submitting complaint....</span> }
                 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 </MuiPickersUtilsProvider>
             </form>
             
@@ -463,5 +459,15 @@ export default function SubmitComplaint() {
         </div>
 
         </div>
+
+        : goToSignIn() }
+
+
+        </div>
     )
+    
+
+
+
+
 }

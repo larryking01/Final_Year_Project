@@ -65,7 +65,8 @@ export default function MainPage() {
                             //color: ( selectedRow === rowData.tableData.id) ? 'black' : 'black'
                             backgroundColor: ( rowData.tableData.id % 2 === 1 ) ? '#b3b3ff' : '#FFF'
                         }),
-                        actionsColumnIndex: -1
+                        actionsColumnIndex: -1,
+                        exportButton: true
                     }}
                     editable={{
                         onRowUpdate: ( updatedData, oldData ) => new Promise((resolve, reject) => {

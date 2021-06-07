@@ -66,7 +66,7 @@ export default function ViewAllComplaints() {
                 onRowClick={ ((event, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
                     options={{
                         headerStyle: {
-                            backgroundColor: 'green',
+                            backgroundColor: '#01579b',
                             color: '#FFF'
                         },
                         rowStyle: rowData => ({

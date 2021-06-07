@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import BookIcon from '@material-ui/icons/Book'
+import PersonIcon from '@material-ui/icons/Person'
 
 
 // setting up styling.
@@ -29,7 +30,10 @@ const useStyles = makeStyles(theme => ({
 
 
 
-export default function StudentComplaintPersistentDrawer() {
+export default function StudentComplaintPersistentDrawer(props) {
+
+    // destructuring props.
+    const { handleLogout, user } = props 
 
      // initializing styling
      const classes = useStyles()
@@ -64,17 +68,17 @@ export default function StudentComplaintPersistentDrawer() {
                      </ListItem>
                      </div>
 
-                    <div>
+                    <div onClick={() => console.log(`current user = ${ user.email }`)}>
                      <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
-                                <EditIcon />
-                         </ListItemIcon>
-                         <ListItemText primary={'Email Here'} />
+                                <PersonIcon />
+                         </ListItemIcon> 
+                         <ListItemText primary={ `${user.email}`} />
                      </ListItem>
                      </div>
             
 
-                    <div onClick={() => router.push('/submitcomplaint')}>
+                    <div onClick={ handleLogout }>
                      <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
                                 <BookIcon />

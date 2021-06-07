@@ -1,6 +1,7 @@
 import  firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/storage'
+import 'firebase/auth'
 
 
 let firebaseConfig = {
@@ -30,6 +31,9 @@ let projectFirestore = firebase.firestore()
 // initializing firebase storage
 let projectStorage = firebase.storage()
 
+// initializing firebase authentication.
+let firebaseAuthentication = firebase.auth()
+
 // creating a server timestamp.
 let timestamp = firebase.firestore.FieldValue.serverTimestamp
 
@@ -38,5 +42,6 @@ let timestamp = firebase.firestore.FieldValue.serverTimestamp
 export {
     projectFirestore,
     projectStorage,
+    firebaseAuthentication,
     timestamp
 }
