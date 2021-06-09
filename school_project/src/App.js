@@ -17,6 +17,7 @@ import ManageVisitors from './StudentTracking/ManageVisitors'
 import ViewAllComplaints from './StudentTracking/ViewAllComplaints'
 import SignUp from './Complaint/SignUp'
 import SignIn from './Complaint/SignIn'
+import StudentComplaintHistory from './Complaint/StudentComplaintHistory'
 
 
 
@@ -213,6 +214,11 @@ function App() {
                 <Route exact path='/submitcomplaint'> 
                       <SubmitComplaint handleLogout={ handleLogOut } user={ user } />
                 </Route>
+
+                <Route exact path='/studentcomplainthistory'>
+                      <StudentComplaintHistory user={ user } />
+                </Route>
+
                 <Route exact path='/viewallcomplaints' component={ ViewAllComplaints } />
                 <Route path='*' render={() => <h2> Sorry, page not found </h2>} />
             </Switch>

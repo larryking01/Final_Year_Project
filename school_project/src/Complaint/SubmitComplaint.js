@@ -35,7 +35,7 @@ const useStyles = makeStyles( theme => ({
     },
     fullNameAndIndexNumberDiv: {
         position: 'relative',
-        top: '20px'
+        top: '10px'
     },
     fullNameTextField: {
         width: '240px',
@@ -49,7 +49,7 @@ const useStyles = makeStyles( theme => ({
     },
     roomNumberAndMobileNumberDiv: {
         position: 'relative',
-        top: '40px'
+        top: '27px'
     },
     roomNumberTextField: {
         width: '240px',
@@ -63,7 +63,7 @@ const useStyles = makeStyles( theme => ({
     },
     complaintType: {
         position: 'relative',
-        top: '60px',
+        top: '50px',
         left: '105px'
     },
     specifyOtherComplaintTypeTextField: {
@@ -74,12 +74,12 @@ const useStyles = makeStyles( theme => ({
     },
     complaintDescription: {
         position: 'relative',
-        top: '110px',
+        top: '87px',
         right: '20px'
     },
     secondaryComplaintDescription: {
         position: 'relative',
-        top: '60px',
+        top: '40px',
         right: '5px'
     },
     complaintDescriptionTextarea: {
@@ -90,7 +90,7 @@ const useStyles = makeStyles( theme => ({
     },
     dateAndTimePickerDiv: {
         position: 'relative',
-        top: '120px'
+        top: '90px'
     },
     datePicker: {
         position: 'relative',
@@ -102,15 +102,15 @@ const useStyles = makeStyles( theme => ({
     },
     formButtonsDiv: {
         position: 'relative',
-        top: '140px'
+        top: '110px'
     },
     secondaryDateAndTimePickerDiv: {
         position: 'relative',
-        top: '60px'
+        top: '45px'
     },
     secondaryFormButtonsDiv: {
         position: 'relative',
-        top: '90px'
+        top: '70px'
     },
     complaintStatusSpan: {
         position: 'relative',
@@ -119,6 +119,19 @@ const useStyles = makeStyles( theme => ({
     secondarycomplaintStatusSpan: {
         position: 'relative',
         top: '100px'
+    },
+    studentEmailTextFieldDiv: {
+        position: 'relative',
+        top: '60px',
+        right: '178px'
+    },
+    secondaryStudentEmailTextFieldDiv: {
+        position: 'relative',
+        top: '13px',
+        right: '180px'
+    },
+    studentEmailTextField: {
+        width: '220px'
     }
 
 }))
@@ -159,6 +172,7 @@ export default function SubmitComplaint(props) {
     const [ mobileNumber, setMobileNumber ] = useState('')
     const [ complaintDescription, setComplaintDescription ] = useState('')
     const [ complaintSubmitting, setComplaintSubmitting ] = useState( false )
+    const [ studentEmail, setStudentEmail ] = useState('')
 
 
     // the onChange handlers.
@@ -190,6 +204,12 @@ export default function SubmitComplaint(props) {
         setOtherComplaintType( event.target.value )
     }
 
+    const handleStudentEmailChange = ( event ) => {
+        setStudentEmail( event.target.value )
+    }
+
+
+
 
     // handling cancel Btn click.
     const handleCancelButtonClick = ( event ) => {
@@ -200,6 +220,7 @@ export default function SubmitComplaint(props) {
         setComplaintTypeInputValue('')
         setOtherComplaintType('')
         setComplaintDescription('')
+        setStudentEmail('')
 
     }
 
@@ -221,6 +242,7 @@ export default function SubmitComplaint(props) {
             hour: '2-digit',
             minute: '2-digit'
         })}`)
+        console.log(`student email = ${studentEmail}`)
 
 
         // saving the complaint details into the firestore database.
@@ -236,24 +258,34 @@ export default function SubmitComplaint(props) {
                 hour: '2-digit',
                 minute: '2-digit'
             }),
-            complaintStatus : 'Pending'
+            complaintStatus : 'Pending',
+            studentEmail
         }
 
         
-        projectFirestore.collection('Submitted Complaints Collection').add(complaintSubmitted)
-        .then(doc => {
-            console.log(`complaint submitted with id ${ doc.id }`)
-            // modal here later.
-            alert(`complaint submitted`)
-            setComplaintSubmitting( false )
-            handleCancelButtonClick()
-        })
-        .catch(error => {
-            // modal here later
-            alert('failed to submit complaint due to error ', error)
-            setComplaintSubmitting( false )
-            
-        })
+        // making sure the sign in email matches entered email before complaint is submitted.
+
+        if ( user.email === studentEmail ) {
+            projectFirestore.collection('Submitted Complaints Collection').add(complaintSubmitted)
+            .then(doc => {
+                console.log(`complaint submitted with id ${ doc.id }`)
+                // modal here later.
+                alert(`complaint submitted`)
+                setComplaintSubmitting( false )
+                handleCancelButtonClick()
+            })
+            .catch(error => {
+                // modal here later
+                alert('failed to submit complaint due to error ', error)
+                setComplaintSubmitting( false )
+            })
+
+        }
+        else {
+            // modal goes here later.
+            alert(`You need to enter the same email you used to sign in before you can submit your complaint, ${user.email}`)
+        }
+        
 
 
 
@@ -394,6 +426,20 @@ export default function SubmitComplaint(props) {
                                                          value={ otherComplaintType }  
                                                 /> 
                         }
+                 </div>
+
+
+                 <div className={ specifyOtherComplaintType ? classes.secondaryStudentEmailTextFieldDiv : classes.studentEmailTextFieldDiv }>
+                     <TextField 
+                        variant='standard'
+                        label='Email'
+                        type='email'
+                        required={ true }
+                        className={ classes.studentEmailTextField }
+                        onChange={ handleStudentEmailChange }
+                        value={ studentEmail }
+                     />
+
                  </div>
 
 

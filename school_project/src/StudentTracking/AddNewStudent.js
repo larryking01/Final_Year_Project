@@ -248,7 +248,8 @@ export default function AddNewStudent() {
         })
        } 
        else {
-           alert('failed to add student. \nPlease make sure you have a good network connection and try again')
+        // modal here later
+           alert('Student picture took too long to upload. This is most likely due to slow internet connection. \nClick Add Student again to complete the process.')
        }
         
         }) 

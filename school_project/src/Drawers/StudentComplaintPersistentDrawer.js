@@ -59,7 +59,7 @@ export default function StudentComplaintPersistentDrawer(props) {
                      </ListItem>
                      </div>
                      
-                    <div onClick={() => router.push('/viewallcomplaints')}>
+                    <div onClick={() => router.push('/studentcomplainthistory')}>
                      <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
                                 <BookIcon />
