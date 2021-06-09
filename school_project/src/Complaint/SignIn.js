@@ -26,17 +26,17 @@ const useStyles = makeStyles( theme => ({
     },
     emailTextField: {
         position: 'relative',
-        top: '60px',
+        top: '30px',
         width: '250px'
     },
     passwordTextField:{
         position: 'relative',
-        top: '100px',
+        top: '65px',
         width: '250px'
     },
     signInButtonDiv: {
         position: 'relative',
-        top: '140px'
+        top: '110px'
     },
     signInButton: {
         backgroundColor: '#01579b',
@@ -48,12 +48,12 @@ const useStyles = makeStyles( theme => ({
     },
     signUpLink: {
         position: 'relative',
-        top: '145px',
+        top: '105px',
         left: '100px'
     },
     typographyText: {
         position: 'relative',
-        top: '170px',
+        top: '130px',
         right: '40px'
     },
     headerText: {
@@ -61,8 +61,19 @@ const useStyles = makeStyles( theme => ({
         top: '20px',
         color: '#01579b',
         fontSize: '18px'
+    },
+    emailErrorSpan: {
+        position: 'relative',
+        top: '40px',
+        fontSize: '13px',
+        color: 'red'
+    },
+    passwordErrorSpan: {
+        position: 'relative',
+        top: '70px',
+        fontSize: '13px',
+        color: 'red'
     }
-
 
 })
 )
@@ -72,6 +83,7 @@ const useStyles = makeStyles( theme => ({
 
 export default function SignIn(props) {
 
+
     // destructuring all the props.
     const { 
             signInEmail, 
@@ -79,13 +91,11 @@ export default function SignIn(props) {
             signInPassword, 
             setSignInPassword, 
             handleLogin, 
-            handleSignUp, 
-            hasAccount, 
-            person, 
-            setHasAccount, 
             emailError, 
             passwordError,
-            user } = props
+            user ,
+            clearErrors
+            } = props
 
 
     // initializing styling.
@@ -119,6 +129,7 @@ export default function SignIn(props) {
     }
     
 
+
     return (
         <div className={ classes.parentContainer }>
             <form className={ classes.signInForm } onSubmit={ handleFormSubmit } >
@@ -132,22 +143,31 @@ export default function SignIn(props) {
                            type='email'
                            required={ true }
                            label='Email'
-                           onChange={ (event) => setSignInEmail(event.target.value) }
+                           onChange={ (event) => {
+                               setSignInEmail( event.target.value )
+                               clearErrors()
+                           } }
                            value={ signInEmail }
                            className={ classes.emailTextField }
-                           error={ false }
-                           //helperText='Enter a valid email address'
+                           //error={ emailError ? true : false }
+                           //helperText={ emailError }
                 />
+
+                { emailError && <div className={classes.emailErrorSpan}> { emailError } </div> }
+
 
                 <TextField variant='outlined'
                            type={ showPassword ? "text" : "password"}
                            required={ true }
                            label='Password'
-                           onChange={ (event) => setSignInPassword(event.target.value) }
+                           onChange={ (event) => {
+                               setSignInPassword(event.target.value)
+                               clearErrors() 
+                             }}
                            value={ signInPassword }
                            className={ classes.passwordTextField }
-                           error={ false }
-                           //helperText='Enter a valid email address'
+                           //error={ passwordError ? true : false }
+                           //helperText={ passwordError }
                            InputProps={{ 
                             endAdornment: (
                               <InputAdornment position="end">
@@ -163,6 +183,8 @@ export default function SignIn(props) {
                           }}
                            
                 />
+
+                { passwordError && <div className={classes.passwordErrorSpan}> { passwordError } </div> }
 
 
                 <div className={ classes.signInButtonDiv }>

@@ -64,14 +64,26 @@ function App() {
     .catch( error => {
       switch( error.code ) {
         case 'auth/invalid-email':
-        case 'auth/user-disabled':
+          setEmailError('Invalid Email. Please enter a valid email address to continue')
+          console.log( error.message )
+          break
         case 'auth/user-not-found':
+          setEmailError('User does not exist. Please check your credentials and try again')
+          console.log( error.message )
+          break
+        case 'auth/user-disabled':
           setEmailError( error.message )
-          console.log( emailError )
+          break
+        case 'auth/email-already-exists':
+          setEmailError('The provided email is already in use by an existing user. Each user must have a unique email')
+          console.log( error.message )
           break
         case 'auth/wrong-password':
-          setPasswordError( error.message )
+          setPasswordError('Wrong password')
           console.log( passwordError )
+          break
+        case 'auth/invalid-password' :
+          setPasswordError('Invalid Password. Password should be a string of at least 6 characters')
           break
       }
     })
@@ -193,6 +205,7 @@ function App() {
                             emailError={emailError}
                             passwordError={passwordError} 
                             user={user}
+                            clearErrors={clearErrors}
                        />
 
                 </Route>

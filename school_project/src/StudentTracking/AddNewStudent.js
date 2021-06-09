@@ -201,7 +201,8 @@ export default function AddNewStudent() {
                     console.log(`progress = ${progress}`)
                     console.log(`image url = ${downloadUrl}`)
                     setImageUrl(downloadUrl)
-                })
+
+                
                 
         // initializing the firebase collection to store added students.
         if( imageUrl ) {
@@ -215,7 +216,8 @@ export default function AddNewStudent() {
             mobileNumber: mobileNumber.trim(),
             sexInputValue,
             levelInputValue,
-            imageUrl
+            imageUrl,
+            checkInStatus : 'Checked In'
         }
 
         let addedStudentsCollection = projectFirestore.collection('Added Students Collection')
@@ -230,16 +232,28 @@ export default function AddNewStudent() {
                     // resetting all components.
                     handleCancelBtnClick()
                 })
-            } else {
+                .catch(error => {
+                    console.log(`failed to add student due to error: ${error}`)
+                })
+                    }
+            else {
                 // modal goes here later.
                 alert(`Failed to add student. Student with the id ${indexNumber} already exists`)
             }
         })
-       } else {
+        .catch( error => {
+            // modal here later
+            alert('failed to add student due to error')
+            console.log(`failed to add student due to error: ${error}`)
+        })
+       } 
+       else {
            alert('failed to add student. \nPlease make sure you have a good network connection and try again')
        }
         
         }) 
+
+    })
 
     }
 

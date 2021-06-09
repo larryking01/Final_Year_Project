@@ -3,6 +3,8 @@ import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 import MaterialTable from 'material-table'
 
 import SwipeableDrawer from '../Drawers/SwipeableDrawer'
+import CheckCircleIcon from '@material-ui/icons/CheckCircle'
+import CancelIcon from '@material-ui/icons/Cancel'
 //import PersistentDrawer from '../Drawers/PersistentDrawer'
 
 
@@ -39,7 +41,8 @@ export default function MainPage() {
         { title: 'Room Number', field: 'roomNumber'},
         { title: 'Course', field: 'course'},
         { title: 'Level', field: 'levelInputValue'},
-        { title: 'Mobile Number', field: 'mobileNumber'}
+        { title: 'Mobile Number', field: 'mobileNumber'},
+        { title: 'Check In Status', field: 'checkInStatus', editable: 'never'}
         
     ]
 
@@ -110,6 +113,51 @@ export default function MainPage() {
 
                     }}
 
+                    actions={[
+                        {
+                            icon: () => ( <CheckCircleIcon /> ),
+                            tooltip: 'Check student in',
+                            onClick: ( event, rowData ) => {
+                                let checkStudentIn = projectFirestore.collection('Added Students Collection').doc(rowData.id)
+                                checkStudentIn.update({
+                                    checkInStatus : 'Checked In'
+                                })
+                                .then(() => {
+                                    // modal goes here later.
+                                    alert(`document with id ${rowData.id} updated successfully`)
+                                }) 
+                                .catch(error => {
+                                    alert('failed to delete document due to error')
+                                    console.log(`error = ${error}`)
+                                })
+                                 }
+
+                        },
+
+                        {
+                            icon: () => ( <CancelIcon /> ),
+                            tooltip: 'Check student out',
+                            onClick: ( event, rowData ) => {
+                                let checkStudentIn = projectFirestore.collection('Added Students Collection').doc(rowData.id)
+                                checkStudentIn.update({
+                                    checkInStatus : 'Checked Out'
+                                })
+                                .then(() => {
+                                    // modal goes here later.
+                                    alert(`document with id ${rowData.id} updated successfully`)
+                                })
+                                .catch(error => {
+                                    alert('failed to delete document due to error')
+                                    console.log(`error = ${error}`)
+                                })
+                                 }
+
+                        }
+
+
+
+
+                    ]}
 
                 />
             </div>

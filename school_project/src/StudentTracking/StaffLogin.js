@@ -1,27 +1,32 @@
 import React, { useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/styles'
+import { InputAdornment, IconButton } from "@material-ui/core"
+import Visibility from "@material-ui/icons/Visibility"
+import VisibilityOff from "@material-ui/icons/VisibilityOff"
 
 // importing other files.
 import '../App.css'
-import { projectFirestore, timestamp } from '../firebaseSetup/firebaseConfig'
+import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 
 
 
 // setting up styling.
 const useStyles = makeStyles({
     loginContainer: {
-        backgroundColor: 'white',
-        width: 580,
-        height: 470,
-        borderRadius: '5%',
-        textAlign: 'center'
+        height: '470px',
+        width: '360px',
+        textAlign: 'center',
+        position: 'relative',
+        top: '40px',
+        left: '400px',
+        /*borderRadius: '5%',
+        boxShadow: '2px 2px 8px' */
     },
     staffIDTextField: {
-        marginTop: 120,
+        marginTop: 100,
         width: 270
     },
     staffPINTextField: {
@@ -29,7 +34,7 @@ const useStyles = makeStyles({
         width: 270
     },
     signInButton: {
-        marginTop: 40,
+        marginTop: 50,
         width: 270,
         backgroundColor: 'rgba(105, 13, 170, 0.541)',
         height: 35,
@@ -74,6 +79,17 @@ const StaffLogin = () => {
     // function to update staff PIN
     const updateStaffPIN = (event) => {
         setStaffPIN(event.target.value)
+    }
+
+    // Showing and hiding the password
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword)
+    }
+
+    const handleMouseDownPassword = () => {
+        setShowPassword(!showPassword)
     }
 
 
@@ -121,7 +137,7 @@ const StaffLogin = () => {
 
 
     return (
-        <div className='parentContainer'>
+       
             <div className={classes.loginContainer}>
                 <form onSubmit={ HandleFormSubmit }>
                 <Typography variant='h4' className={classes.headerText}>
@@ -141,16 +157,30 @@ const StaffLogin = () => {
                 />
                 </div>
 
+
                 <div>
                 <TextField className={classes.staffPINTextField}
                            variant='outlined' 
                            label='PIN'
                            color='primary'
-                           type='password'  
+                           type={ showPassword ? "text" : "password"}
                            required={ true }
                            onChange={ updateStaffPIN }
                            value={ staffPIN }
                            onKeyPress={HandleEnterPressed}
+                           InputProps={{ 
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={ handleClickShowPassword }
+                                  onMouseDown={ handleMouseDownPassword }
+                                >
+                                  { showPassword ? <Visibility /> : <VisibilityOff /> }
+                                </IconButton>
+                              </InputAdornment>
+                            )
+                          }}
                            
                 />
                 </div>
@@ -166,7 +196,6 @@ const StaffLogin = () => {
                 </form>
             </div>
             
-        </div>
     )
 }
 
