@@ -96,13 +96,14 @@ export default function PersistentDrawer() {
                      </div>
                      <hr />
 
-
+                    <div onClick={() => router.push('/nssaccomodationfinder')}>
                      <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
                                 <RoomIcon />
                          </ListItemIcon>
                          <ListItemText primary={'Looking for NSS accomodation? Click here'} />
                      </ListItem>
+                    </div>
 
                  </List>
                  

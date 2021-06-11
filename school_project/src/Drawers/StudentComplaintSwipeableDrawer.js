@@ -39,7 +39,10 @@ const useStyles = makeStyles(theme => ({
 
 
 
-export default function StudentComplaintSwipeabledrawer() {
+export default function StudentComplaintSwipeabledrawer(props) {
+
+    // destructuring props
+    const { handleLogout, user } = props
 
     // handling state.
     const [ open, setOpen ] = useState(false)
@@ -104,11 +107,11 @@ export default function StudentComplaintSwipeabledrawer() {
                          <ListItemIcon className={classes.listItemIcon}>
                                 <EditIcon />
                          </ListItemIcon>
-                         <ListItemText primary={'Email here'} />
+                         <ListItemText primary={user.email} />
                      </ListItem>
                     
 
-                     <div onClick={() => router.push('/submitcomplaint')}>
+                     <div onClick={() => handleLogout }>
                      <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
                                 <BookIcon />
@@ -119,12 +122,14 @@ export default function StudentComplaintSwipeabledrawer() {
 
 
                      <hr />
+                     <div onClick={() => router.push('/nssaccomodationfinder')}>
                      <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
                                 <BookIcon />
                          </ListItemIcon>
                          <ListItemText primary={'Looking for NSS accomodation? Click here'} />
                      </ListItem>
+                     </div>
 
                    </List>
 

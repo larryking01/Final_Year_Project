@@ -9,10 +9,11 @@ import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 
 
 
+
 export default function StudentComplaintHistory( props ) {
 
     // destructuring the props.
-    const { user } = props
+    const { handleLogout, user } = props
 
     // handling state.
     const [ studentComplaintsArray, setStudentComplaintsArray ] = useState([ ])
@@ -59,7 +60,7 @@ export default function StudentComplaintHistory( props ) {
 
     return (
         <div style={{display: 'flex'}} >
-            <StudentComplaintSwipeableDrawer />
+            <StudentComplaintSwipeableDrawer handleLogout={ handleLogout } user={ user } />
 
             <MaterialTable 
                 title='Submitted Complaints'

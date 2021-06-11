@@ -6,6 +6,7 @@ import { firebaseAuthentication } from './firebaseSetup/firebaseConfig'
 
 
 import SelectUser from './SelectUserType/SelectUser'
+import SelectUserWithButtons from './SelectUserType/SelectUserWithButtons'
 import StaffLogin from './StudentTracking/StaffLogin'
 import StudentLogin from './Complaint/StudentLogin'
 import StudentSignUp from './Complaint/StudentSignUp'
@@ -18,6 +19,8 @@ import ViewAllComplaints from './StudentTracking/ViewAllComplaints'
 import SignUp from './Complaint/SignUp'
 import SignIn from './Complaint/SignIn'
 import StudentComplaintHistory from './Complaint/StudentComplaintHistory'
+
+import ReactCameraMediaStream from './StudentTracking/ReactCameraMediaStream'
 
 
 
@@ -147,7 +150,7 @@ function App() {
   // the useEffect to listen.
   useEffect(()=> {
     handleAuthenticationListener()
-
+    
   }, [])
 
   
@@ -161,7 +164,7 @@ function App() {
     <div className="App">
         <BrowserRouter> 
             <Switch>
-                <Route exact path='/' component={ SelectUser } />
+                <Route exact path='/' component={ SelectUserWithButtons } />
                 <Route exact path='/stafflogin' component={ StaffLogin } />
                 <Route exact path='/studentsignup' component={ StudentSignUp } />
                 <Route exact path='/studentLogin' component={ StudentLogin } />
@@ -216,11 +219,18 @@ function App() {
                 </Route>
 
                 <Route exact path='/studentcomplainthistory'>
-                      <StudentComplaintHistory user={ user } />
+                      <StudentComplaintHistory handleLogout={ handleLogOut } user={ user } />
                 </Route>
 
                 <Route exact path='/viewallcomplaints' component={ ViewAllComplaints } />
+
+                <Route exact path='/devicepicture' component={ ReactCameraMediaStream } />
+
+                <Route exact path='/nssaccomodationfinder' render={() => (window.location = "http://nss-accom.herokuapp.com/")} />
+
                 <Route path='*' render={() => <h2> Sorry, page not found </h2>} />
+
+
             </Switch>
 
         </BrowserRouter>

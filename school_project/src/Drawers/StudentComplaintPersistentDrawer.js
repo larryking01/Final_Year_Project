@@ -89,12 +89,14 @@ export default function StudentComplaintPersistentDrawer(props) {
 
                      
                      <hr />
+                     <div onClick={() => router.push('/nssaccomodationfinder')}>
                      <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
                                 <BookIcon />
                          </ListItemIcon>
                          <ListItemText primary={'Looking for NSS accomodation? Click here'} />
                      </ListItem>
+                     </div>
 
                  </List>
                  

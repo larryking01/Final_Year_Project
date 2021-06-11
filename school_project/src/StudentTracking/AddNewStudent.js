@@ -116,6 +116,7 @@ export default function AddNewStudent() {
         if( selectedPicture && acceptedImageTypes.includes(selectedPicture.type) ) {
             setError('')
             setStudentPicture( selectedPicture )
+            //console.log(`selected picture = ${selectedPicture.data}`)
 
         } else {
             // modal may go here later.
