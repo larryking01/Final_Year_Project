@@ -59,7 +59,7 @@ export default function Swipeabledrawer() {
        <div>
 
            <IconButton 
-                edge='start'
+                edge='end'
                 color='inherit'
                 aria-label='Open drawer'
                 onClick={ () => setOpen(true)}

@@ -1,11 +1,30 @@
 import React, { useState, useEffect } from 'react'
-import MaterialTable from 'material-table'
+import MaterialTable, { MTableToolbar } from 'material-table'
 import StudentComplaintSwipeableDrawer from '../Drawers/StudentComplaintSwipeableDrawer'
 //import StudentComplaintPersistentDrawer from '../Drawers/PersistentDrawer'
 import { projectFirestore } from '../firebaseSetup/firebaseConfig'
+import { makeStyles } from '@material-ui/core/styles'
 
 
-
+// setting up styling.
+const useStyles = makeStyles(theme => ({
+    complaintStatusPendingButtons: {
+        backgroundColor: '#01579b',
+        color: 'white',
+        border: 'none',
+        width: '70px',
+        height: '30px',
+        cursor: 'pointer'
+    },
+    complaintStatusResolvedButtons: {
+        backgroundColor: 'green',
+        color: 'white',
+        border: 'none',
+        width: '70px',
+        height: '30px',
+        cursor: 'pointer'
+    }
+}))
 
 
 
@@ -18,6 +37,10 @@ export default function StudentComplaintHistory( props ) {
     // handling state.
     const [ studentComplaintsArray, setStudentComplaintsArray ] = useState([ ])
     const [ selectedRow, setSelectedRow ] = useState(null)
+
+
+    // initializing styling.
+    const classes = useStyles()
 
     
 
@@ -47,7 +70,9 @@ export default function StudentComplaintHistory( props ) {
         { title: 'Complaint Description', field: 'complaintDescription'},
         { title: 'Student Mobile Number', field: 'mobileNumber' },
         { title: 'Date Submitted', field: 'date'},
-        { title: 'Complaint Status', field: 'complaintStatus'}
+        { title: 'Complaint Status', field: 'complaintStatus',
+                  render: item => <button className={ item.complaintStatus === 'Pending' ? classes.complaintStatusPendingButtons : classes.complaintStatusResolvedButtons}> {item.complaintStatus} </button>
+    }
 
     ]
 
@@ -59,15 +84,18 @@ export default function StudentComplaintHistory( props ) {
 
 
     return (
-        <div style={{display: 'flex'}} >
-            <StudentComplaintSwipeableDrawer handleLogout={ handleLogout } user={ user } />
-
+        <div >
+            <div>
+                  <StudentComplaintSwipeableDrawer handleLogout={ handleLogout } user={ user }  />
+            </div>
+           
+                
             <MaterialTable 
                 title='Submitted Complaints'
                 data={ studentComplaintsArray }
                 columns={ tableColumns }
                 onRowClick={ ((event, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
-                    options={{
+                options={{
                         headerStyle: {
                             backgroundColor: '#01579b',
                             color: '#FFF'
@@ -78,9 +106,19 @@ export default function StudentComplaintHistory( props ) {
                             backgroundColor: ( rowData.tableData.id % 2 === 1 ) ? '#b3b3ff' : '#FFF'
                         }),
                         actionsColumnIndex: -1,
-                        exportButton: true
+                        exportButton: true,
+                        searchFieldAlignment: "right",
+                
 
-                    }}
+                }}
+                components={{
+                    Toolbar: props => (
+                        <div style={{ backgroundColor: 'white', color: 'black' }}>
+                            <MTableToolbar {...props} /> 
+
+                        </div>
+                    )
+                }}
             
             />
 

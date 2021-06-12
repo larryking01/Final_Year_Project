@@ -1,11 +1,37 @@
 import React, { useState, useEffect } from 'react'
 import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 import MaterialTable from 'material-table'
-
+import { makeStyles } from '@material-ui/styles'
 import SwipeableDrawer from '../Drawers/SwipeableDrawer'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import CancelIcon from '@material-ui/icons/Cancel'
 //import PersistentDrawer from '../Drawers/PersistentDrawer'
+
+
+
+// setting up styling.
+const useStyles = makeStyles( theme => ({
+    checkInButton: {
+        backgroundColor: 'green',
+        color: 'white',
+        border: 'none',
+        width: '77px',
+        height: '37px',
+        cursor: 'pointer'
+    },
+    checkOutButton: {
+        backgroundColor: 'red',
+        color: 'white',
+        border: 'none',
+        width: '84px',
+        height: '37px',
+        cursor: 'pointer'
+    }
+}))
+
+
+
+
 
 
 
@@ -14,6 +40,11 @@ export default function MainPage() {
     // handling state.
     const [ addedStudentsArray, setAddedStudentsArray ] = useState([])
     const [ selectedRow, setSelectedRow ] = useState(null)
+
+
+    // initializing styling.
+    const classes = useStyles()
+
     
 
     // the use effect to fetch all added students.
@@ -33,7 +64,7 @@ export default function MainPage() {
     // setting up the columns of the table.
     const tableColumns = [
         { title: 'Student Picture', field: 'imageUrl', editable: 'never',
-        render: item => <img src={item.imageUrl} alt='' border='1' width='90'  /> },
+        render: item => <img src={item.imageUrl} alt='' border='1' width='90' style={{ borderRadius: '50%' }}  /> },
         { title: 'Index Number', field: 'indexNumber'},
         { title: 'First Name', field: 'firstName'},
         { title: 'Last Name', field: 'lastName'},
@@ -42,17 +73,19 @@ export default function MainPage() {
         { title: 'Course', field: 'course'},
         { title: 'Level', field: 'levelInputValue'},
         { title: 'Mobile Number', field: 'mobileNumber'},
-        { title: 'Check In Status', field: 'checkInStatus', editable: 'never'}
+        { title: 'Check In Status', field: 'checkInStatus', editable: 'never',
+                render: item => <button className={ item.checkInStatus === 'Checked In' ? classes.checkInButton : classes.checkOutButton }> { item.checkInStatus } </button>
+        }
         
     ]
 
 
     return (
-        <div style={{ display: 'flex'}}>
+        <div >
             
             <SwipeableDrawer /> 
 
-            <div style={{flexDirection: 'column', marginLeft: 20}}>
+            <div style={{flexDirection: 'column' }}>
                 <MaterialTable 
                     title='List Of Resident Students'
                     data={ addedStudentsArray }

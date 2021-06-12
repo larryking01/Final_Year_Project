@@ -57,10 +57,11 @@ export default function StudentComplaintSwipeabledrawer(props) {
     return (
        <div>
            <IconButton 
-                edge='start'
-                color='inherit'
+                edge='end'
+                color='red'
                 aria-label='Open drawer'
                 onClick={ () => setOpen(true)}
+                
            >
               <div onClick={() => setOpen(true)}>
                 <MenuIcon> </MenuIcon>

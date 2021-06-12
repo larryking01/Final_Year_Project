@@ -7,6 +7,32 @@ import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
 import RestoreIcon from '@material-ui/icons/Restore'
 import Button from '@material-ui/core/Button'
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline'
+import { makeStyles } from '@material-ui/styles'
+
+
+// setting up styling.
+const useStyles = makeStyles( theme => ({
+    complaintStatusPendingButtons: {
+        backgroundColor: '#01579b',
+        color: 'white',
+        border: 'none',
+        width: '70px',
+        height: '30px',
+        cursor: 'pointer'
+    },
+    complaintStatusResolvedButtons: {
+        backgroundColor: 'green',
+        color: 'white',
+        border: 'none',
+        width: '70px',
+        height: '30px',
+        cursor: 'pointer'
+    }
+
+
+
+
+}))
 
 
 
@@ -20,6 +46,10 @@ export default function ViewAllComplaints() {
 
     let complaintResolvedStatus = 'Pending'
     const [ complaintAttended, setComplaintAttended ] = useState( false )
+
+
+    // initializing styling.
+    const classes = useStyles()
 
 
     // the useEffect to fetch all complaints.
@@ -40,6 +70,7 @@ export default function ViewAllComplaints() {
 
     // setting up the table columns.
     let tableColumns = [
+        
         { title: 'Student Index Number', field: 'studentIndexNumber' },
         { title: 'Student Full Name', field: 'studentFullName' },
         { title: 'Room Number', field: 'roomNumber' },
@@ -47,7 +78,9 @@ export default function ViewAllComplaints() {
         { title: 'Complaint Description', field: 'complaintDescription'},
         { title: 'Student Mobile Number', field: 'mobileNumber' },
         { title: 'Date Submitted', field: 'date'},
-        { title: 'Complaint Status', field: 'complaintStatus'}
+        { title: 'Complaint Status', field: 'complaintStatus',
+                render: item => <button className={ item.complaintStatus === 'Pending' ? classes.complaintStatusPendingButtons : classes.complaintStatusResolvedButtons}> {item.complaintStatus} </button>
+        }
 
     ]
 
@@ -55,8 +88,10 @@ export default function ViewAllComplaints() {
 
 
     return (
-        <div style={{display: 'flex'}}>
+        <div>
+            <div>
             <SwipeableDrawer />
+            </div>
 
 
             <MaterialTable 
