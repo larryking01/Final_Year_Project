@@ -19,6 +19,7 @@ import ViewAllComplaints from './StudentTracking/ViewAllComplaints'
 import SignUp from './Complaint/SignUp'
 import SignIn from './Complaint/SignIn'
 import StudentComplaintHistory from './Complaint/StudentComplaintHistory'
+import Dialog from './Complaint/Dialog'
 
 import ReactCameraMediaStream from './StudentTracking/ReactCameraMediaStream'
 
@@ -228,6 +229,7 @@ function App() {
 
                 <Route exact path='/nssaccomodationfinder' render={() => (window.location = "http://nss-accom.herokuapp.com/")} />
 
+                <Route exact path='/dialog' component={ Dialog } />
                 <Route path='*' render={() => <h2> Sorry, page not found </h2>} />
 
 

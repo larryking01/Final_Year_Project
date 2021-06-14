@@ -7,6 +7,16 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import CancelIcon from '@material-ui/icons/Cancel'
 //import PersistentDrawer from '../Drawers/PersistentDrawer'
 
+// the Dialog
+import Dialog from '@material-ui/core/Dialog'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogCOntentText'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import Button from '@material-ui/core/Button'
+import Box from '@material-ui/core/Box'
+import Slide from '@material-ui/core/Slide'
+
 
 
 // setting up styling.
@@ -26,7 +36,57 @@ const useStyles = makeStyles( theme => ({
         width: '84px',
         height: '37px',
         cursor: 'pointer'
+    },
+    totalStudentsDiv: {
+        backgroundColor: '#01579b',
+        height: '40px',
+        width: '200px',
+        position: 'relative',
+        left: '60px',
+        bottom: '60px',
+        color: 'white',
+        cursor: 'pointer',
+        textAlign: 'center',
+        boxShadow: '2px 4px 8px'
+    },
+    totalStudentsText: {
+        paddingTop: '5px'
+    },
+    totalCheckedInStudentsDiv: {
+        backgroundColor: '#01579b',
+        height: '40px',
+        width: '200px',
+        position: 'relative',
+        left: '300px',
+        bottom: '122px',
+        color: 'white',
+        cursor: 'pointer',
+        textAlign: 'center'
+    },
+    totalCheckInStudentsText: {
+        paddingTop: '5px'
+    },
+    totalCheckedOutStudentsDiv: {
+        backgroundColor: '#01579b',
+        height: '40px',
+        width: '200px',
+        position: 'relative',
+        left: '540px',
+        bottom: '183px',
+        color: 'white',
+        cursor: 'pointer',
+        textAlign: 'center'
+    },
+    totalCheckOutStudentsText: {
+        paddingTop: '5px'
     }
+
+
+
+
+
+
+
 }))
 
 
@@ -40,6 +100,27 @@ export default function MainPage() {
     // handling state.
     const [ addedStudentsArray, setAddedStudentsArray ] = useState([])
     const [ selectedRow, setSelectedRow ] = useState(null)
+
+
+    // state for the total number of students.
+    const [ totalStudents, setTotalStudents ] = useState(0)
+    const [ totalCheckedInStudents, setTotalCheckedInStudents ] = useState(0)
+    const [ totalCheckedOutStudents, setTotalCheckedOutStudents ] = useState(0)
+
+
+    // for the dialog.
+    const [showDialog, setShowDialog] = useState(false)
+    const [rowData, setRowData] = useState('')
+
+
+    // dialog transition.
+    const Transition = React.forwardRef(function Transition(props, ref) {
+        return <Slide direction="up" ref={ref} {...props} />;
+      });
+
+
+
+
 
 
     // initializing styling.
@@ -59,6 +140,52 @@ export default function MainPage() {
         })
         
     }, [ ])
+
+
+
+    // the use effect to get the total number of students added.
+    useEffect(() => {
+        projectFirestore.collection('Added Students Collection').onSnapshot(snapshot => {
+            setTotalStudents( snapshot.size )
+        })
+        console.log(` total students = ${ totalStudents }`)
+
+
+    }, [ totalStudents, setTotalStudents ])
+
+
+
+    // the use effect to get the total number of students who are checked in.
+    useEffect(() => {
+        // total checked in students.
+        projectFirestore.collection('Added Students Collection').where('checkInStatus', '==', 'Checked In')
+        .onSnapshot(snapshot => {
+            setTotalCheckedInStudents( snapshot.size )
+        })
+        console.log(` total checked in students = ${ totalCheckedInStudents }`)
+
+    }, [ totalCheckedInStudents, setTotalCheckedInStudents ])
+
+
+
+    // the use effect to get the total number of students who are checked out.
+    useEffect(() => {
+        // total checked in students.
+        projectFirestore.collection('Added Students Collection').where('checkInStatus', '==', 'Checked Out')
+        .onSnapshot(snapshot => {
+            setTotalCheckedOutStudents( snapshot.size )
+        })
+        console.log(` total checked out students = ${ totalCheckedOutStudents }`)
+
+    }, [ totalCheckedOutStudents, setTotalCheckedOutStudents ])
+
+
+    
+
+
+
+
+
 
 
     // setting up the columns of the table.
@@ -82,15 +209,34 @@ export default function MainPage() {
 
     return (
         <div >
-            
-            <SwipeableDrawer /> 
+            <div>
+                 <SwipeableDrawer /> 
+                 <div className={ classes.totalStudentsDiv }>
+                          <h4 className={ classes.totalStudentsText }> {`Total Students: ${totalStudents}`} </h4>
+                 </div>
 
-            <div style={{flexDirection: 'column' }}>
+                 <div className={ classes.totalCheckedInStudentsDiv }>
+                          <h4 className={ classes.totalCheckInStudentsText }> {`Checked In: ${totalCheckedInStudents}`} </h4>
+                 </div>
+
+                 <div className={ classes.totalCheckedOutStudentsDiv }>
+                          <h4 className={ classes.totalCheckOutStudentsText }> {`Checked Out: ${totalCheckedOutStudents}`} </h4>
+                 </div>
+            </div>
+            
+
+            <div style={{ position: 'relative', top: '-170px'}}>
                 <MaterialTable 
                     title='List Of Resident Students'
                     data={ addedStudentsArray }
                     columns={ tableColumns } 
-                    onRowClick={ ((event, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
+                    onRowClick={ ((event, selectedRow) => {
+                        setSelectedRow(selectedRow.tableData.id) 
+                        setRowData(selectedRow)
+                        console.log(`image url = ${selectedRow.imageUrl} `)
+                        setShowDialog(true)
+
+                    })}
                     options={{
                         headerStyle: {
                             backgroundColor: '#01579b',
@@ -187,12 +333,27 @@ export default function MainPage() {
 
                         }
 
-
-
-
                     ]}
 
                 />
+
+                <Dialog open={showDialog} 
+                        onClose={() => setShowDialog( false )} 
+                        //rowData={ rowData }
+                        //TransitionComponent={ Transition }
+                        //keepMounted
+                >
+                    <DialogTitle style={{backgroundColor: '#01579b', color: 'white'}}> {'Enlarged student picture'} </DialogTitle>
+                    
+                    <Box>
+                        <img src={ rowData.imageUrl} alt='' width={400}  />
+                    </Box>
+
+                </Dialog>
+
+
+
+
             </div>
                 
             
