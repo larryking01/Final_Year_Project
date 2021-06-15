@@ -14,7 +14,8 @@ const useStyles = makeStyles(theme => ({
         border: 'none',
         width: '70px',
         height: '30px',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        boxShadow: '2px 8px 6px grey'
     },
     complaintStatusResolvedButtons: {
         backgroundColor: 'green',
@@ -22,7 +23,8 @@ const useStyles = makeStyles(theme => ({
         border: 'none',
         width: '70px',
         height: '30px',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        boxShadow: '2px 8px 6px grey'
     }
 }))
 
@@ -114,12 +116,11 @@ export default function StudentComplaintHistory( props ) {
                             //backgroundColor: ( selectedRow === rowData.tableData.id) ? 'darkgrey' : '#FFF',
                             //color: ( selectedRow === rowData.tableData.id) ? 'black' : 'black'
                             backgroundColor: ( rowData.tableData.id % 2 === 1 ) ? '#b3b3ff' : '#FFF'
+                            
                         }),
                         actionsColumnIndex: -1,
-                        exportButton: true,
-                        searchFieldAlignment: "right",
-                
-
+                        exportButton: true
+    
                 }}
                 components={{
                     Toolbar: props => (

@@ -25,9 +25,10 @@ const useStyles = makeStyles( theme => ({
         backgroundColor: 'green',
         color: 'white',
         border: 'none',
-        width: '77px',
+        width: '84px',
         height: '37px',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        boxShadow: '2px 8px 6px grey'
     },
     checkOutButton: {
         backgroundColor: 'red',
@@ -35,7 +36,8 @@ const useStyles = makeStyles( theme => ({
         border: 'none',
         width: '84px',
         height: '37px',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        boxShadow: '2px 8px 6px grey'
     },
     totalStudentsDiv: {
         backgroundColor: '#01579b',
@@ -80,11 +82,6 @@ const useStyles = makeStyles( theme => ({
     totalCheckOutStudentsText: {
         paddingTop: '5px'
     }
-
-
-
-
-
 
 
 }))
@@ -387,7 +384,6 @@ export default function MainPage() {
 
                 <Dialog open={showDialog} 
                         onClose={() => setShowDialog( false )} 
-                        //rowData={ rowData }
                         //TransitionComponent={ Transition }
                         //keepMounted
                 >

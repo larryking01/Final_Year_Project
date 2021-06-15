@@ -101,7 +101,8 @@ export default function SelectUser(props) {
         if(studentChecked) {
             router.push('/signin')
         } else if(staffChecked) {
-            router.push('/stafflogin')
+            //router.push('/stafflogin')
+            router.push('/stafflandingpage')
         } else {
             // a dialog or modal comes in here later.
             alert('You need to select a user-type to continue')

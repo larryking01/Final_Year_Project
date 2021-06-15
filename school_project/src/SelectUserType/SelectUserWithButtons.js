@@ -90,7 +90,7 @@ export default function SelectUserWithButtons() {
             <div>
                 <Button className={ classes.staffButton }
                         startIcon={ <PersonIcon /> }
-                        onClick={ () => router.push('/stafflogin') }
+                        onClick={ () => router.push('/stafflogin')  }
                 >
                     Staff 
                 </Button>

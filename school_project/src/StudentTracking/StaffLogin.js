@@ -119,7 +119,7 @@ const StaffLogin = () => {
                         setVerifyingComplete(true)
                         // modal goes here later
                         alert('verification successful !!')
-                        router.push('/viewallstudents')
+                        router.push('/stafflandingpage')
                     }
                 })
             }

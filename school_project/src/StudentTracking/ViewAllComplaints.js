@@ -18,7 +18,8 @@ const useStyles = makeStyles( theme => ({
         border: 'none',
         width: '70px',
         height: '30px',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        boxShadow: '2px 8px 6px grey'
     },
     complaintStatusResolvedButtons: {
         backgroundColor: 'green',
@@ -26,7 +27,8 @@ const useStyles = makeStyles( theme => ({
         border: 'none',
         width: '70px',
         height: '30px',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        boxShadow: '2px 8px 6px grey'
     }
 
 

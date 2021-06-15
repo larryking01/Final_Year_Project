@@ -121,7 +121,7 @@ export default function SignIn(props) {
         event.preventDefault()
         handleLogin()
         if( user ) {
-            router.push('/submitcomplaint')
+            router.push('/studentlandingpage')
         } else {
             router.push('/signin')
         }
