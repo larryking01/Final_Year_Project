@@ -46,7 +46,10 @@ export default function StudentComplaintHistory( props ) {
 
 
     // the useEffect to fetch all complaints.
+    const [ fetchAllComplaintsMounted, setFetchAllComplaintsMounted ] = useState( true )
+
     useEffect(() => {
+        if( fetchAllComplaintsMounted ) {
         let fetchComplaints = projectFirestore.collection('Submitted Complaints Collection').where('studentEmail', '==', user.email)
         fetchComplaints.onSnapshot( snapshot => {
             let temporaryArray = []
@@ -58,7 +61,14 @@ export default function StudentComplaintHistory( props ) {
             //studentComplaintsArray.forEach( complaint => console.log(complaint))
         })
 
-    }, [ ])
+        }
+
+        // the clean up.
+        return () => {
+            setFetchAllComplaintsMounted( false )
+        }
+
+    }, [ fetchAllComplaintsMounted ])
 
 
     // setting up the table columns.

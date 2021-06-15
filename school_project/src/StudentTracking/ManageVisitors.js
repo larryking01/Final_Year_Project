@@ -21,17 +21,29 @@ export default function ManageVisitors() {
     const [ selectedRow, setSelectedRow ] = useState(null)
 
 
+
     // the useEffect to fetch all added visitors.
+    const [ fetchAllVisitorsMounted, setfetchAllVisitorsMounted ] = useState( true )
     useEffect(() => {
+        if( fetchAllVisitorsMounted ) {
         projectFirestore.collection('Added Visitors Collection').onSnapshot( snapshot => {
             let temporaryArray = []
             snapshot.forEach( document => {
                 temporaryArray.push({ id: document.id, ...document.data() })
             })
             setVisitorsArray( temporaryArray )
+            console.log('all visitors effect')
         })
 
-    }, [ ])
+        }
+
+        // the clean up.
+        return () => {
+            setfetchAllVisitorsMounted( false )
+        }
+
+
+    }, [ fetchAllVisitorsMounted ])
 
     
     // defining the columns to use for material table.

@@ -127,6 +127,7 @@ export default function AddNewStudent() {
     }
 
     
+
     // handling the state for the sex autocomplete component.
     const [ sexValue, setSexValue ] = useState('Male')
     const [ sexInputValue, setSexInputValue ] = useState('')
@@ -199,14 +200,14 @@ export default function AddNewStudent() {
                 console.log(`failed to upload picture due to error: ${error}`)
             }, async () => {
                 await uploadTask.snapshot.ref.getDownloadURL().then(downloadUrl => {
+                    setImageUrl(downloadUrl)
                     console.log(`progress = ${progress}`)
                     console.log(`image url = ${downloadUrl}`)
-                    setImageUrl(downloadUrl)
+                    
 
                 
-                
         // initializing the firebase collection to store added students.
-        if( imageUrl ) {
+        if( imageUrl  ) {
         // the student to store in the database.
         let newStudent = {
             firstName: firstName[0].toUpperCase() + firstName.substring(1).trim(),
@@ -220,6 +221,7 @@ export default function AddNewStudent() {
             imageUrl,
             checkInStatus : 'Checked In'
         }
+
 
         let addedStudentsCollection = projectFirestore.collection('Added Students Collection')
         // preventing the addition of duplicate records

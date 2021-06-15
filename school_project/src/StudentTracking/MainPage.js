@@ -127,9 +127,12 @@ export default function MainPage() {
     const classes = useStyles()
 
     
-
     // the use effect to fetch all added students.
+    const [ addedStudentsMounted, setAddedStudentsMounted ] = useState( true )
+    
     useEffect(() => {
+
+        if( addedStudentsMounted ) {
         projectFirestore.collection('Added Students Collection').onSnapshot(snapShot => {
             let temporaryArray = []
             snapShot.forEach(document => {
@@ -137,47 +140,92 @@ export default function MainPage() {
             })
             setAddedStudentsArray(temporaryArray)
             //addedStudentsArray.forEach(student => console.log(student))
+            console.log(`added students use effect`)
         })
-        
-    }, [ ])
+        }
+
+        // the clean up.
+        return () => {
+            setAddedStudentsMounted( false )
+        }
+
+    }, [ addedStudentsMounted ])
+
+
+
 
 
 
     // the use effect to get the total number of students added.
+    const [ totalAddedStudentsMounted, setTotalAddedStudentsMounted ] = useState( true )
+
     useEffect(() => {
+
+        if( totalAddedStudentsMounted ) {
         projectFirestore.collection('Added Students Collection').onSnapshot(snapshot => {
             setTotalStudents( snapshot.size )
         })
         console.log(` total students = ${ totalStudents }`)
+      }
+
+      // the clean up.
+      return () => {
+            setTotalAddedStudentsMounted( false )
+      }
 
 
-    }, [ totalStudents, setTotalStudents ])
+     }, [ totalStudents, totalAddedStudentsMounted ])
+
+
+
 
 
 
     // the use effect to get the total number of students who are checked in.
+    const [ totalCheckedInStudentsMounted, setTotalCheckedInStudentsMounted ] = useState( true )
+
     useEffect(() => {
         // total checked in students.
+        if( totalCheckedInStudentsMounted ) {
+
         projectFirestore.collection('Added Students Collection').where('checkInStatus', '==', 'Checked In')
         .onSnapshot(snapshot => {
             setTotalCheckedInStudents( snapshot.size )
         })
         console.log(` total checked in students = ${ totalCheckedInStudents }`)
 
-    }, [ totalCheckedInStudents, setTotalCheckedInStudents ])
+        }
+
+        // the clean up.
+        return () => {
+            setTotalCheckedInStudentsMounted( false )
+        }
+
+    }, [ totalCheckedInStudents, totalCheckedInStudentsMounted ])
+
+
 
 
 
     // the use effect to get the total number of students who are checked out.
+    const [ totalCheckedOutStudentsMounted, setTotalCheckedOutStudentsMounted ] = useState( true )
+    
     useEffect(() => {
         // total checked in students.
+        if( totalCheckedOutStudentsMounted ) {
         projectFirestore.collection('Added Students Collection').where('checkInStatus', '==', 'Checked Out')
         .onSnapshot(snapshot => {
             setTotalCheckedOutStudents( snapshot.size )
         })
         console.log(` total checked out students = ${ totalCheckedOutStudents }`)
+        }
 
-    }, [ totalCheckedOutStudents, setTotalCheckedOutStudents ])
+        // the cleanup.
+        return () => {
+            setTotalCheckedOutStudentsMounted( false )
+        }
+
+    }, [ totalCheckedOutStudents, totalCheckedOutStudentsMounted ])
 
 
     
@@ -343,7 +391,7 @@ export default function MainPage() {
                         //TransitionComponent={ Transition }
                         //keepMounted
                 >
-                    <DialogTitle style={{backgroundColor: '#01579b', color: 'white'}}> {'Enlarged student picture'} </DialogTitle>
+                    <DialogTitle style={{backgroundColor: '#01579b', color: 'white'}}> {`${rowData.firstName} ${rowData.lastName}`} </DialogTitle>
                     
                     <Box>
                         <img src={ rowData.imageUrl} alt='' width={400}  />

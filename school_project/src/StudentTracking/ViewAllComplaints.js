@@ -53,7 +53,9 @@ export default function ViewAllComplaints() {
 
 
     // the useEffect to fetch all complaints.
+    const [ fetchAllComplaintsMounted, setFetchAllComplaintsMounted ] = useState( true )
     useEffect(() => {
+        if( fetchAllComplaintsMounted ) {
         let fetchComplaints = projectFirestore.collection('Submitted Complaints Collection')
         fetchComplaints.onSnapshot( snapshot => {
             let temporaryArray = []
@@ -64,8 +66,17 @@ export default function ViewAllComplaints() {
             setComplaintsArray(temporaryArray)
             //complaintsArray.forEach( complaint => console.log(complaint))
         })
+            }
 
-    }, [ ])
+        // the clean up.
+        return () => {
+            setFetchAllComplaintsMounted( false )
+        }
+
+    }, [ fetchAllComplaintsMounted ])
+
+
+
 
 
     // setting up the table columns.
