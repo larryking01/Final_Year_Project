@@ -12,7 +12,7 @@ import PersonIcon from '@material-ui/icons/Person'
 // setting up styling.
 const useStyles = makeStyles(theme => ({
     drawerPaper: {
-        width: 'inherit',
+        width: 280,
         opacity: 1,
         color: 'white',
         backgroundColor: '#2E2A3B'
@@ -46,9 +46,11 @@ export default function StudentComplaintPersistentDrawer(props) {
             <Drawer variant='persistent'
                     anchor='left'
                     open={true}
-                    style={{width: '220px'}}
-                    classes={{paper: classes.drawerPaper }}
+                    /*style={{width: '220px'}}
+                    classes={{paper: classes.drawerPaper }} */
              >
+
+                 <div className={ classes.drawerPaper }>
                  <List>
                      <div onClick={() => router.push('/submitcomplaint')}>
                      <ListItem button className={classes.listItem}>
@@ -58,6 +60,7 @@ export default function StudentComplaintPersistentDrawer(props) {
                          <ListItemText primary={'Submit a complaint'} />
                      </ListItem>
                      </div>
+                     <hr />
                      
                     <div onClick={() => router.push('/studentcomplainthistory')}>
                      <ListItem button className={classes.listItem}>
@@ -67,6 +70,7 @@ export default function StudentComplaintPersistentDrawer(props) {
                          <ListItemText primary={'View Complaint History'} />
                      </ListItem>
                      </div>
+                     <hr />
 
                     <div onClick={() => console.log(`current user = ${ user.email }`)}>
                      <ListItem button className={classes.listItem}>
@@ -76,6 +80,7 @@ export default function StudentComplaintPersistentDrawer(props) {
                          <ListItemText primary={ `${user.email}`} />
                      </ListItem>
                      </div>
+                     <hr />
             
 
                     <div onClick={ handleLogout }>
@@ -99,6 +104,7 @@ export default function StudentComplaintPersistentDrawer(props) {
                      </div>
 
                  </List>
+                 </div>
                  
             </Drawer>
             

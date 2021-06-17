@@ -25,7 +25,7 @@ import BookIcon from '@material-ui/icons/Book'
 // setting up styling.
 const useStyles = makeStyles(theme => ({
     drawerPaper: {
-        width: '180',
+        width: 350,
         opacity: 1,
         color: 'white',
         backgroundColor: '#2E2A3B'
@@ -92,6 +92,7 @@ export default function Swipeabledrawer() {
                          <ListItemText primary={'View all students'} />
                      </ListItem>
                      </div>
+                     <hr />
 
                      <div onClick={() => router.push('/addnewstudent') }>
                      <ListItem button className={classes.listItem} >
@@ -101,6 +102,7 @@ export default function Swipeabledrawer() {
                          <ListItemText primary={'Add new student'} />
                      </ListItem>
                      </div>
+                     <hr />
 
                      <div onClick={() => router.push('/newvisitor')}>
                      <ListItem button className={classes.listItem}>
@@ -110,6 +112,7 @@ export default function Swipeabledrawer() {
                          <ListItemText primary={'New Visitor'} />
                      </ListItem>
                      </div>
+                     <hr />
 
                      <div onClick={() => router.push('/managevisitors')}>
                      <ListItem button className={classes.listItem}>
@@ -119,6 +122,7 @@ export default function Swipeabledrawer() {
                          <ListItemText primary={'Manage Visitors'} />
                      </ListItem>
                      </div>
+                     <hr />
 
                      <div onClick={() => router.push('/viewallcomplaints')}>
                      <ListItem button className={classes.listItem}>
@@ -128,9 +132,6 @@ export default function Swipeabledrawer() {
                          <ListItemText primary={'View All Complaints'} />
                      </ListItem>
                      </div>
-
-
-                     
                      <hr />
 
                      <div onClick={() => router.push('/nssaccomodationfinder')}>

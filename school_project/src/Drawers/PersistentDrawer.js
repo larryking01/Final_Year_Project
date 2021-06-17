@@ -7,20 +7,24 @@ import { Drawer, List, ListItem, ListItemIcon, ListItemText, Typography } from '
 import PersonIcon from '@material-ui/icons/Person'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import EditIcon from '@material-ui/icons/Edit'
-import DeleteIcon from '@material-ui/icons/Delete'
+//import DeleteIcon from '@material-ui/icons/Delete'
 import RoomIcon from '@material-ui/icons/Room'
 import BookIcon from '@material-ui/icons/Book'
+import { AiFillNotification } from 'react-icons/ai'
+
+
 
 
 // setting up styling.
 const useStyles = makeStyles(theme => ({
-    drawerPaper: {
-        width: 'inherit',
+    paper: {
+        width: 280,
         opacity: 1,
         color: 'white',
         backgroundColor: '#2E2A3B'
     },
     listItem: {
+        height: '60px',
         '&:hover': {
             backgroundColor: '#13131A'
         }
@@ -46,9 +50,10 @@ export default function PersistentDrawer() {
             <Drawer variant='persistent'
                     anchor='left'
                     open={true}
-                    style={{width: '220px'}}
-                    classes={{paper: classes.drawerPaper }}
+                    //style={{width: '280px'}}
+                    //classes={{paper: classes.paper }}
              >
+                 <div className={ classes.paper }>
                  <List>
                      <div onClick={() => router.push('/viewallstudents')}>
                      <ListItem button className={classes.listItem}>
@@ -58,6 +63,7 @@ export default function PersistentDrawer() {
                          <ListItemText primary={'View all students'} />
                      </ListItem>
                      </div>
+                     <hr />
                      
                     <div onClick={() => router.push('/addnewstudent')}>
                      <ListItem button className={classes.listItem}>
@@ -67,6 +73,7 @@ export default function PersistentDrawer() {
                          <ListItemText primary={'Add new student'} />
                      </ListItem>
                      </div>
+                     <hr />
 
                     <div onClick={() => router.push('/newvisitor')}>
                      <ListItem button className={classes.listItem}>
@@ -76,6 +83,7 @@ export default function PersistentDrawer() {
                          <ListItemText primary={'New Visitor'} />
                      </ListItem>
                      </div>
+                     <hr />
 
                     <div onClick={() => router.push('/managevisitors')}>
                      <ListItem button className={classes.listItem}>
@@ -85,6 +93,7 @@ export default function PersistentDrawer() {
                          <ListItemText primary={'Manage Visitors'} />
                      </ListItem>
                      </div>
+                     <hr />
 
                      <div onClick={() => router.push('/viewallcomplaints')}>
                      <ListItem button className={classes.listItem}>
@@ -96,6 +105,18 @@ export default function PersistentDrawer() {
                      </div>
                      <hr />
 
+                     <div onClick={() => router.push('/postannouncement')}>
+                     <ListItem button className={classes.listItem}>
+                         <ListItemIcon className={classes.listItemIcon}>
+                                <AiFillNotification size={ 25 } />
+                         </ListItemIcon>
+                         <ListItemText primary={'Post An Announcement'} />
+                     </ListItem>
+                     </div>
+                     <hr />
+
+                     
+
                     <div onClick={() => router.push('/nssaccomodationfinder')}>
                      <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
@@ -106,6 +127,7 @@ export default function PersistentDrawer() {
                     </div>
 
                  </List>
+                 </div>
                  
             </Drawer>
             

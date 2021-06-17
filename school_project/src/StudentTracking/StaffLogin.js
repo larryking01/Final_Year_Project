@@ -36,7 +36,8 @@ const useStyles = makeStyles({
     signInButton: {
         marginTop: 50,
         width: 270,
-        backgroundColor: 'rgba(105, 13, 170, 0.541)',
+        backgroundColor: '#2E2A3B',
+        color: 'white',
         height: 35,
         fontSize: 16, 
         cursor: 'pointer',

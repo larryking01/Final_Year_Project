@@ -21,7 +21,7 @@ import BookIcon from '@material-ui/icons/Book'
 // setting up styling.
 const useStyles = makeStyles(theme => ({
     drawerPaper: {
-        width: '180',
+        width: '210',
         opacity: 1,
         color: 'white',
         backgroundColor: '#2E2A3B'

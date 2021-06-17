@@ -12,15 +12,31 @@ import { Autocomplete } from '@material-ui/lab'
 
 // setting up styling.
 const useStyles = makeStyles(theme => ({
-    
-    addNewStudentForm: {
-        width:'790px',
-        height: '530px',
+
+    headerTextDiv: {
+        backgroundColor: '#2E2A3B',
+        color: 'white',
+        width: '850px',
+        height: '80px',
+        //borderRadius: '50%'
+        boxShadow: '2px 2px 8px grey',
         position: 'relative',
-        top: '20px',
-        left: '60px',
-        boxShadow: '2px 2px 8px',
-        borderRadius: '3%'
+        top: '30px',
+        left: '400px'
+    },
+    headerText: {
+        position: 'relative',
+        left: '340px',
+        top: '20px'
+    },
+    addNewStudentForm: {
+        width:'850px',
+        height: '540px',
+        position: 'relative',
+        top: '40px',
+        left: '400px',
+        /*boxShadow: '2px 2px 8px',
+        borderRadius: '3%' */
         
     },
     actualForm: {
@@ -32,11 +48,13 @@ const useStyles = makeStyles(theme => ({
     },
     firstNameTextField: {
         position: 'relative',
-        right: '90px'
+        right: '90px',
+        width: '300px'
     },
     lastNameTextField: {
         position: 'relative',
-        left: '40px'
+        left: '40px',
+        width: '300px'
     },
     idNumberAndRoomNumberDiv: {
         marginTop: '30px'
@@ -70,12 +88,14 @@ const useStyles = makeStyles(theme => ({
     },
     sexAutocomplete: {
         position: 'relative',
-        left: '105px',
+        left: '35px'
+        
     },
     levelAutocomplete: {
         position: 'relative',
-        left: '432px',
+        left: '462px',
         bottom: '50px'
+        
     },
     errorSpan: {
         color: 'red',
@@ -287,6 +307,13 @@ export default function AddNewStudent() {
         <div style={{display: 'flex'}}>
 
             <PersistentDrawer />
+
+            <div style={{flex: 'column'}}>
+            <div className={ classes.headerTextDiv }>
+                <Typography  variant='h6' className={ classes.headerText} >
+                    Add a new student
+                </Typography>
+            </div>
             
             {/* the form for adding a new student */}
             <div className={classes.addNewStudentForm}>
@@ -348,7 +375,7 @@ export default function AddNewStudent() {
                             renderInput = { (params) => (
                                 <TextField {...params} required={true} label='Sex' variant='filled' />
                             ) }
-                            style={{width: 200}}
+                            style={{width: 300}}
                             className={classes.sexAutocomplete}
                             size='small'
                             value={ sexValue }
@@ -359,6 +386,7 @@ export default function AddNewStudent() {
                             onInputChange={(event, newInputValue) => {
                                 setSexInputValue(newInputValue)
                             }}
+                            
                                 
                         />
 
@@ -369,7 +397,7 @@ export default function AddNewStudent() {
                             renderInput={ (params) => (
                                 <TextField {...params} required={true} label='Level' variant='filled' />
                             )}
-                            style={{width: 200}}
+                            style={{width: 300}}
                             className={classes.levelAutocomplete}
                             size='small'
                             value={ levelValue }
@@ -409,9 +437,9 @@ export default function AddNewStudent() {
 
                     {/* the upload picture div */}
                     <div className={classes.pictureDiv}>
-                        <input type='file' onChange={ handlePictureSelected } required={ true } />
+                        <input type='file' onChange={ handlePictureSelected } required={ true } style={{ position: 'relative', right: '100px' }} />
                         <div className={classes.uploadPictureText}>
-                        <Typography variant='h9'>
+                        <Typography variant='h9' >
                             Upload student picture.
                         </Typography>
                         </div>
@@ -432,6 +460,7 @@ export default function AddNewStudent() {
                  
                 </form>
                 
+            </div>
             </div>
 
         </div>

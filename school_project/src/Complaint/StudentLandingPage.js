@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import StudentComplaintPersistentDrawer from '../Drawers/StudentComplaintPersistentDrawer'
 import StudentComplaintSwipeableDrawer from '../Drawers/StudentComplaintSwipeableDrawer'
 import Typography from '@material-ui/core/Typography'
+import { AiFillNotification } from 'react-icons/ai'
 
 
 // icons
@@ -17,6 +18,10 @@ import { BsArrowCounterclockwise } from 'react-icons/bs'
 import { BsBookHalf } from 'react-icons/bs'
 import { VscLoading } from 'react-icons/vsc'
 
+// for slider.
+import Slider from "react-slick"
+
+
 
 
 // setting up styling.
@@ -25,14 +30,15 @@ const useStyles = makeStyles( theme => ({
         display: 'flex'
     },
     headerTextDiv: {
-        backgroundColor: 'white',
-        width: '800px',
+        backgroundColor: '#2E2A3B',
+        color: 'white',
+        width: '900px',
         height: '80px',
         //borderRadius: '50%'
         boxShadow: '2px 2px 8px grey',
         position: 'relative',
         top: '30px',
-        left: '60px'
+        left: '120px'
     },
     headerText: {
         position: 'relative',
@@ -42,9 +48,9 @@ const useStyles = makeStyles( theme => ({
     totalComplaintsDiv: {
         position: 'relative',
         top: '50px',
-        left:'60px',
-        backgroundColor: 'blue',
-        width: '250px',
+        left:'118px',
+        backgroundColor: 'red',
+        width: '270px',
         height: '110px',
         borderRadius: '3%',
         color: 'white',
@@ -54,9 +60,9 @@ const useStyles = makeStyles( theme => ({
     totalResolvedComplaintsDiv: {
         position: 'relative',
         bottom: '60px',
-        left:'333px',
+        left:'433px',
         backgroundColor: 'green',
-        width: '254px',
+        width: '274px',
         height: '110px',
         borderRadius: '3%',
         color: 'white',
@@ -66,9 +72,9 @@ const useStyles = makeStyles( theme => ({
     totalPendingComplaintsDiv: {
         position: 'relative',
         bottom: '170px',
-        left:'607px',
-        backgroundColor: 'red',
-        width: '254px',
+        left:'743px',
+        backgroundColor: 'blue',
+        width: '274px',
         height: '110px',
         borderRadius: '3%',
         color: 'white',
@@ -107,6 +113,34 @@ const useStyles = makeStyles( theme => ({
         position: 'relative',
         bottom: '50px',
         left: '150px'
+    },
+    totalAnnouncementsDiv: {
+        position: 'relative',
+        left: '117px',
+        bottom: '130px',
+        backgroundColor: ' green',
+        height: '110px',
+        width: '270px',
+        borderRadius: '3%',
+        color: 'white',
+        cursor: 'pointer'
+    },
+    totalAnnouncementsNumber: {
+        position: 'relative',
+        bottom: '60px',
+        left: '140px'
+    },
+    showAnnouncementsSlide: {
+        position: 'relative',
+        bottom: '250px',
+        left: '433px',
+        backgroundColor: '#2E2A3B',
+        width: '587px',
+        height: '240px',
+        borderRadius: '3%',
+        color: 'white',
+        cursor: 'pointer',
+        boxShadow: '2px 2px 8px grey'
     }
 
 
@@ -130,6 +164,16 @@ export default function StudentLandingPage(props) {
     const router = useHistory() 
 
 
+    // announcements slider settings.
+    const sliderSettings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1
+      };
+
+
     // the function to push users to sign in when they log out.
     const goToStudentSignIn = () => {
         alert('you are logging out')
@@ -143,6 +187,9 @@ export default function StudentLandingPage(props) {
     const [ totalComplaintsNumber, setTotalComplaintsNumber ] = useState(0)
     const [ totalResolvedComplaintsNumber, setTotalResolvedComplaintsNumber ] = useState(0)
     const [ totalPendingComplaintsNumber, setTotalPendingComplaintsNumber ] = useState(0)
+    const [ totalAnnouncementsNumber, setTotalAnnouncementsNumber ] = useState(0)
+    const [ totalAnnouncementsArray, setTotalAnnouncementsArray ] = useState([])
+
 
 
     // the use effect to get the total number of complaints submitted.
@@ -216,6 +263,54 @@ export default function StudentLandingPage(props) {
 
 
 
+    // the use effect to get the total number of announcements.
+    const [ totalAnnouncementsMounted, setTotalAnnouncementsMounted ] = useState( true )
+
+    useEffect(() => {
+
+        if( totalAnnouncementsMounted && user ) {
+        projectFirestore.collection('Posted Announcements')
+        .onSnapshot(snapshot => {
+            setTotalAnnouncementsNumber( snapshot.size )
+        })
+        console.log(` total announcements = ${ totalAnnouncementsNumber }`)
+      }
+
+      // the clean up.
+      return () => {
+        setTotalAnnouncementsMounted( false )
+      }
+
+     }, [ totalAnnouncementsNumber, totalAnnouncementsMounted ])
+
+
+
+    // use effect to fetch all announcements.
+    const [ totalAnnouncementsPostedMounted, setTotalAnnouncementsPostedMounted ] = useState( true )
+
+    useEffect(() => {
+        if( totalAnnouncementsPostedMounted ) {
+            projectFirestore.collection('Posted Announcements').onSnapshot( snapshot => {
+                let temporaryArray = []
+                snapshot.forEach( document => {
+                    temporaryArray.push({ id: document.id, ...document.data() })
+                })
+                setTotalAnnouncementsArray( temporaryArray )
+                console.log('all announcements fetched')
+            })
+    
+        }
+
+       
+      // the clean up.
+      return () => {
+        setTotalAnnouncementsPostedMounted( false )
+      }
+
+     }, [ totalAnnouncementsPostedMounted ])
+
+
+
 
 
 
@@ -231,10 +326,10 @@ export default function StudentLandingPage(props) {
         <div className={ classes.parentContainer }>
             <StudentComplaintPersistentDrawer user={ user } handleLogout={ handleLogout } />
 
-            <div style={{ position: 'relative', top: '20'}}>
+            <div style={{ position: 'relative', top: '20', left: '240px'}}>
                <div className={ classes.headerTextDiv }>
                      <Typography className={ classes.headerText } variant='h6' >
-                           Student Complaint Submission
+                           Student Dashboard
                      </Typography>
                  </div>
 
@@ -281,6 +376,33 @@ export default function StudentLandingPage(props) {
                      </Typography>
 
                  </div>
+
+
+                 <div className={ classes.totalAnnouncementsDiv }> 
+                    <AiFillNotification size={ 70 } style={{ paddingLeft: '20px' }} />
+
+                    <Typography variant='h7' className={ classes.totalPendingComplaintsText }>
+                        Announcements
+                    </Typography>
+
+                    <Typography variant='h4' className={ classes.totalAnnouncementsNumber }>
+                         { totalAnnouncementsNumber }
+                     </Typography>
+
+                 </div>
+
+           
+                <div className={ classes.showAnnouncementsSlide }>
+            
+                 </div>
+              
+
+
+
+
+
+
+
 
 
 

@@ -15,8 +15,8 @@ const useStyles = makeStyles( theme => ({
         height: '400px',
         width: '360px',
         position: 'relative',
-        top: '80px',
-        left: '370px',
+        top: '110px',
+        left: '500px',
         borderRadius: '5%',
         boxShadow: '2px 2px 8px' 
     },

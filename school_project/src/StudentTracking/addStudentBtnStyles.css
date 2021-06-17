@@ -4,22 +4,24 @@
 }
 
 .addStudentBtn {
-    width: 150px;
-    height: 30px;
+    width: 200px;
+    height: 40px;
     background-color: blue;
     color: white;
     border: none;
     margin-right: 30px;
     cursor: pointer;
+    font-size: 18px
     
 }
 
 
 .cancelAddStudentBtn {
-    width: 150px;
-    height: 30px;
+    width: 200px;
+    height: 40px;
     background-color: blue;
     color: white;
     border: none;
     cursor: pointer;
+    font-size: 18px
 }

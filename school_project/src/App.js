@@ -21,6 +21,8 @@ import SignIn from './Complaint/SignIn'
 import StudentComplaintHistory from './Complaint/StudentComplaintHistory'
 import StaffLandingPage from './StudentTracking/StaffLandingPage'
 import StudentLandingPage from './Complaint/StudentLandingPage'
+import PostAnnouncement from './StudentTracking/PostAnnouncement'
+import ManageAnnouncements from './StudentTracking/PostAnnouncement'
 import Dialog from './Complaint/Dialog'
 
 import ReactCameraMediaStream from './StudentTracking/ReactCameraMediaStream'
@@ -238,6 +240,10 @@ function App() {
                 <Route exact path='/studentlandingpage'>
                     <StudentLandingPage handleLogout={ handleLogOut } user={ user } />
                 </Route>
+
+                <Route exact path='/postannouncement' component={ PostAnnouncement } />
+
+                <Route exact path='/manageannouncements' component={ ManageAnnouncements } />
 
                 <Route path='*' render={() => <h2> Sorry, page not found </h2>} />
 

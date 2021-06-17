@@ -23,14 +23,30 @@ import './complaintFormBtns.css'
 
 
 const useStyles = makeStyles( theme => ({
+    headerTextDiv: {
+        backgroundColor: '#2E2A3B',
+        color: 'white',
+        width: '850px',
+        height: '80px',
+        /*borderRadius: '50%' */
+        boxShadow: '2px 2px 8px grey', 
+        position: 'relative',
+        top: '30px',
+        left: '400px'
+    },
+    headerText: {
+        position: 'relative',
+        left: '340px',
+        top: '20px'
+    },
     submitComplaintForm: {
         width:'790px',
         height: '520px',
         position: 'relative',
-        top: '30px',
-        left: '70px',
-        boxShadow: '2px 2px 8px',
-        borderRadius: '3%',
+        top: '60px',
+        left: '400px',
+        /*boxShadow: '2px 2px 8px',
+        borderRadius: '3%', */
         textAlign: 'center'
     },
     fullNameAndIndexNumberDiv: {
@@ -38,12 +54,12 @@ const useStyles = makeStyles( theme => ({
         top: '10px'
     },
     fullNameTextField: {
-        width: '240px',
+        width: '300px',
         position: 'relative',
         right: '80px'
     },
     indexNumberTextField: {
-        width: '180px',
+        width: '300px',
         position: 'relative',
         left: '30px'
     },
@@ -52,25 +68,25 @@ const useStyles = makeStyles( theme => ({
         top: '27px'
     },
     roomNumberTextField: {
-        width: '240px',
+        width: '300px',
         position: 'relative',
         right: '80px'
     },
     mobileNumberTextField: {
-        width: '180px',
+        width: '300px',
         position: 'relative',
         left: '30px'
     },
     complaintType: {
         position: 'relative',
         top: '50px',
-        left: '105px'
+        left: '15px'
     },
     specifyOtherComplaintTypeTextField: {
-        width: '240px',
+        width: '300px',
         position: 'relative',
         bottom: '47px',
-        left: '74px'
+        left: '167px'
     },
     complaintDescription: {
         position: 'relative',
@@ -80,13 +96,13 @@ const useStyles = makeStyles( theme => ({
     secondaryComplaintDescription: {
         position: 'relative',
         top: '40px',
-        right: '5px'
+        right: '20px'
     },
     complaintDescriptionTextarea: {
-        width: '530px'
+        width: '710px'
     },
     secondaryComplaintDescriptionTextarea : {
-        width: '570px'
+        width: '710px'
     },
     dateAndTimePickerDiv: {
         position: 'relative',
@@ -123,15 +139,16 @@ const useStyles = makeStyles( theme => ({
     studentEmailTextFieldDiv: {
         position: 'relative',
         top: '60px',
-        right: '178px'
+        right: '230px'
     },
     secondaryStudentEmailTextFieldDiv: {
         position: 'relative',
         top: '13px',
-        right: '180px'
+        right: '-13px',
+        width: '240px'
     },
     studentEmailTextField: {
-        width: '220px'
+        width: '300px'
     }
 
 }))
@@ -336,20 +353,22 @@ export default function SubmitComplaint(props) {
             
             <StudentComplaintPersistentDrawer handleLogout={ handleLogout } 
                                               user={ user }
-                                              />
+            />
 
+            <div style={{flex: 'column'}}>
+            <div className={ classes.headerTextDiv }>
+                <Typography  variant='h6' className={ classes.headerText} >
+                    Submit A Complaint
+                </Typography>
+            </div>
         
         <div className={ classes.submitComplaintForm }>
             <form onSubmit={ handleFormSubmit }>
                 <MuiPickersUtilsProvider utils={ DateFnsUtils }>
 
-                 <Typography variant='h6'>
-                        Submit Complaint
-                 </Typography>
-
                  <div className={ classes.fullNameAndIndexNumberDiv}>
                         <TextField
-                            variant='standard'
+                            variant='outlined'
                             label='Student Full Name'
                             required={ true }
                             className={ classes.fullNameTextField }
@@ -358,7 +377,7 @@ export default function SubmitComplaint(props) {
                         />
 
                         <TextField
-                            variant='standard'
+                            variant='outlined'
                             label='Student Index Number'
                             required={ true }
                             className={ classes.indexNumberTextField }
@@ -371,7 +390,7 @@ export default function SubmitComplaint(props) {
 
                  <div className={ classes.roomNumberAndMobileNumberDiv }>
                        <TextField
-                            variant='standard'
+                            variant='outlined'
                             label='Room Number'
                             required={ true }
                             className={ classes.roomNumberTextField }
@@ -381,7 +400,7 @@ export default function SubmitComplaint(props) {
                         />
 
                         <TextField
-                            variant='standard'
+                            variant='outlined'
                             label='Mobile Number'
                             required={ true }
                             className={ classes.mobileNumberTextField }
@@ -399,9 +418,9 @@ export default function SubmitComplaint(props) {
                             options={ complaintTypesArray }
                             getOptionLabel={ (option) => option.complaintType }
                             renderInput={ (params) => (
-                                <TextField {...params} required={true} label='Complaint Type' variant='standard' />
+                                <TextField {...params} required={true} label='Complaint Type' variant='outlined' />
                             )}
-                            style={{ width: 200 }}
+                            style={{ width: 300 }}
                             className={ classes.complaintTypeAutocomplete }
                             size='small'
                             onChange={( event, newComplaint ) => {
@@ -418,7 +437,7 @@ export default function SubmitComplaint(props) {
 
 
                         { specifyOtherComplaintType && <TextField
-                                                         variant='standard'
+                                                         variant='outlined'
                                                          label='Please specify complaint type'
                                                          required={ true }
                                                          className={ classes.specifyOtherComplaintTypeTextField } 
@@ -431,7 +450,7 @@ export default function SubmitComplaint(props) {
 
                  <div className={ specifyOtherComplaintType ? classes.secondaryStudentEmailTextFieldDiv : classes.studentEmailTextFieldDiv }>
                      <TextField 
-                        variant='standard'
+                        variant='outlined'
                         label='Email'
                         type='email'
                         required={ true }
@@ -502,6 +521,7 @@ export default function SubmitComplaint(props) {
             </form>
             
             
+        </div>
         </div>
 
         </div>

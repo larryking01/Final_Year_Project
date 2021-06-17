@@ -19,11 +19,26 @@ const useStyles = makeStyles( theme => ({
         width: '500px',
         height: '545px',
         position: 'relative',
-        left: '200px',
-        top: '20px',
-        boxShadow: '2px 2px 8px',
+        left: '660px',
+        top: '40px',
+        /*boxShadow: '2px 2px 8px',
         borderRadius: '3%',
-        textAlign: 'center'
+        textAlign: 'center' */
+    },
+    headerTextDiv: {
+        backgroundColor: 'white',
+        width: '850px',
+        height: '80px',
+        //borderRadius: '50%'
+        boxShadow: '2px 2px 8px grey',
+        position: 'relative',
+        top: '30px',
+        left: '400px'
+    },
+    headerText: {
+        position: 'relative',
+        left: '340px',
+        top: '20px'
     },
     visitorFullNameTextFieldDiv: {
         position: 'relative',
@@ -172,14 +187,19 @@ export default function NewVisitor() {
         <div style={{display: 'flex'}}>
 
             <PersistentDrawer />
+
+            <div style={{display: 'column'}}>
+            <div className={ classes.headerTextDiv }>
+                <Typography  variant='h6' className={ classes.headerText} >
+                    Add a new visitor
+                </Typography>
+            </div>
             
             <MuiPickersUtilsProvider utils={ DateFnsUtils }>
 
             <div className={ classes.parentContainer }>
                 <form onSubmit={ handleFormSubmit }>
-                <Typography variant='h6'>
-                    Add a new visitor
-                </Typography>
+                
 
                 <div className={ classes.visitorFullNameTextFieldDiv}>
                     <TextField 
@@ -270,9 +290,10 @@ export default function NewVisitor() {
 
             </form>
             </div>
+            
 
         </MuiPickersUtilsProvider>
-
+        </div>
         </div>
     )
 }

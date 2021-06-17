@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import MaterialTable from 'material-table'
-import PersistentDrawer from '../Drawers/PersistentDrawer'
-//import SwipeableDrawer from '../Drawers/SwipeableDrawer'
+//import PersistentDrawer from '../Drawers/PersistentDrawer'
+import SwipeableDrawer from '../Drawers/SwipeableDrawer'
 import BookIcon from '@material-ui/icons/Book'
 import Button from '@material-ui/core/Button'
 import CheckIcon from '@material-ui/icons/Check'
@@ -61,8 +61,8 @@ export default function ManageVisitors() {
 
 
     return (
-        <div style={{display: 'flex'}}>
-            <PersistentDrawer />
+        <div style={{display: 'column'}}>
+            <SwipeableDrawer />
             
             <div style={{ flexDirection: 'column'}}>
                 <MaterialTable 
@@ -72,7 +72,7 @@ export default function ManageVisitors() {
                     onRowClick={ ((event, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
                     options={{
                         headerStyle: {
-                            backgroundColor: '#01579b',
+                            backgroundColor: '#2E2A3B', /*'#01579b' */ 
                             color: '#FFF'
                         },
                         rowStyle: rowData => ({

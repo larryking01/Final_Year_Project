@@ -21,7 +21,9 @@
     "react-icons": "^4.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-slick": "^0.28.1",
     "react-webcam": "^5.2.4",
+    "slick-carousel": "^1.8.1",
     "use-camera": "^0.2.2",
     "web-vitals": "^1.0.1",
     "webcam-easy": "^1.0.5"

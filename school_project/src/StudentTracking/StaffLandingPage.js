@@ -11,6 +11,9 @@ import { BsPeopleFill } from "react-icons/bs"
 import { BiBookOpen } from 'react-icons/bi'
 import { IoIosPerson } from 'react-icons/io'
 import { AiOutlineForm } from 'react-icons/ai'
+import { AiFillNotification } from 'react-icons/ai'
+
+
 
 
 // setting up styling.
@@ -19,14 +22,15 @@ const useStyles = makeStyles( theme => ({
         display: 'flex'
     },
     headerTextDiv: {
-        backgroundColor: 'white',
-        width: '800px',
+        backgroundColor: '#2E2A3B',
+        color: 'white',
+        width: '900px',
         height: '80px',
         //borderRadius: '50%'
         boxShadow: '2px 2px 8px grey',
         position: 'relative',
         top: '30px',
-        left: '60px'
+        left: '120px'
     },
     headerText: {
         position: 'relative',
@@ -36,9 +40,9 @@ const useStyles = makeStyles( theme => ({
     totalStudentsDiv: {
         position: 'relative',
         top: '50px',
-        left:'60px',
+        left:'118px',
         backgroundColor: 'red',
-        width: '250px',
+        width: '270px',
         height: '110px',
         borderRadius: '3%',
         color: 'white',
@@ -48,9 +52,9 @@ const useStyles = makeStyles( theme => ({
     totalVisitorsDiv: {
         position: 'relative',
         bottom: '60px',
-        left:'333px',
+        left:'433px',
         backgroundColor: 'green',
-        width: '254px',
+        width: '274px',
         height: '110px',
         borderRadius: '3%',
         color: 'white',
@@ -60,9 +64,9 @@ const useStyles = makeStyles( theme => ({
     totalComplaintsDiv: {
         position: 'relative',
         bottom: '170px',
-        left:'607px',
+        left:'743px',
         backgroundColor: 'blue',
-        width: '254px',
+        width: '274px',
         height: '110px',
         borderRadius: '3%',
         color: 'white',
@@ -101,6 +105,28 @@ const useStyles = makeStyles( theme => ({
         position: 'relative',
         bottom: '50px',
         left: '150px'
+    },
+    manageAnnouncementsDiv: {
+        position: 'relative',
+        left: '117px',
+        bottom: '130px',
+        backgroundColor: ' green',
+        height: '110px',
+        width: '270px',
+        borderRadius: '3%',
+        color: 'white',
+        cursor: 'pointer'
+    },
+    totalAnnouncementsText : {
+        position: 'relative',
+        top:'10px',
+        left: '20px'
+
+    },
+    totalAnnouncementsNumber: {
+        position: 'relative',
+        bottom: '90px',
+        left: '170px'
     }
 
 
@@ -212,7 +238,7 @@ export default function StaffLandingPage() {
         <div className={ classes.parentContainer }>
             <PersistentDrawer />
 
-            <div style={{ position: 'relative', top: '20'}}>
+            <div style={{ position: 'relative', top: '20', left: '240px'}}>
 
             <div className={ classes.headerTextDiv }>
                 <Typography className={ classes.headerText } variant='h6' >
@@ -261,6 +287,25 @@ export default function StaffLandingPage() {
                 </Typography>
 
             </div>
+
+            <div className={ classes.manageAnnouncementsDiv }>
+                <AiFillNotification size={ 60 } style={{ paddingLeft: '30px', paddingTop: '10px'}} />
+
+                <Typography variant='h6' className={ classes.totalAnnouncementsText } >
+                    Posted Announcements 
+                </Typography>
+
+                <Typography variant='h4' className={ classes.totalAnnouncementsNumber }>
+                    7
+                </Typography>
+
+            </div>
+
+
+
+
+
+
 
 
 

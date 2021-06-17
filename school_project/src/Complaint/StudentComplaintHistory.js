@@ -109,7 +109,7 @@ export default function StudentComplaintHistory( props ) {
                 onRowClick={ ((event, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
                 options={{
                         headerStyle: {
-                            backgroundColor: '#01579b',
+                            backgroundColor: '#2E2A3B',
                             color: '#FFF'
                         },
                         rowStyle: rowData => ({

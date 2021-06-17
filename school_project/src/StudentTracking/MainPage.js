@@ -40,7 +40,7 @@ const useStyles = makeStyles( theme => ({
         boxShadow: '2px 8px 6px grey'
     },
     totalStudentsDiv: {
-        backgroundColor: '#01579b',
+        backgroundColor: '#2E2A3B',
         height: '40px',
         width: '200px',
         position: 'relative',
@@ -55,7 +55,7 @@ const useStyles = makeStyles( theme => ({
         paddingTop: '5px'
     },
     totalCheckedInStudentsDiv: {
-        backgroundColor: '#01579b',
+        backgroundColor: '#2E2A3B',
         height: '40px',
         width: '200px',
         position: 'relative',
@@ -69,7 +69,7 @@ const useStyles = makeStyles( theme => ({
         paddingTop: '5px'
     },
     totalCheckedOutStudentsDiv: {
-        backgroundColor: '#01579b',
+        backgroundColor: '#2E2A3B',
         height: '40px',
         width: '200px',
         position: 'relative',
@@ -236,7 +236,7 @@ export default function MainPage() {
     // setting up the columns of the table.
     const tableColumns = [
         { title: 'Student Picture', field: 'imageUrl', editable: 'never',
-        render: item => <img src={item.imageUrl} alt='' border='1' width='90' style={{ borderRadius: '50%' }}  /> },
+        render: item => <img src={item.imageUrl} alt='' border='1' width='95' style={{ borderRadius: '50%' }}  /> },
         { title: 'Index Number', field: 'indexNumber'},
         { title: 'First Name', field: 'firstName'},
         { title: 'Last Name', field: 'lastName'},
@@ -244,12 +244,13 @@ export default function MainPage() {
         { title: 'Room Number', field: 'roomNumber'},
         { title: 'Course', field: 'course'},
         { title: 'Level', field: 'levelInputValue'},
-        { title: 'Mobile Number', field: 'mobileNumber'},
+        { title: 'Mobile Number', field: 'mobileNumber', width:'30%'},
         { title: 'Check In Status', field: 'checkInStatus', editable: 'never',
                 render: item => <button className={ item.checkInStatus === 'Checked In' ? classes.checkInButton : classes.checkOutButton }> { item.checkInStatus } </button>
         }
         
     ]
+
 
 
     return (
@@ -270,7 +271,7 @@ export default function MainPage() {
             </div>
             
 
-            <div style={{ position: 'relative', top: '-170px'}}>
+            <div style={{ position: 'relative', top: '-170px' }}>
                 <MaterialTable 
                     title='List Of Resident Students'
                     data={ addedStudentsArray }
@@ -284,7 +285,7 @@ export default function MainPage() {
                     })}
                     options={{
                         headerStyle: {
-                            backgroundColor: '#01579b',
+                            backgroundColor: '#2E2A3B',
                             color: '#FFF'
                         },
                         rowStyle: rowData => ({
@@ -294,6 +295,7 @@ export default function MainPage() {
                         }),
                         actionsColumnIndex: -1,
                         exportButton: true
+                        
                     }}
                     editable={{
                         onRowUpdate: ( updatedData, oldData ) => new Promise((resolve, reject) => {
@@ -379,6 +381,7 @@ export default function MainPage() {
                         }
 
                     ]}
+                    
 
                 />
 
@@ -387,10 +390,10 @@ export default function MainPage() {
                         //TransitionComponent={ Transition }
                         //keepMounted
                 >
-                    <DialogTitle style={{backgroundColor: '#01579b', color: 'white'}}> {`${rowData.firstName} ${rowData.lastName}`} </DialogTitle>
+                    <DialogTitle style={{backgroundColor: '#2E2A3B', color: 'white', textAlign: 'center'}}> {`${rowData.firstName} ${rowData.lastName}`} </DialogTitle>
                     
                     <Box>
-                        <img src={ rowData.imageUrl} alt='' width={400}  />
+                        <img src={ rowData.imageUrl} alt='' width={500} style={{borderRadius: '50%'}}  />
                     </Box>
 
                 </Dialog>
