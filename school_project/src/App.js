@@ -5,8 +5,8 @@ import { firebaseAuthentication } from './firebaseSetup/firebaseConfig'
 
 
 
-import SelectUser from './SelectUserType/SelectUser'
-import SelectUserWithButtons from './SelectUserType/SelectUserWithButtons'
+/*import SelectUser from './SelectUserType/SelectUser'
+import SelectUserWithButtons from './SelectUserType/SelectUserWithButtons' */
 import StaffLogin from './StudentTracking/StaffLogin'
 import StudentLogin from './Complaint/StudentLogin'
 import StudentSignUp from './Complaint/StudentSignUp'
