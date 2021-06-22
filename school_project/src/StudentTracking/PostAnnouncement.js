@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { projectFirestore } from '../firebaseSetup/firebaseConfig'
+import { projectFirestore, timestamp } from '../firebaseSetup/firebaseConfig'
 import { makeStyles } from '@material-ui/core/styles'
 import PersistentDrawer from '../Drawers/PersistentDrawer'
 //import SwipeableDrawer from '../Drawers/SwipeableDrawer'
@@ -116,11 +116,18 @@ export default function PostAnnouncement() {
     // form submit.
     const formSubmit = ( event ) => {
         event.preventDefault()
+
+        let announcementDate = new Date()
         
         // saving announcements to firebase.
         projectFirestore.collection('Posted Announcements').add({
             announcementTitle,
-            announcementBody
+            announcementBody,
+            datePosted: announcementDate.toDateString(),
+            timePosted : announcementDate.toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+            }),
         })
         .then( announcement => {
             // modal here later.

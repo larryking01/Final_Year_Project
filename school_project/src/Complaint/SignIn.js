@@ -130,7 +130,7 @@ export default function SignIn(props) {
 
 
     return (
-        <div className={ classes.parentContainer }>
+        <div className={ classes.parentContainer } >
             <form className={ classes.signInForm } onSubmit={ handleFormSubmit } >
 
                 <Typography className={ classes.headerText }>

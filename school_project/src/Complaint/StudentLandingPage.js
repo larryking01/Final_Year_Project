@@ -3,24 +3,26 @@ import { useHistory } from 'react-router-dom'
 import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 import { makeStyles } from '@material-ui/core/styles'
 import StudentComplaintPersistentDrawer from '../Drawers/StudentComplaintPersistentDrawer'
-import StudentComplaintSwipeableDrawer from '../Drawers/StudentComplaintSwipeableDrawer'
 import Typography from '@material-ui/core/Typography'
 import { AiFillNotification } from 'react-icons/ai'
 
 
+
+
+
 // icons
-import { BsPeopleFill } from "react-icons/bs"
-import { BiBookOpen } from 'react-icons/bi'
-import { IoIosPerson } from 'react-icons/io'
-import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { BsCheckAll } from 'react-icons/bs'
 import { BsArrowCounterclockwise } from 'react-icons/bs'
 import { BsBookHalf } from 'react-icons/bs'
-import { VscLoading } from 'react-icons/vsc'
+
 
 // for slider.
-import Slider from "react-slick"
-
+/*import Slider from "react-slick"
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css"; 
+import Carousel from 'nuka-carousel' */
+import './complaintSliderStyling.css'
+import Carousel from 'react-elastic-carousel'
 
 
 
@@ -132,11 +134,11 @@ const useStyles = makeStyles( theme => ({
     },
     showAnnouncementsSlide: {
         position: 'relative',
-        bottom: '250px',
-        left: '433px',
-        backgroundColor: '#2E2A3B',
-        width: '587px',
-        height: '240px',
+        bottom: '120px',
+        backgroundColor: '#4d4dff',
+        left: '110px',
+        width: '200px',
+        height: '350px',
         borderRadius: '3%',
         color: 'white',
         cursor: 'pointer',
@@ -167,8 +169,8 @@ export default function StudentLandingPage(props) {
     // announcements slider settings.
     const sliderSettings = {
         dots: true,
-        infinite: true,
-        speed: 500,
+        infinite: false,
+        speed: 2000,
         slidesToShow: 1,
         slidesToScroll: 1
       };
@@ -181,6 +183,13 @@ export default function StudentLandingPage(props) {
         router.push('/signin')
     }
 
+
+
+    //announcements object.
+    let announcementStructure = {
+        announcementTitle: 'Fetching',
+        announcementBody: 'Fetching'
+    }
 
 
     // handling state.
@@ -297,17 +306,19 @@ export default function StudentLandingPage(props) {
                 })
                 setTotalAnnouncementsArray( temporaryArray )
                 console.log('all announcements fetched')
+                totalAnnouncementsArray.forEach( post => {
+                    console.log(`announcement = ${ post.announcementTitle }` )
+                })
             })
     
         }
 
-       
       // the clean up.
       return () => {
         setTotalAnnouncementsPostedMounted( false )
       }
 
-     }, [ totalAnnouncementsPostedMounted ])
+     }, [ totalAnnouncementsPostedMounted, totalAnnouncementsArray ])
 
 
 
@@ -378,23 +389,35 @@ export default function StudentLandingPage(props) {
                  </div>
 
 
-                 <div className={ classes.totalAnnouncementsDiv }> 
-                    <AiFillNotification size={ 70 } style={{ paddingLeft: '20px' }} />
 
-                    <Typography variant='h7' className={ classes.totalPendingComplaintsText }>
-                        Announcements
-                    </Typography>
+            <Carousel className={ classes.showAnnouncementsSlide } 
+                      itemsToShow={ 1 }
+                      enableAutoPlay
+                      autoPlaySpeed={ 5000 } // same time
 
-                    <Typography variant='h4' className={ classes.totalAnnouncementsNumber }>
-                         { totalAnnouncementsNumber }
-                     </Typography>
+            >
+                    
+                 { totalAnnouncementsArray.map(announcement => 
+                     <div key={announcement.announcementTitle} onClick={() => console.log(announcement.id)}>
+                         
+                         <div style={{alignItems: 'center'}}>
+                             <h2 style={{ paddingLeft: '140px'}}> { announcement.announcementTitle } </h2> 
+                             <AiFillNotification  size={ 30 } style={{ position: 'relative', left: '40px', bottom: '45px'}}  />
+                             <hr style={{ color: 'white', width: '60vw', position: 'relative', bottom: '44px'}}/>
+                         </div>
 
-                 </div>
+                         <div style={{ position:'relative', bottom: '30px', paddingLeft: '35px'}}>
+                             { announcement.announcementBody }
 
-           
-                <div className={ classes.showAnnouncementsSlide }>
-            
-                 </div>
+                         </div>
+
+                    </div>)
+                }
+
+
+            </Carousel>
+
+        
               
 
 

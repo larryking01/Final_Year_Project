@@ -115,6 +115,16 @@ export default function PersistentDrawer() {
                      </div>
                      <hr />
 
+                     <div onClick={() => router.push('/manageannouncements')}>
+                     <ListItem button className={classes.listItem}>
+                         <ListItemIcon className={classes.listItemIcon}>
+                                <AiFillNotification size={ 25 } />
+                         </ListItemIcon>
+                         <ListItemText primary={'Manage Announcements'} />
+                     </ListItem>
+                     </div>
+                     <hr />
+
                      
 
                     <div onClick={() => router.push('/nssaccomodationfinder')}>

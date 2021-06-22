@@ -22,7 +22,8 @@ import StudentComplaintHistory from './Complaint/StudentComplaintHistory'
 import StaffLandingPage from './StudentTracking/StaffLandingPage'
 import StudentLandingPage from './Complaint/StudentLandingPage'
 import PostAnnouncement from './StudentTracking/PostAnnouncement'
-import ManageAnnouncements from './StudentTracking/PostAnnouncement'
+import ManageAnnouncements from './StudentTracking/ManageAnnouncements'
+import StartUpLandingPage from './LandingPages/StartUpLandingPage'
 import Dialog from './Complaint/Dialog'
 
 import ReactCameraMediaStream from './StudentTracking/ReactCameraMediaStream'
@@ -169,7 +170,7 @@ function App() {
     <div className="App">
         <BrowserRouter> 
             <Switch>
-                <Route exact path='/' component={ SelectUserWithButtons } />
+                <Route exact path='/' component={ StartUpLandingPage } />
                 <Route exact path='/stafflogin' component={ StaffLogin } />
                 <Route exact path='/studentsignup' component={ StudentSignUp } />
                 <Route exact path='/studentLogin' component={ StudentLogin } />
@@ -231,7 +232,7 @@ function App() {
 
                 <Route exact path='/devicepicture' component={ ReactCameraMediaStream } />
 
-                <Route exact path='/nssaccomodationfinder' render={() => (window.location = "http://nss-accom.herokuapp.com/")} />
+                <Route exact path='/nssaccomodationfinder' render={() => (window.location = "https://nss-accom.herokuapp.com/")} />
 
                 <Route exact path='/dialog' component={ Dialog } />
 
@@ -244,6 +245,8 @@ function App() {
                 <Route exact path='/postannouncement' component={ PostAnnouncement } />
 
                 <Route exact path='/manageannouncements' component={ ManageAnnouncements } />
+
+                <Route exact path='/startuplandingpage' component={ StartUpLandingPage } />
 
                 <Route path='*' render={() => <h2> Sorry, page not found </h2>} />
 

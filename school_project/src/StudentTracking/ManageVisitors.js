@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react'
 import MaterialTable from 'material-table'
 //import PersistentDrawer from '../Drawers/PersistentDrawer'
 import SwipeableDrawer from '../Drawers/SwipeableDrawer'
-import BookIcon from '@material-ui/icons/Book'
-import Button from '@material-ui/core/Button'
 import CheckIcon from '@material-ui/icons/Check'
-import DoneAllIcon from '@material-ui/icons/DoneAll'
-import DoneOutlineIcon from '@material-ui/icons/DoneOutline'
 
 
 import { projectFirestore } from '../firebaseSetup/firebaseConfig'
+
+
 
 
 
@@ -153,27 +151,8 @@ export default function ManageVisitors() {
                     }
                     
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 />
             </div>
-
-            
 
         </div>
     )

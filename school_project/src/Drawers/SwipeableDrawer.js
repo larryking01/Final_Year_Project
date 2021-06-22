@@ -16,9 +16,10 @@ import { makeStyles } from '@material-ui/core/styles'
 import PersonIcon from '@material-ui/icons/Person'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import EditIcon from '@material-ui/icons/Edit'
-import DeleteIcon from '@material-ui/icons/Delete'
 import RoomIcon from '@material-ui/icons/Room'
 import BookIcon from '@material-ui/icons/Book'
+import { AiFillNotification } from 'react-icons/ai'
+
 
 
 
@@ -133,6 +134,27 @@ export default function Swipeabledrawer() {
                      </ListItem>
                      </div>
                      <hr />
+
+                     <div onClick={() => router.push('/postannouncement')}>
+                     <ListItem button className={classes.listItem}>
+                         <ListItemIcon className={classes.listItemIcon}>
+                                <AiFillNotification size={ 25 } />
+                         </ListItemIcon>
+                         <ListItemText primary={'Post An Announcement'} />
+                     </ListItem>
+                     </div>
+                     <hr />
+
+                     <div onClick={() => router.push('/manageannouncements')}>
+                     <ListItem button className={classes.listItem}>
+                         <ListItemIcon className={classes.listItemIcon}>
+                                <AiFillNotification size={ 25 } />
+                         </ListItemIcon>
+                         <ListItemText primary={'Manage Announcements'} />
+                     </ListItem>
+                     </div>
+                     <hr />
+
 
                      <div onClick={() => router.push('/nssaccomodationfinder')}>
                      <ListItem button className={classes.listItem}>
