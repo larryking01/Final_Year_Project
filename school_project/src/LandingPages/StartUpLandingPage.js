@@ -2,7 +2,6 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 
 import './css/style.css'
-import logo from './assets/logo.png'
 import bubble from './assets/bubble.png'
 
 
