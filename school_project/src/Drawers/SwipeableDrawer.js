@@ -64,6 +64,7 @@ export default function Swipeabledrawer() {
                 color='inherit'
                 aria-label='Open drawer'
                 onClick={ () => setOpen(true)}
+                style={{color: 'white'}}
            >
                 <MenuIcon> </MenuIcon>
                

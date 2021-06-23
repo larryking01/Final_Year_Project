@@ -17,8 +17,8 @@ const useStyles = makeStyles( theme => ({
         position: 'relative',
         top: '110px',
         left: '500px',
-        borderRadius: '5%',
-        boxShadow: '2px 2px 8px' 
+        /*borderRadius: '5%',
+        boxShadow: '2px 2px 8px' */
     },
     signInForm: {
         textAlign: 'center'

@@ -60,7 +60,10 @@ export default function ManageVisitors() {
 
     return (
         <div style={{display: 'column'}}>
-            <SwipeableDrawer />
+            <div style={{ backgroundColor: '#2E2A3B', height: '70px'}}>
+                <SwipeableDrawer />
+            </div>
+            
             
             <div style={{ flexDirection: 'column'}}>
                 <MaterialTable 
@@ -93,7 +96,7 @@ export default function ManageVisitors() {
                                    timeOfDeparture: updatedData.timeOfDeparture
                                 }).then(() => {
                                     // modal goes here later.
-                                    alert(`document with id ${oldData.id} updated successfully`)
+                                    console.log(`document with id ${oldData.id} updated successfully`)
                                 }).catch(error => {
                                     // modal goes here later.
                                     alert('failed to update document')
@@ -107,7 +110,7 @@ export default function ManageVisitors() {
                          onRowDelete: (selectedRow) => new Promise((resolve, reject) => {
                             let docToDelete = projectFirestore.collection('Added Visitors Collection').doc(selectedRow.id)
                             docToDelete.delete().then(() => {
-                                alert(`document with the id ${selectedRow.id} deleted successfully`)
+                                console.log(`document with the id ${selectedRow.id} deleted successfully`)
                             }).catch(error => {
                                 alert('failed to delete document due to error')
                                 console.log(`error = ${error}`)
@@ -137,7 +140,7 @@ export default function ManageVisitors() {
                                             })
                                     }).then(() => {
                                         // modal goes here later.
-                                        alert(`document with id ${rowData.id} updated successfully`)
+                                        console.log(`document with id ${rowData.id} updated successfully`)
                                     }).catch( error => {
                                         // modal goes here later.
                                         alert('failed to update document')

@@ -38,6 +38,9 @@ export default function StudentComplaintHistory( props ) {
 
     // handling state.
     const [ studentComplaintsArray, setStudentComplaintsArray ] = useState([ ])
+    const [ totalComplaintsSubmitted, setTotalComplaintsSubmitted ] = useState( 0 )
+    const [ totalResolvedComplaints, setTotalResolvedComplaints ] = useState( 0 )
+    const [ totalPendingComplaints, setTotalPendingComplaints ] = useState( 0 )
     const [ selectedRow, setSelectedRow ] = useState(null)
 
 
@@ -54,6 +57,7 @@ export default function StudentComplaintHistory( props ) {
         if( fetchAllComplaintsMounted ) {
         let fetchComplaints = projectFirestore.collection('Submitted Complaints Collection').where('studentEmail', '==', user.email)
         fetchComplaints.onSnapshot( snapshot => {
+            setTotalComplaintsSubmitted( snapshot.size )
             let temporaryArray = []
             snapshot.forEach( document => {
                 temporaryArray.push({ id : document.id, ...document.data()})
@@ -73,6 +77,52 @@ export default function StudentComplaintHistory( props ) {
     }, [ fetchAllComplaintsMounted ])
 
 
+
+    // the useEffect to fetch all resolved complaints.
+    const [ fetchAllResolvedMounted, setFetchAllResolvedMounted ] = useState( true )
+
+    useEffect(() => {
+        if( fetchAllResolvedMounted ) {
+        let fetchComplaints = projectFirestore.collection('Submitted Complaints Collection')
+        .where('studentEmail', '==', user.email).where('complaintStatus', '==', 'Resolved')
+        fetchComplaints.onSnapshot( snapshot => {
+            setTotalResolvedComplaints( snapshot.size )
+        })
+
+        }
+
+        // the clean up.
+        return () => {
+            setFetchAllResolvedMounted( false )
+        }
+
+    }, [ fetchAllResolvedMounted ])
+
+
+
+    // the useEffect to fetch all pending complaints.
+    const [ fetchAllPendingMounted, setFetchAllPendingMounted ] = useState( true )
+
+    useEffect(() => {
+        if( fetchAllPendingMounted ) {
+        let fetchComplaints = projectFirestore.collection('Submitted Complaints Collection')
+        .where('studentEmail', '==', user.email).where('complaintStatus', '==', 'Pending')
+        fetchComplaints.onSnapshot( snapshot => {
+            setTotalPendingComplaints( snapshot.size )
+        })
+
+        }
+
+        // the clean up.
+        return () => {
+            setFetchAllPendingMounted( false )
+        }
+
+    }, [ fetchAllPendingMounted ])
+
+
+
+
     // setting up the table columns.
     let tableColumns = [
         { title: 'Student Index Number', field: 'studentIndexNumber' },
@@ -90,18 +140,23 @@ export default function StudentComplaintHistory( props ) {
 
 
 
-
-
-
-
-
     return (
         <div >
-            <div>
+            <div style={{backgroundColor: '#2E2A3B', color: 'white'}}>
                   <StudentComplaintSwipeableDrawer handleLogout={ handleLogout } user={ user }  />
+                  <h5 style={{ position: 'relative', bottom: '50px', left: '800px', cursor: 'pointer', fontSize: '15px'}}>
+                      Total Complaints: { totalComplaintsSubmitted } 
+                  </h5>
+                  <h5 style={{ position: 'relative', bottom: '94px', left: '1000px', cursor: 'pointer', fontSize: '15px'}}>
+                      Resolved: { totalResolvedComplaints } 
+                  </h5>
+                  <h5 style={{ position: 'relative', bottom: '138px', left: '1190px', cursor: 'pointer', fontSize: '15px'}}>
+                      Pending: { totalPendingComplaints } 
+                  </h5>
             </div>
+
            
-                
+            <div style={{ position: 'relative', bottom: '130px'}}>
             <MaterialTable 
                 title='Submitted Complaints'
                 data={ studentComplaintsArray }
@@ -132,6 +187,7 @@ export default function StudentComplaintHistory( props ) {
                 }}
             
             />
+            </div>
 
 
         </div>

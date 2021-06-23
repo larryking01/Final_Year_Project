@@ -4,25 +4,24 @@ import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 import { makeStyles } from '@material-ui/core/styles'
 import StudentComplaintPersistentDrawer from '../Drawers/StudentComplaintPersistentDrawer'
 import Typography from '@material-ui/core/Typography'
-import { AiFillNotification } from 'react-icons/ai'
-
-
-
 
 
 // icons
 import { BsCheckAll } from 'react-icons/bs'
 import { BsArrowCounterclockwise } from 'react-icons/bs'
 import { BsBookHalf } from 'react-icons/bs'
+import { AiFillNotification } from 'react-icons/ai'
 
 
 // for slider.
-/*import Slider from "react-slick"
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css"; 
-import Carousel from 'nuka-carousel' */
 import './complaintSliderStyling.css'
 import Carousel from 'react-elastic-carousel'
+
+
+// scroll bar
+//import ScrollArea from 'react-scrollbar'
+import { Scrollbars } from 'react-custom-scrollbars'
+ 
 
 
 
@@ -176,11 +175,11 @@ export default function StudentLandingPage(props) {
       };
 
 
+
     // the function to push users to sign in when they log out.
     const goToStudentSignIn = () => {
-        alert('you are logging out')
-
-        router.push('/signin')
+      
+        router.push('/signin')  
     }
 
 
@@ -389,15 +388,15 @@ export default function StudentLandingPage(props) {
                  </div>
 
 
-
+      
             <Carousel className={ classes.showAnnouncementsSlide } 
                       itemsToShow={ 1 }
                       enableAutoPlay
                       autoPlaySpeed={ 5000 } // same time
-
             >
                     
                  { totalAnnouncementsArray.map(announcement => 
+                  <Scrollbars >
                      <div key={announcement.announcementTitle} onClick={() => console.log(announcement.id)}>
                          
                          <div style={{alignItems: 'center'}}>
@@ -411,12 +410,14 @@ export default function StudentLandingPage(props) {
 
                          </div>
 
-                    </div>)
+                    </div>
+                    </Scrollbars>
+                    )
                 }
 
 
             </Carousel>
-
+           
         
               
 

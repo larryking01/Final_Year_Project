@@ -6,8 +6,19 @@ import PersistentDrawer from '../Drawers/PersistentDrawer'
 //import SwipeableDrawer from '../Drawers/SwipeableDrawer'
 
 import { makeStyles } from '@material-ui/core/styles'
-import { Typography, TextField } from '@material-ui/core'
+import { Typography, TextField, Button } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab'
+
+
+
+// the dialog.
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogActions from '@material-ui/core/DialogActions'
+
+
 
 
 // setting up styling.
@@ -121,6 +132,45 @@ export default function AddNewStudent() {
     const [ mobileNumber, setMobileNumber ] = useState('')
     const [ addStudentComplete, setAddStudentComplete ] = useState(true)
 
+
+    // handling state for the dialog.
+    const [ open, setOpen ] = useState( false )
+
+    const handleDialogOpen = () => {
+        setOpen(true)
+    }
+
+    const handleDialogClose = () => {
+        setOpen(false)
+    }
+
+
+    // function to return the dialog.
+    const showConfirmationDialog = () => {
+        setOpen(true)
+        console.log(`open = ${open}`)
+        console.log('show confirmation dialog executing')
+        return(
+            <Dialog open={ open } onClose={ handleDialogClose }>
+                <DialogTitle> Confirmation Message </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Student added successfully !
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button>
+                        OK
+                    </Button>
+                </DialogActions>
+
+            </Dialog>
+        )
+        
+    }
+
+
+
     // handling state for the uploaded student picture.
     const [ studentPicture, setStudentPicture ] = useState(null)
     const [ error, setError ] = useState(null)
@@ -208,6 +258,7 @@ export default function AddNewStudent() {
     const handleFormSubmit = ( event ) => {
         event.preventDefault()
         setAddStudentComplete(false) 
+        setOpen( true )
 
             // the reference to the image file.
             let storageReference = projectStorage.ref()
@@ -251,8 +302,11 @@ export default function AddNewStudent() {
                 addedStudentsCollection.add( newStudent ).then(doc => {
                     console.log(`document added with id ${doc.id} `)
                     setAddStudentComplete(true)
-                    alert('student added ') 
-                    // resetting all components.
+                    alert('Student Added Successfully') 
+                    //the dialog.
+                    //showConfirmationDialog()
+
+                    //resetting all components.
                     handleCancelBtnClick()
                 })
                 .catch(error => {
@@ -273,6 +327,7 @@ export default function AddNewStudent() {
        else {
         // modal here later
            alert('Student picture took too long to upload. This is most likely due to slow internet connection. \nClick Add Student again to complete the process.')
+           //showConfirmationDialog()
        }
         
         }) 

@@ -61,6 +61,7 @@ export default function StudentComplaintSwipeabledrawer(props) {
                 color='red'
                 aria-label='Open drawer'
                 onClick={ () => setOpen(true)}
+                style={{color: 'white'}}
                 
            >
               <div onClick={() => setOpen(true)}>
@@ -94,7 +95,8 @@ export default function StudentComplaintSwipeabledrawer(props) {
                      </ListItem>
                      </div>
 
-                     <div onClick={() => router.push('/viewallcomplaints') }>
+
+                     <div onClick={() => router.push('/studentcomplainthistory') }>
                      <ListItem button className={classes.listItem} >
                          <ListItemIcon className={classes.listItemIcon}>
                                 <BookIcon />

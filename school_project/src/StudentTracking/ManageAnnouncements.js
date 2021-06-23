@@ -57,7 +57,10 @@ export default function ManageAnnouncements() {
 
     return (
         <div style={{display: 'column'}}>
-            <SwipeableDrawer />
+            <div style={{ backgroundColor: '#2E2A3B', height: '70px'}}>
+                 <SwipeableDrawer />
+            </div>
+            
 
             <div style={{ flexDirection: 'column'}}>
                 <MaterialTable 

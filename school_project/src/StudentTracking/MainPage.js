@@ -25,8 +25,8 @@ const useStyles = makeStyles( theme => ({
         backgroundColor: 'green',
         color: 'white',
         border: 'none',
-        width: '84px',
-        height: '37px',
+        width: '100px',
+        height: '44px',
         cursor: 'pointer',
         boxShadow: '2px 8px 6px grey'
     },
@@ -34,53 +34,32 @@ const useStyles = makeStyles( theme => ({
         backgroundColor: 'red',
         color: 'white',
         border: 'none',
-        width: '84px',
-        height: '37px',
+        width: '100px',
+        height: '44px',
         cursor: 'pointer',
         boxShadow: '2px 8px 6px grey'
     },
-    totalStudentsDiv: {
-        backgroundColor: '#2E2A3B',
-        height: '40px',
-        width: '200px',
-        position: 'relative',
-        left: '60px',
-        bottom: '60px',
-        color: 'white',
-        cursor: 'pointer',
-        textAlign: 'center',
-        boxShadow: '2px 4px 8px'
-    },
     totalStudentsText: {
-        paddingTop: '5px'
-    },
-    totalCheckedInStudentsDiv: {
-        backgroundColor: '#2E2A3B',
-        height: '40px',
-        width: '200px',
         position: 'relative',
-        left: '300px',
-        bottom: '122px',
-        color: 'white',
-        cursor: 'pointer',
-        textAlign: 'center'
+        bottom: '50px',
+        left: '700px',
+        color: 'white'
+
     },
     totalCheckInStudentsText: {
-        paddingTop: '5px'
-    },
-    totalCheckedOutStudentsDiv: {
-        backgroundColor: '#2E2A3B',
-        height: '40px',
-        width: '200px',
+        paddingTop: '5px',
         position: 'relative',
-        left: '540px',
-        bottom: '183px',
-        color: 'white',
-        cursor: 'pointer',
-        textAlign: 'center'
+        bottom: '93px',
+        left: '930px',
+        color: 'white'
+
     },
     totalCheckOutStudentsText: {
-        paddingTop: '5px'
+        paddingTop: '5px',
+        position: 'relative',
+        bottom: '137px',
+        left: '1170px',
+        color: 'white'
     }
 
 
@@ -255,23 +234,19 @@ export default function MainPage() {
 
     return (
         <div >
-            <div>
+            <div style={{ backgroundColor: '#2E2A3B', color: 'white', height:'70px'}}>
                  <SwipeableDrawer /> 
-                 <div className={ classes.totalStudentsDiv }>
+                 
                           <h4 className={ classes.totalStudentsText }> {`Total Students: ${totalStudents}`} </h4>
-                 </div>
-
-                 <div className={ classes.totalCheckedInStudentsDiv }>
+        
                           <h4 className={ classes.totalCheckInStudentsText }> {`Checked In: ${totalCheckedInStudents}`} </h4>
-                 </div>
-
-                 <div className={ classes.totalCheckedOutStudentsDiv }>
+               
                           <h4 className={ classes.totalCheckOutStudentsText }> {`Checked Out: ${totalCheckedOutStudents}`} </h4>
-                 </div>
+            
             </div>
             
 
-            <div style={{ position: 'relative', top: '-170px' }}>
+            <div style={{ position: 'relative', top: '0px' }}>
                 <MaterialTable 
                     title='List Of Resident Students'
                     data={ addedStudentsArray }
@@ -311,7 +286,7 @@ export default function MainPage() {
                                   sexInputValue: updatedData.sexInputValue
                                }).then(() => {
                                    // modal goes here later.
-                                   alert(`document with id ${oldData.id} updated successfully`)
+                                   console.log(`document with id ${oldData.id} updated successfully`)
                                }).catch(error => {
                                    // modal goes here later.
                                    alert('failed to update document')
@@ -326,7 +301,7 @@ export default function MainPage() {
                         onRowDelete: (selectedRow) => new Promise((resolve, reject) => {
                             let docToDelete = projectFirestore.collection('Added Students Collection').doc(selectedRow.id)
                             docToDelete.delete().then(() => {
-                                alert(`document with the id ${selectedRow.id} deleted successfully`)
+                                console.log(`document with the id ${selectedRow.id} deleted successfully`)
                             }).catch(error => {
                                 alert('failed to delete document due to error')
                                 console.log(`error = ${error}`)
@@ -350,7 +325,7 @@ export default function MainPage() {
                                 })
                                 .then(() => {
                                     // modal goes here later.
-                                    alert(`document with id ${rowData.id} updated successfully`)
+                                    console.log(`document with id ${rowData.id} updated successfully`)
                                 }) 
                                 .catch(error => {
                                     alert('failed to delete document due to error')
@@ -370,7 +345,7 @@ export default function MainPage() {
                                 })
                                 .then(() => {
                                     // modal goes here later.
-                                    alert(`document with id ${rowData.id} updated successfully`)
+                                    //alert(`document with id ${rowData.id} updated successfully`)
                                 })
                                 .catch(error => {
                                     alert('failed to delete document due to error')

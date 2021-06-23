@@ -16,8 +16,9 @@ const useStyles = makeStyles( theme => ({
         backgroundColor: '#01579b',
         color: 'white',
         border: 'none',
-        width: '70px',
+        width: '100px',
         height: '30px',
+        paddingBottom: '4px',
         cursor: 'pointer',
         boxShadow: '2px 8px 6px grey'
     },
@@ -25,10 +26,29 @@ const useStyles = makeStyles( theme => ({
         backgroundColor: 'green',
         color: 'white',
         border: 'none',
-        width: '70px',
+        width: '100px',
         height: '30px',
         cursor: 'pointer',
         boxShadow: '2px 8px 6px grey'
+    },
+    totalComplaintsText: {
+        position: 'relative',
+        bottom: '50px',
+        left: '700px',
+        color: 'white'
+
+    },
+    totalResolvedComplaintsText: {
+        position: 'relative',
+        bottom: '88px',
+        left: '940px',
+        color: 'white'
+    },
+    totalPendingComplaintsText: {
+        position: 'relative',
+        bottom: '127px',
+        left: '1170px',
+        color: 'white'
     }
 
 
@@ -45,6 +65,13 @@ export default function ViewAllComplaints() {
     // handling state.
     const [ complaintsArray, setComplaintsArray ] = useState([ ])
     const [ selectedRow, setSelectedRow ] = useState(null)
+    const [ totalComplaints, setTotalComplaints ] = useState( 0 )
+    const [ totalResolved, setTotalResolvedComplaints ] = useState( 0 )
+    const [ totalPending, setTotalPendingComplaints ] = useState( 0 )
+
+
+
+
 
     let complaintResolvedStatus = 'Pending'
     const [ complaintAttended, setComplaintAttended ] = useState( false )
@@ -60,6 +87,7 @@ export default function ViewAllComplaints() {
         if( fetchAllComplaintsMounted ) {
         let fetchComplaints = projectFirestore.collection('Submitted Complaints Collection')
         fetchComplaints.onSnapshot( snapshot => {
+            setTotalComplaints( snapshot.size )
             let temporaryArray = []
             snapshot.forEach( document => {
                 temporaryArray.push({ id : document.id, ...document.data()})
@@ -76,6 +104,66 @@ export default function ViewAllComplaints() {
         }
 
     }, [ fetchAllComplaintsMounted ])
+
+
+
+    // the useEffect to fetch all resolved complaints.
+    const [ fetchAllResolvedMounted, setFetchAllResolvedComplaintsMounted ] = useState( true )
+    useEffect(() => {
+        if( fetchAllResolvedMounted ) {
+        let fetchComplaints = projectFirestore.collection('Submitted Complaints Collection')
+        .where('complaintStatus', '==', 'Resolved')
+        fetchComplaints.onSnapshot( snapshot => {
+           setTotalResolvedComplaints( snapshot.size )
+        })
+
+        }
+
+        // the clean up.
+        return () => {
+            setFetchAllResolvedComplaintsMounted( false )
+        }
+
+    }, [ fetchAllResolvedMounted ])
+
+
+
+
+    // the useEffect to fetch all pending complaints.
+    const [ fetchAllPendingMounted, setFetchAllPendingComplaintsMounted ] = useState( true )
+    useEffect(() => {
+        if( fetchAllPendingMounted ) {
+        let fetchComplaints = projectFirestore.collection('Submitted Complaints Collection')
+        .where('complaintStatus', '==', 'Pending')
+        fetchComplaints.onSnapshot( snapshot => {
+           setTotalPendingComplaints( snapshot.size )
+        })
+
+        }
+
+        // the clean up.
+        return () => {
+            setFetchAllPendingComplaintsMounted( false )
+        }
+
+    }, [ fetchAllPendingMounted ])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -102,8 +190,17 @@ export default function ViewAllComplaints() {
 
     return (
         <div>
-            <div>
-            <SwipeableDrawer />
+            <div style={{ backgroundColor: '#2E2A3B', height: '70px'}}>
+                <SwipeableDrawer />
+
+                <h4 className={ classes.totalComplaintsText }> {`Total Complaints: ${ totalComplaints }`} </h4>
+        
+                <h4 className={ classes.totalResolvedComplaintsText }> {`Resolved: ${ totalResolved }`} </h4>
+               
+                <h4 className={ classes.totalPendingComplaintsText }> {`Pending: ${ totalPending }`} </h4>
+
+
+
             </div>
 
 
