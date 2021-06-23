@@ -24,7 +24,7 @@ import './complaintFormBtns.css'
 
 const useStyles = makeStyles( theme => ({
     headerTextDiv: {
-        backgroundColor: '#2E2A3B',
+        backgroundColor: '#01579b',
         color: 'white',
         width: '850px',
         height: '80px',
@@ -302,10 +302,7 @@ export default function SubmitComplaint(props) {
             // modal goes here later.
             alert(`You need to enter the same email you used to sign in before you can submit your complaint, ${user.email}`)
         }
-        
-
-
-
+    
     }
 
 
@@ -476,7 +473,7 @@ export default function SubmitComplaint(props) {
                  <div className={ specifyOtherComplaintType? classes.secondaryDateAndTimePickerDiv : classes.dateAndTimePickerDiv }>
                     <DatePicker 
                                 disableToolbar
-                                variant="inline"
+                                variant='inline'
                                 required={ true }
                                 format="MM / dd / yyyy"
                                 margin="normal"
@@ -488,6 +485,7 @@ export default function SubmitComplaint(props) {
                                 KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                 }} /> 
+
 
                             <TimePicker 
                                 margin="normal"

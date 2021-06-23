@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Redirect } from 'react-router-dom'
 
 import './css/style.css'
 import bubble from './assets/bubble.png'
@@ -25,21 +25,17 @@ export default function StartUpLandingPage() {
     }
 
 
+    // handle NSS btn clicked.
+    const handleNSSAccomBtnClicked = ( ) => {
+        router.push('/nssaccomodationfinder')
+    }
+
 
     return (
 
         <div className='parentContainer' >
 
-        { /*
-            <div className="navbar">
-	            <img src={ logo } className="logo" alt='image' /> 
-	            <button type="button">Sign up</button>
-            </div>
-
-        */  }
-            
-
-
+    
             <div className="content">
 	            <small>Welcome to the </small>
 	            <h1>Student Tracking,</h1> 
@@ -50,11 +46,15 @@ export default function StartUpLandingPage() {
 
 	            <ul className="btn">
                   <li style={{padding: '10px', listStyle: 'none'}} className="nav-item">
-         	      <button type="button" onClick={ handleStudentButtonClicked }> Sign In as a student</button>
+         	        <button type="button" onClick={ handleStudentButtonClicked }> Sign in as a student</button>
                  </li>
 
                  <li style={{padding: '10px', liststyle: 'none'}} className="nav-item">
-                	<button type="button" onClick={ handleStaffButtonClicked }> Sign In as a staff </button>
+                	<button type="button" onClick={ handleStaffButtonClicked }> Sign in as a staff </button>
+                </li>
+
+                <li style={{padding: '10px', liststyle: 'none'}} className="nav-item">
+                	<button type="button" onClick={ handleNSSAccomBtnClicked }> Access NSS accommodation   </button>
                 </li>
 
                 </ul>

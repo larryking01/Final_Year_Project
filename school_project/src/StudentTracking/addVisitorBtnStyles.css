@@ -1,21 +1,26 @@
 
 .addVisitorButton {
-    width: 150px;
-    height: 30px;
+    width: 300px;
+    height: 50px;
     background-color: blue;
     color: white;
     border: none;
     margin-right: 30px;
     cursor: pointer;
+    position: relative;
+    right: 200px;
     
 }
 
 
 .cancelAddVisitorButton {
-    width: 150px;
-    height: 30px;
+    width: 300px;
+    height: 50px;
     background-color: blue;
     color: white;
     border: none;
     cursor: pointer;
+    position: relative;
+    left: 200px;
+    bottom: 52px;
 }

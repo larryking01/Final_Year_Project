@@ -396,7 +396,7 @@ export default function StudentLandingPage(props) {
             >
                     
                  { totalAnnouncementsArray.map(announcement => 
-                  <Scrollbars >
+                  
                      <div key={announcement.announcementTitle} onClick={() => console.log(announcement.id)}>
                          
                          <div style={{alignItems: 'center'}}>
@@ -411,7 +411,7 @@ export default function StudentLandingPage(props) {
                          </div>
 
                     </div>
-                    </Scrollbars>
+            
                     )
                 }
 

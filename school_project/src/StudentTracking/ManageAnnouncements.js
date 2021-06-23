@@ -70,7 +70,7 @@ export default function ManageAnnouncements() {
                     onRowClick={ ((event, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
                     options={{
                         headerStyle: {
-                            backgroundColor: '#2E2A3B', /*'#01579b' */ 
+                            backgroundColor: '#01579b', /*'#01579b', #2E2A3B */ 
                             color: '#FFF'
                         },
                         rowStyle: rowData => ({

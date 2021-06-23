@@ -12,8 +12,8 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: '#01579b',
         color: 'white',
         border: 'none',
-        width: '70px',
-        height: '30px',
+        width: '100px',
+        height: '40px',
         cursor: 'pointer',
         boxShadow: '2px 8px 6px grey'
     },
@@ -21,8 +21,8 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: 'green',
         color: 'white',
         border: 'none',
-        width: '70px',
-        height: '30px',
+        width: '100px',
+        height: '40px',
         cursor: 'pointer',
         boxShadow: '2px 8px 6px grey'
     }
@@ -164,7 +164,7 @@ export default function StudentComplaintHistory( props ) {
                 onRowClick={ ((event, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
                 options={{
                         headerStyle: {
-                            backgroundColor: '#2E2A3B',
+                            backgroundColor: '#01579b',
                             color: '#FFF'
                         },
                         rowStyle: rowData => ({

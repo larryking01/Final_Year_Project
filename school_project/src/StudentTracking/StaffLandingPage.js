@@ -6,12 +6,29 @@ import PersistentDrawer from '../Drawers/PersistentDrawer'
 import Typography from '@material-ui/core/Typography'
 
 
+
 // icons
 import { BsPeopleFill } from "react-icons/bs"
 import { BiBookOpen } from 'react-icons/bi'
 import { IoIosPerson } from 'react-icons/io'
 import { AiOutlineForm } from 'react-icons/ai'
 import { AiFillNotification } from 'react-icons/ai'
+import { HiUserGroup } from 'react-icons/hi'
+
+
+
+// date picker.
+import { DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import DateFnsUtils from '@date-io/date-fns';
+
+/*import Calendar from 'react-calendar'
+import 'react-calendar/dist/Calendar.css'*/
+
+
+/*import { Calendar, momentLocalizer } from 'react-big-calendar'
+import moment from 'moment' */
+
+
 
 
 
@@ -35,7 +52,7 @@ const useStyles = makeStyles( theme => ({
     headerText: {
         position: 'relative',
         left: '260px',
-        top: '20px'
+        bottom: '30px'
     },
     totalStudentsDiv: {
         position: 'relative',
@@ -127,6 +144,15 @@ const useStyles = makeStyles( theme => ({
         position: 'relative',
         bottom: '90px',
         left: '170px'
+    },
+    datePickerDiv : {
+        position: 'relative',
+        bottom: '260px',
+        left: '420px',
+        height: '400px',
+        width: '700px',
+        borderWidth: 3,
+        borderColor: 'black'
     }
 
 
@@ -213,6 +239,14 @@ export default function StaffLandingPage() {
      }, [ totalComplaintsNumber, totalComplaintsMounted ])
 
 
+     // state for date and time
+    const [ selectedDateAndTime, setSelectedDateAndTime ] = useState(new Date());
+    
+
+    const updateDateAndTime = ( date ) => {
+        setSelectedDateAndTime( date )
+    }
+
 
 
 
@@ -238,9 +272,11 @@ export default function StaffLandingPage() {
         <div className={ classes.parentContainer }>
             <PersistentDrawer />
 
+        
             <div style={{ position: 'relative', top: '20', left: '240px'}}>
 
             <div className={ classes.headerTextDiv }>
+                <HiUserGroup size={ 50 } style={{ position: 'relative', left: '70px', top: '15px'}}/>
                 <Typography className={ classes.headerText } variant='h6' >
                     Resident Student Tracking System
                 </Typography>
@@ -301,15 +337,33 @@ export default function StaffLandingPage() {
 
             </div>
 
+            
+            <MuiPickersUtilsProvider utils={ DateFnsUtils }>
+                <div className={ classes.datePickerDiv }>
+                        <DatePicker 
+                                disableToolbar
+                                variant="static"
+                                //required={ true }
+                                format="MM / dd / yyyy"
+                                margin="normal"
+                                id="date-picker-inline"
+                                label="Select Date"
+                                value={ selectedDateAndTime }
+                                onChange={ updateDateAndTime }
+                                
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }} /> 
+                </div>
+
+            </MuiPickersUtilsProvider>
 
 
 
-
-
-
-
-
+            
             </div>
+
+      
         </div>
     )
 }

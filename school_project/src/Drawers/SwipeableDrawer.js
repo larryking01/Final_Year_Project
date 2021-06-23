@@ -19,6 +19,10 @@ import EditIcon from '@material-ui/icons/Edit'
 import RoomIcon from '@material-ui/icons/Room'
 import BookIcon from '@material-ui/icons/Book'
 import { AiFillNotification } from 'react-icons/ai'
+import { IoIosPerson } from 'react-icons/io'
+import { AiOutlineHome } from 'react-icons/ai'
+import { HiUserGroup } from 'react-icons/hi'
+
 
 
 
@@ -89,7 +93,7 @@ export default function Swipeabledrawer() {
                    <div onClick={() => router.push('/viewallstudents')}>
                      <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
-                             <PersonIcon />
+                             <HiUserGroup size={ 30 } />
                          </ListItemIcon>
                          <ListItemText primary={'View all students'} />
                      </ListItem>
@@ -109,7 +113,7 @@ export default function Swipeabledrawer() {
                      <div onClick={() => router.push('/newvisitor')}>
                      <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
-                                <EditIcon />
+                                <PersonAddIcon />
                          </ListItemIcon>
                          <ListItemText primary={'New Visitor'} />
                      </ListItem>
@@ -160,7 +164,7 @@ export default function Swipeabledrawer() {
                      <div onClick={() => router.push('/nssaccomodationfinder')}>
                      <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
-                                <RoomIcon />
+                                <AiOutlineHome size={ 30 } />
                          </ListItemIcon>
                          <ListItemText primary={'Looking for NSS accomodation? Click here'} />
                      </ListItem>

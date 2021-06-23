@@ -1,7 +1,7 @@
 .submitComplaintButton {
-    width: 150px;
-    height: 30px;
-    background-color: #2E2A3B;
+    width: 180px;
+    height: 40px;
+    background-color: #01579b;
     color: white;
     border: none;
     margin-right: 30px;
@@ -10,9 +10,9 @@
 
 
 .cancelButton {
-    width: 150px;
-    height: 30px;
-    background-color: #2E2A3B;
+    width: 180px;
+    height: 40px;
+    background-color: #01579b;
     color: white;
     border: none;
     cursor: pointer;

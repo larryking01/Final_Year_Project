@@ -1,16 +1,17 @@
 import React from 'react'
-import { useHistory, Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 
 import { makeStyles } from '@material-ui/core/styles'
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core'
+import { Drawer, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import PersonIcon from '@material-ui/icons/Person'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
-import EditIcon from '@material-ui/icons/Edit'
 //import DeleteIcon from '@material-ui/icons/Delete'
-import RoomIcon from '@material-ui/icons/Room'
 import BookIcon from '@material-ui/icons/Book'
 import { AiFillNotification } from 'react-icons/ai'
+import { HiUserGroup } from 'react-icons/hi'
+import { AiOutlineHome } from 'react-icons/ai'
+
 
 
 
@@ -58,7 +59,7 @@ export default function PersistentDrawer() {
                      <div onClick={() => router.push('/viewallstudents')}>
                      <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
-                             <PersonIcon />
+                             <HiUserGroup size={ 30 } />
                          </ListItemIcon>
                          <ListItemText primary={'View all students'} />
                      </ListItem>
@@ -78,7 +79,7 @@ export default function PersistentDrawer() {
                     <div onClick={() => router.push('/newvisitor')}>
                      <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
-                                <EditIcon />
+                                <PersonAddIcon />
                          </ListItemIcon>
                          <ListItemText primary={'New Visitor'} />
                      </ListItem>
@@ -130,7 +131,7 @@ export default function PersistentDrawer() {
                     <div onClick={() => router.push('/nssaccomodationfinder')}>
                      <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
-                                <RoomIcon />
+                                <AiOutlineHome size={ 30 } />
                          </ListItemIcon>
                          <ListItemText primary={'Looking for NSS accomodation? Click here'} />
                      </ListItem>

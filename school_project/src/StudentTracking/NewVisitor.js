@@ -26,7 +26,8 @@ const useStyles = makeStyles( theme => ({
         textAlign: 'center' */
     },
     headerTextDiv: {
-        backgroundColor: 'white',
+        backgroundColor: '#01579b',
+        color: 'white',
         width: '850px',
         height: '80px',
         //borderRadius: '50%'
@@ -42,53 +43,62 @@ const useStyles = makeStyles( theme => ({
     },
     visitorFullNameTextFieldDiv: {
         position: 'relative',
-        top:'10px'
+        top:'70px',
+        right: '200px'
     },
     visitorFullNameTextField: {
-        width: '270px'
+        width: '300px'
     },
     visitorIndexNumberTextFieldDiv: {
         position: 'relative',
-        top: '35px'
+        top: '16px',
+        left: '200px'
     },
     visitorIndexNumberTextField: {
-        width: '270px'
+        width: '300px'
     },
     roomVisitedTextFieldDiv: {
         position: 'relative',
-        top: '65px'
+        top: '65px',
+        right: '200px'
     },
     roomVisitedTextField: {
-        width: '270px'
+        width: '300px'
     },
     personGettingVisitedTextFieldDiv: {
         position: 'relative',
-        top: '95px'
+        top: '5px',
+        left: '200px'
 
     },
     personGettingVisitedTextField: {
-        width: '270px'
+        width: '300px'
 
     },
     dateTextFieldDiv: {
         position: 'relative',
-        top: '110px'
+        top: '110px',
+        //right: '170px'
     },
     timeTextFieldDiv: {
         position: 'relative',
-        top: '130px'
+        top: '130px',
+        //left: '150px'
     },
     buttonsDiv: {
         position: 'relative',
-        top: '140px'
+        top: '130px'
     },
     datePicker: {
         position: 'relative',
-        right: '20px'
+        right: '180px',
+        bottom: '60px'
+
     },
     timePicker: {
         position: 'relative',
-        left: '20px'
+        left: '40px',
+        bottom: '60px'
     },
     visitorAddStatus: {
         position: 'relative',
@@ -169,7 +179,7 @@ export default function NewVisitor() {
         .then( doc => {
             // modal goes here later.
             console.log(`visitor added with id ${ doc.id }`)
-            alert('visitor saved successfully')
+            alert('Visitor saved successfully')
             setVisitorAddedComplete( true )
             handleCancelBtnClick()
         })
@@ -200,7 +210,7 @@ export default function NewVisitor() {
             <div className={ classes.parentContainer }>
                 <form onSubmit={ handleFormSubmit }>
                 
-
+          
                 <div className={ classes.visitorFullNameTextFieldDiv}>
                     <TextField 
                         variant='outlined'
@@ -222,6 +232,9 @@ export default function NewVisitor() {
                         className={ classes.visitorIndexNumberTextField }
                     />
                 </div>
+          
+
+
 
                 <div className={ classes.roomVisitedTextFieldDiv }>
                     <TextField 

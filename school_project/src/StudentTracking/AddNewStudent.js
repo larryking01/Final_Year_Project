@@ -25,7 +25,7 @@ import DialogActions from '@material-ui/core/DialogActions'
 const useStyles = makeStyles(theme => ({
 
     headerTextDiv: {
-        backgroundColor: '#2E2A3B',
+        backgroundColor: '#01579b',
         color: 'white',
         width: '850px',
         height: '80px',

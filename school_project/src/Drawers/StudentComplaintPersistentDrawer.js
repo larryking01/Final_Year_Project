@@ -7,6 +7,14 @@ import { Drawer, List, ListItem, ListItemIcon, ListItemText, Typography } from '
 import EditIcon from '@material-ui/icons/Edit'
 import BookIcon from '@material-ui/icons/Book'
 import PersonIcon from '@material-ui/icons/Person'
+import { IoIosLogOut } from 'react-icons/io'
+import { AiFillHome } from 'react-icons/ai'
+import { AiOutlineHome } from 'react-icons/ai'
+import { AiOutlineMail } from 'react-icons/ai'
+
+
+
+
 
 
 // setting up styling.
@@ -75,7 +83,7 @@ export default function StudentComplaintPersistentDrawer(props) {
                     <div onClick={() => console.log(`current user = ${ user.email }`)}>
                      <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
-                                <PersonIcon />
+                                <AiOutlineMail size={ 30 } />
                          </ListItemIcon> 
                          <ListItemText primary={ `${user.email}`} />
                      </ListItem>
@@ -86,7 +94,7 @@ export default function StudentComplaintPersistentDrawer(props) {
                     <div onClick={ handleLogout }>
                      <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
-                                <BookIcon />
+                                <IoIosLogOut size={ 30 } />
                          </ListItemIcon>
                          <ListItemText primary={'Sign Out'} />
                      </ListItem>
@@ -97,7 +105,7 @@ export default function StudentComplaintPersistentDrawer(props) {
                      <div onClick={() => router.push('/nssaccomodationfinder')}>
                      <ListItem button className={classes.listItem}>
                          <ListItemIcon className={classes.listItemIcon}>
-                                <BookIcon />
+                                <AiOutlineHome size={ 30 } />
                          </ListItemIcon>
                          <ListItemText primary={'Looking for NSS accomodation? Click here'} />
                      </ListItem>

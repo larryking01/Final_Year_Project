@@ -17,7 +17,7 @@ const useStyles = makeStyles( theme => ({
         display: 'flex'
     },
     headerTextDiv: {
-        backgroundColor: '#2E2A3B',
+        backgroundColor: '#01579b',
         color: 'white',
         width: '800px',
         height: '80px',
@@ -67,7 +67,7 @@ const useStyles = makeStyles( theme => ({
         height: '40px',
         border: 'none',
         cursor: 'pointer',
-        backgroundColor: '#2E2A3B',
+        backgroundColor: '#01579b',
         color: 'white'
     },
     cancelAnnouncementBtn: {
@@ -78,7 +78,7 @@ const useStyles = makeStyles( theme => ({
         height: '40px',
         border: 'none',
         cursor: 'pointer',
-        backgroundColor: '#2E2A3B',
+        backgroundColor: '#01579b',
         color: 'white'
     }
 
@@ -168,7 +168,7 @@ export default function PostAnnouncement() {
             <div style={{ position: 'relative', top: '20' }}>
             <div className={ classes.headerTextDiv }>
                 <Typography className={ classes.headerText } variant='h6' >
-                    Post An Announcement <AiFillNotification style={{ paddingLeft: '10px', color: '#2E2A3B', paddingTop: '7px'}}/>
+                    Post An Announcement <AiFillNotification style={{ paddingLeft: '10px', color: 'white', paddingTop: '7px'}}/>
                 </Typography>
             </div>
 
