@@ -38,6 +38,7 @@ button{
 	border-radius: 20px;
 	outline: none;
 	cursor: pointer;
+	list-style-type: none;
 }
 .content{
 	color: #fbfcfd;

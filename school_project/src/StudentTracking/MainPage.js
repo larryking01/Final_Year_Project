@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 import MaterialTable from 'material-table'
 import { makeStyles } from '@material-ui/styles'
-import SwipeableDrawer from '../Drawers/SwipeableDrawer'
+import StudentTrackingNavBar from '../Drawers/StudentTrackingNavBar'
+//import SwipeableDrawer from '../Drawers/SwipeableDrawer'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import CancelIcon from '@material-ui/icons/Cancel'
 //import PersistentDrawer from '../Drawers/PersistentDrawer'
@@ -71,7 +72,11 @@ const useStyles = makeStyles( theme => ({
 
 
 
-export default function MainPage() {
+export default function MainPage( props ) {
+
+    // destructuring props.
+    const { staffID } = props
+
 
     // handling state.
     const [ addedStudentsArray, setAddedStudentsArray ] = useState([])
@@ -233,20 +238,12 @@ export default function MainPage() {
 
 
     return (
-        <div >
-            <div style={{ backgroundColor: '#2E2A3B', color: 'white', height:'70px'}}>
-                 <SwipeableDrawer /> 
-                 
-                          <h4 className={ classes.totalStudentsText }> {`Total Students: ${totalStudents}`} </h4>
-        
-                          <h4 className={ classes.totalCheckInStudentsText }> {`Checked In: ${totalCheckedInStudents}`} </h4>
-               
-                          <h4 className={ classes.totalCheckOutStudentsText }> {`Checked Out: ${totalCheckedOutStudents}`} </h4>
-            
-            </div>
+        <div>
+
+            <StudentTrackingNavBar staffID={ staffID } />
             
 
-            <div style={{ position: 'relative', top: '0px' }}>
+            <div style={{ marginTop: '100px' }}>
                 <MaterialTable 
                     title='List Of Resident Students'
                     data={ addedStudentsArray }

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import MaterialTable from 'material-table'
+import StudentTrackingNavBar from '../Drawers/StudentTrackingNavBar'
 //import PersistentDrawer from '../Drawers/PersistentDrawer'
-import SwipeableDrawer from '../Drawers/SwipeableDrawer'
+//import SwipeableDrawer from '../Drawers/SwipeableDrawer'
 import CheckIcon from '@material-ui/icons/Check'
 
 
@@ -12,7 +13,10 @@ import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 
 
 
-export default function ManageVisitors() {
+export default function ManageVisitors( props ) {
+
+    // destructuring props.
+    const { staffID } = props
 
     // handling state.
     const [ visitorsArray, setVisitorsArray ] = useState([])
@@ -60,12 +64,11 @@ export default function ManageVisitors() {
 
     return (
         <div style={{display: 'column'}}>
-            <div style={{ backgroundColor: '#2E2A3B', height: '70px'}}>
-                <SwipeableDrawer />
-            </div>
+
+            <StudentTrackingNavBar staffID={ staffID } />
             
             
-            <div style={{ flexDirection: 'column'}}>
+            <div style={{ marginTop: '100px' }}>
                 <MaterialTable 
                     title='List Of Visitors'
                     data={ visitorsArray }

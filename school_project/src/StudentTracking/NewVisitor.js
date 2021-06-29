@@ -1,125 +1,70 @@
 import React, { useState } from 'react'
 import { projectFirestore } from '../firebaseSetup/firebaseConfig'
-
-import PersistentDrawer from '../Drawers/PersistentDrawer'
-//import SwipeableDrawer from '../Drawers/SwipeableDrawer'
+import StudentTrackingNavBar from '../Drawers/StudentTrackingNavBar'
 import { makeStyles } from '@material-ui/core/styles'
-import TextField from '@material-ui/core/TextField'
-import Typography from '@material-ui/core/Typography'
+import { Form, Row, Col, Button } from 'react-bootstrap'
 import { DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns';
 
-import './addVisitorBtnStyles.css'
+//import './addVisitorBtnStyles.css'
 
 
 
 // setting up styles.
 const useStyles = makeStyles( theme => ({
-    parentContainer: {
-        width: '500px',
-        height: '545px',
+    addVisitorForm: {
         position: 'relative',
-        left: '660px',
-        top: '40px',
-        /*boxShadow: '2px 2px 8px',
-        borderRadius: '3%',
-        textAlign: 'center' */
-    },
-    headerTextDiv: {
-        backgroundColor: '#01579b',
-        color: 'white',
-        width: '850px',
-        height: '80px',
-        //borderRadius: '50%'
-        boxShadow: '2px 2px 8px grey',
-        position: 'relative',
-        top: '30px',
-        left: '400px'
-    },
-    headerText: {
-        position: 'relative',
-        left: '340px',
-        top: '20px'
-    },
-    visitorFullNameTextFieldDiv: {
-        position: 'relative',
-        top:'70px',
-        right: '200px'
-    },
-    visitorFullNameTextField: {
-        width: '300px'
-    },
-    visitorIndexNumberTextFieldDiv: {
-        position: 'relative',
-        top: '16px',
-        left: '200px'
-    },
-    visitorIndexNumberTextField: {
-        width: '300px'
-    },
-    roomVisitedTextFieldDiv: {
-        position: 'relative',
-        top: '65px',
-        right: '200px'
-    },
-    roomVisitedTextField: {
-        width: '300px'
-    },
-    personGettingVisitedTextFieldDiv: {
-        position: 'relative',
-        top: '5px',
-        left: '200px'
-
-    },
-    personGettingVisitedTextField: {
-        width: '300px'
-
-    },
-    dateTextFieldDiv: {
-        position: 'relative',
-        top: '110px',
-        //right: '170px'
-    },
-    timeTextFieldDiv: {
-        position: 'relative',
-        top: '130px',
-        //left: '150px'
-    },
-    buttonsDiv: {
-        position: 'relative',
-        top: '130px'
-    },
-    datePicker: {
-        position: 'relative',
-        right: '180px',
-        bottom: '60px'
-
-    },
-    timePicker: {
-        position: 'relative',
-        left: '40px',
-        bottom: '60px'
+        left: '280px',
+        width: '60vw'
     },
     visitorAddStatus: {
         position: 'relative',
         top: '115px'
+    },
+    formRow: {
+        marginBottom: '30px'
+    },
+    submitBtn: {
+        width: '390px',
+        marginTop: '60px',
+        marginLeft: '5px',
+        paddingLeft: '140px'
+    },
+    cancelBtn: {
+        width: '390px',
+        marginTop: '60px',
+        marginLeft: '10px',
+        paddingLeft: '160px'
+    },
+    Buttons: {
+        marginTop: '-40px'
+    },
+    secondaryButtons: {
+        marginTop: '-40px'
     }
+
 }))
 
 
 
 
-export default function NewVisitor() {
+export default function NewVisitor( props ) {
+
+    // destructuring props.
+    const { staffID } = props
 
     // initializing styling.
     let classes = useStyles()
+
 
     // handling state.
     const [ visitorFullName, setVisitorFullName ] = useState('')
     const [ visitorIndexNumber, setVisitorIndexNumber ] = useState('')
     const [ visitingRoom, setVisitingRoom ] = useState('')
     const [ roomMemberGettingVisited, setRoomMemberGettingVisited ] = useState('')
+    const [ visitorUGStudent, setVisitorUGStudent ] = useState( true )
     const [ visitorAddedComplete, setVisitorAddedComplete ] = useState( true )
+
 
     // state for date and time
     const [ selectedDateAndTime, setSelectedDateAndTime ] = useState(new Date());
@@ -194,119 +139,110 @@ export default function NewVisitor() {
 
 
     return (
-        <div style={{display: 'flex'}}>
+        <div>
 
-            <PersistentDrawer />
+            <StudentTrackingNavBar staffID={ staffID } />
 
-            <div style={{display: 'column'}}>
-            <div className={ classes.headerTextDiv }>
-                <Typography  variant='h6' className={ classes.headerText} >
-                    Add a new visitor
-                </Typography>
-            </div>
+            <div style={{display: 'column', marginTop: '210px'}}>
             
-            <MuiPickersUtilsProvider utils={ DateFnsUtils }>
+        <Form className={ classes.addVisitorForm } onSubmit={ handleFormSubmit }>
+            <Row className={ classes.formRow }>
+                <Col>
+                    <Form.Control type='text' placeholder='Visitor full name' required onChange={ updateVisitorFullName } value={ visitorFullName } />
+                </Col>
 
-            <div className={ classes.parentContainer }>
-                <form onSubmit={ handleFormSubmit }>
-                
-          
-                <div className={ classes.visitorFullNameTextFieldDiv}>
-                    <TextField 
-                        variant='outlined'
-                        label="Visitor's full name"
-                        required={ true }
-                        value={ visitorFullName }
-                        onChange={ updateVisitorFullName }
-                        className={ classes.visitorFullNameTextField }
-                    />
-                </div>
+                <Col>
+                    <Form.Control type='text' placeholder='Index Number' required onChange={ updateVisitorIndexNumber } value={ visitorIndexNumber } disabled={ visitorUGStudent ? false : true } />
+                </Col>
+            </Row>
 
-                <div className={ classes.visitorIndexNumberTextFieldDiv }>
-                    <TextField 
-                        variant='outlined'
-                        label="Visitor's Index Number"
-                        required={ true }
-                        value={ visitorIndexNumber }
-                        onChange={ updateVisitorIndexNumber }
-                        className={ classes.visitorIndexNumberTextField }
-                    />
-                </div>
-          
+            <Row className={ classes.formRow }>
+                <Col>
+                    <Form.Control type='text' placeholder='Room of visit' required  onChange={ updateVisitingRoom } value={ visitingRoom } />
+                </Col>
+
+                <Col>
+                     <Form.Control type='text' placeholder='Person being visited' required  onChange={ updateRoomMemberGettingVisited } value={ roomMemberGettingVisited } />
+                </Col>
+            </Row>
+
+            <Row className={ classes.formRow }>
+                <Col>
+                    <Form.Control type='text' placeholder='Is the visitor a UG student?' required />
+                </Col>
+                <Col>
+                    <Form.Control type='text' placeholder='Mobile number' />
+                </Col>
+            </Row>
 
 
+            <MuiPickersUtilsProvider utils={ DateFnsUtils } >
+                <Row className={ classes.formRow }>
+                    <Col>
+                        <DatePicker 
+                            disableToolbar
+                            variant="inline"
+                            required
+                            format="MM / dd / yyyy"
+                            margin="normal"
+                            id="date-picker-inline"
+                            label="Select Date"
+                            value={ selectedDateAndTime }
+                            onChange={ updateDateAndTime }
+                            //className={ classes.datePicker }
+                            KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                            }} /> 
 
-                <div className={ classes.roomVisitedTextFieldDiv }>
-                    <TextField 
-                        variant='outlined'
-                        label='Room of visit'
-                        required={ true }
-                        value={ visitingRoom }
-                        onChange={ updateVisitingRoom }
-                        className={ classes.roomVisitedTextField }
-                    />
-                </div>
+                    </Col>
 
-                <div className={ classes.personGettingVisitedTextFieldDiv }>
-                    <TextField 
-                        variant='outlined'
-                        label='Who is being visited (Full name)'
-                        required={ true }
-                        value={ roomMemberGettingVisited }
-                        onChange={ updateRoomMemberGettingVisited }
-                        className={ classes.personGettingVisitedTextField }
-                    />
-                </div>
-
-                <div className={ classes.dateTextFieldDiv }>
-                    <DatePicker 
-                                disableToolbar
-                                variant="inline"
-                                required={ true }
-                                format="MM / dd / yyyy"
-                                margin="normal"
-                                id="date-picker-inline"
-                                label="Select Date"
-                                value={ selectedDateAndTime }
-                                onChange={ updateDateAndTime }
-                                className={ classes.datePicker }
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                }} /> 
-
-                            <TimePicker 
-                                margin="normal"
-                                id="time-picker"
-                                label="Pick Time"
-                                required={ true }
-                                value={ selectedDateAndTime }
-                                onChange={ updateDateAndTime }
-                                className={ classes.timePicker }
-                                KeyboardButtonProps={{
-                                  'aria-label': 'change time',
-                                }}
+                    <Col>
+                         <TimePicker 
+                            margin="normal"
+                            id="time-picker"
+                            label="Pick Time"
+                            required
+                            value={ selectedDateAndTime }
+                            onChange={ updateDateAndTime }
+                            //className={ classes.timePicker }
+                            KeyboardButtonProps={{
+                                'aria-label': 'change time',
+                            }}
                     
-                              /> 
-            
-                </div>
+                            /> 
+                    
+                    </Col>
 
-                { !visitorAddedComplete && <span className={ classes.visitorAddStatus }>
+                </Row>
+
+            </MuiPickersUtilsProvider>
+
+
+            <Row>
+            { !visitorAddedComplete && <Col>
                      Saving visitor... Please wait
-                </span>}
+                </Col>
+             }
+            </Row>
 
-                <div className={ classes.buttonsDiv}>
-                    <button type='submit' className='addVisitorButton'> Add Visitor </button>
+            <Row className={ visitorAddedComplete? classes.secondaryButtons : classes.Buttons  }>
+                <Col>
+                    <Button type='submit' variant='primary' size='md' className={ classes.submitBtn }> Add Student </Button>{''}
+                </Col>
 
-                    <button type='button' className='cancelAddVisitorButton' onClick={ handleCancelBtnClick } > Cancel </button>
+                <Col>
+                    <Button type='button' variant='primary' size='md' className={ classes.cancelBtn } onClick={ handleCancelBtnClick }> Cancel </Button>
+                </Col>
 
-                </div>
-
-            </form>
-            </div>
+            </Row>
             
 
-        </MuiPickersUtilsProvider>
+            
+
+        </Form>
         </div>
+
+
         </div>
     )
 }

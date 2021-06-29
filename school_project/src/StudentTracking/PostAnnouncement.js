@@ -1,95 +1,68 @@
 import React, { useState, useEffect } from 'react'
 import { projectFirestore, timestamp } from '../firebaseSetup/firebaseConfig'
 import { makeStyles } from '@material-ui/core/styles'
-import PersistentDrawer from '../Drawers/PersistentDrawer'
-//import SwipeableDrawer from '../Drawers/SwipeableDrawer'
-import Typography from '@material-ui/core/Typography'
-import TextField from '@material-ui/core/TextField'
-import TextareaAutosize from '@material-ui/core/TextareaAutosize'
-import { AiFillNotification } from 'react-icons/ai'
+import StudentTrackingNavBar from '../Drawers/StudentTrackingNavBar'
+import { Form, Row, Col, Button } from 'react-bootstrap'
+import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import DateFnsUtils from '@date-io/date-fns';
+
+//import { AiFillNotification } from 'react-icons/ai'
 
 
 
 
 // setting up styling.
 const useStyles = makeStyles( theme => ({
-    parentContainer: {
-        display: 'flex'
-    },
-    headerTextDiv: {
-        backgroundColor: '#01579b',
-        color: 'white',
-        width: '800px',
-        height: '80px',
-        //borderRadius: '50%'
-        boxShadow: '2px 2px 8px grey',
-        position: 'relative',
-        top: '30px',
-        left: '400px'
-    },
-    headerText: {
-        position: 'relative',
-        left: '260px',
-        top: '20px'
-    },
-    postAnnouncementDiv: {
-        height: '400px',
-        position: 'relative',
-        top: '130px',
-        right: '320px',
-        //boxShadow: '2px 2px 8px grey',
-        borderRadius: '5%',
-        alignItems: 'center'
 
-
+    addVisitorForm: {
+        position: 'relative',
+        left: '280px',
+        width: '60vw'
     },
-    postAnnouncementForm: {
-        width: '550px'
+    announcementTitle: {
+        marginBottom: '40px',
+    },
+    announcementBody: {
+        marginBottom: '20px',
+    },
+    postAnnouncementsColumn: {
+        marginTop: '32px'
+    },
+    cancelAnnouncementsColumn: {
+        marginTop: '32px',
+        paddingLeft: '30px',
+        position: 'relative',
+        left: '70px'
         
     },
-    announcementTitleTextField: {
-        position: 'relative',
-        left: '90px',
-        top: '60px',
-        width: '400px'
+    postBtn: {
+        width: '390px',
+        marginTop: '60px',
+        marginLeft: '5px',
+        paddingLeft: '140px'
     },
-    textareaAutosize: {
-        position: 'relative',
-        top:'100px',
-        left: '90px',
-        width: '400px'
+    cancelBtn: {
+        width: '390px',
+        marginTop: '60px',
+        marginLeft: '10px',
+        paddingLeft: '160px'
     },
-    postAnnouncementBtn: {
-        position: 'relative',
-        top: '140px',
-        left: '90px',
-        width: '180px',
-        height: '40px',
-        border: 'none',
-        cursor: 'pointer',
-        backgroundColor: '#01579b',
-        color: 'white'
+    buttonsRow: {
+        marginTop:'-40px'
     },
-    cancelAnnouncementBtn: {
-        position: 'relative',
-        top: '140px',
-        left: '140px',
-        width: '180px',
-        height: '40px',
-        border: 'none',
-        cursor: 'pointer',
-        backgroundColor: '#01579b',
-        color: 'white'
+    textArea: {
+        resize: 'none'
     }
-
-
-
+   
 }))
 
 
 
 
-export default function PostAnnouncement() {
+export default function PostAnnouncement( props ) {
+
+    // destructuring props.
+    const { staffID } = props
 
     // initializing styling.
     const classes = useStyles()
@@ -161,58 +134,44 @@ export default function PostAnnouncement() {
 
 
     return (
-        <div className={ classes.parentContainer }>
-            <PersistentDrawer />
+        <div style={{display: 'flex', marginTop: '160px'}}>
 
+            <StudentTrackingNavBar staffID={ staffID } />
 
-            <div style={{ position: 'relative', top: '20' }}>
-            <div className={ classes.headerTextDiv }>
-                <Typography className={ classes.headerText } variant='h6' >
-                    Post An Announcement <AiFillNotification style={{ paddingLeft: '10px', color: 'white', paddingTop: '7px'}}/>
-                </Typography>
-            </div>
-
-            </div>
-
-
-            <div className={ classes.postAnnouncementDiv }>
-                <form className={ classes.postAnnouncementForm } onSubmit={ formSubmit }>
-                    <div>
-                        <TextField 
-                             className={ classes.announcementTitleTextField }
-                             variant='outlined'
-                             label='Announcement title'
-                             required
-                             onChange={ handleAnnouncementTitleChange }
-                             value={ announcementTitle }
-                        />
-
-
-
-                    </div>
-
-                    <div>
-                        <TextareaAutosize  
-                            variant='outlined'
-                            label='Announcement Body'
-                            required
-                            className={ classes.textareaAutosize }
-                            placeholder='Announcement Body'
-                            rowsMin={ 8 }
-                            rowsMax={ 9 }
-                            onChange={ handleAnnouncementBodyChange }
-                            value={ announcementBody }
-                        />
-                    </div>
-
-
+            <Form className={ classes.addVisitorForm } onSubmit={ formSubmit } >
+                <Row className={ classes.announcementTitle }>
+                    <Col>
+                        <Form.Control type='text' placeholder='Announcement Title' required onChange={ handleAnnouncementTitleChange }  value={ announcementTitle } />
                     
-                        <button type='submit' className={ classes.postAnnouncementBtn }> Post Announcement </button>
-                        <button type='button' onClick={ resetInputs } className={ classes.cancelAnnouncementBtn }> Cancel </button>
+                    </Col>
+                </Row>
 
-                  
-                </form>
-            </div>
+                <Row className={ classes.announcementBody }>
+                    <Col>
+                        <Form.Control as='textarea' placeholder='Announcement Body' rows={ 11 } required className={ classes.textArea } onChange={ handleAnnouncementBodyChange }  value={ announcementBody } />
+                    </Col>
+
+                </Row>
+
+                <Row className={ classes.buttonsRow}>
+                    <Col>
+                        <Button type='submit' className={ classes.postBtn }> Post Announcement </Button>
+                    </Col>
+
+                    <Col>
+                        <Button type='button' className={ classes.cancelBtn } onClick={ resetInputs }> Cancel </Button>
+                    </Col>
+
+                </Row>
+
+
+
+
+
+            </Form>
+
+
+           
 
 
 

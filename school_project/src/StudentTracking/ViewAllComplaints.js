@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import MaterialTable from 'material-table'
-import SwipeableDrawer from '../Drawers/SwipeableDrawer'
+import StudentTrackingNavBar from '../Drawers/StudentTrackingNavBar'
+//import SwipeableDrawer from '../Drawers/SwipeableDrawer'
 //import PersistentDrawer from '../Drawers/PersistentDrawer'
 import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
 import RestoreIcon from '@material-ui/icons/Restore'
-import Button from '@material-ui/core/Button'
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline'
 import { makeStyles } from '@material-ui/styles'
 
 
@@ -60,7 +59,11 @@ const useStyles = makeStyles( theme => ({
 
 
 
-export default function ViewAllComplaints() {
+export default function ViewAllComplaints( props ) {
+
+    // destructuring props.
+    const { staffID } = props
+
 
     // handling state.
     const [ complaintsArray, setComplaintsArray ] = useState([ ])
@@ -154,21 +157,6 @@ export default function ViewAllComplaints() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // setting up the table columns.
     let tableColumns = [
         
@@ -190,20 +178,10 @@ export default function ViewAllComplaints() {
 
     return (
         <div>
-            <div style={{ backgroundColor: '#2E2A3B', height: '70px'}}>
-                <SwipeableDrawer />
 
-                <h4 className={ classes.totalComplaintsText }> {`Total Complaints: ${ totalComplaints }`} </h4>
-        
-                <h4 className={ classes.totalResolvedComplaintsText }> {`Resolved: ${ totalResolved }`} </h4>
-               
-                <h4 className={ classes.totalPendingComplaintsText }> {`Pending: ${ totalPending }`} </h4>
-
-
-
-            </div>
-
-
+            <StudentTrackingNavBar staffID={ staffID } />
+            
+            <div style={{ marginTop: '100px' }}>
             <MaterialTable 
                 title='Submitted Complaints'
                 data={ complaintsArray }
@@ -296,10 +274,8 @@ export default function ViewAllComplaints() {
                           }
                       ]}
 
-
-                      
-
             />
+            </div>
 
 
 

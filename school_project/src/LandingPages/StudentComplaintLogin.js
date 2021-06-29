@@ -9,6 +9,12 @@ import Typography from '@material-ui/core/Typography'
 // for styling
 import { makeStyles } from '@material-ui/styles'
 
+// for styling.
+import './css/Login.css'
+import waveImage from './assets/undraw.png'
+import profileImage from './assets/profile.png'
+
+
 
 // setting up styling
 const useStyles = makeStyles( theme => ({
@@ -23,14 +29,14 @@ const useStyles = makeStyles( theme => ({
         textAlign: 'center'
     },
     emailTextField: {
-        position: 'relative',
-        top: '30px',
-        width: '250px'
+        /*position: 'relative',
+        top: '30px', */
+        width: '350px'
     },
     passwordTextField:{
         position: 'relative',
-        top: '65px',
-        width: '250px'
+        top: '30px', 
+        width: '350px'
     },
     signInButtonDiv: {
         position: 'relative',
@@ -62,7 +68,7 @@ const useStyles = makeStyles( theme => ({
     },
     emailErrorSpan: {
         position: 'relative',
-        top: '40px',
+        top: '10px',
         fontSize: '13px',
         color: 'red'
     },
@@ -79,24 +85,27 @@ const useStyles = makeStyles( theme => ({
 
 
 
-export default function SignIn(props) {
 
+
+
+export default function StudentComplaintLogin( props ) {
 
     // destructuring all the props.
     const { 
-            signInEmail, 
-            setSignInEmail, 
-            signInPassword, 
-            setSignInPassword, 
-            handleLogin, 
-            emailError, 
-            passwordError,
-            user ,
-            clearErrors
-            } = props
+        signInEmail, 
+        setSignInEmail, 
+        signInPassword, 
+        setSignInPassword, 
+        handleLogin, 
+        emailError, 
+        passwordError,
+        user ,
+        clearErrors
+    } = props
 
 
-    // initializing styling.
+
+    // for styling.
     const classes = useStyles()
 
     // for routing
@@ -122,22 +131,31 @@ export default function SignIn(props) {
         if( user ) {
             router.push('/studentlandingpage')
         } else {
-            router.push('/signin')
+            router.push('/login')
         }
     }
-    
+
+
+
+
+
+
+
 
 
     return (
-        <div className={ classes.parentContainer } >
-            <form className={ classes.signInForm } onSubmit={ handleFormSubmit } >
+        <div>
+            <img className="wave" src={ waveImage } />
+            <div className="container">
+                 <div className="login-container">
+                     <form onSubmit={ handleFormSubmit }>
+                        <img className="avatar" src={ profileImage } />
+                        <h2>Welcome</h2>
 
-                <Typography className={ classes.headerText }>
-                    Sign In
-                </Typography>
+                      
 
-
-                <TextField variant='outlined'
+                        <div> 
+                           <TextField variant='outlined'
                            type='email'
                            required={ true }
                            label='Email'
@@ -145,16 +163,22 @@ export default function SignIn(props) {
                                setSignInEmail( event.target.value )
                                clearErrors()
                            } }
-                           value={ signInEmail }
+                           value={ signInEmail } 
                            className={ classes.emailTextField }
                            //error={ emailError ? true : false }
-                           //helperText={ emailError }
-                />
+                           //helperText={ emailError } 
+                        />
 
-                { emailError && <div className={classes.emailErrorSpan}> { emailError } </div> }
+                        { emailError && <div className={classes.emailErrorSpan}> { emailError } </div> }
+
+                        </div>
 
 
-                <TextField variant='outlined'
+            
+                    <div>
+                        <TextField variant='outlined'
+                                   label='Password'
+                                   className={ classes.passwordTextField }
                            type={ showPassword ? "text" : "password"}
                            required={ true }
                            label='Password'
@@ -180,30 +204,44 @@ export default function SignIn(props) {
                             )
                           }}
                            
-                />
+                        />
+                            { passwordError && <div className={classes.passwordErrorSpan}> { passwordError } </div> }
 
-                { passwordError && <div className={classes.passwordErrorSpan}> { passwordError } </div> }
+                      </div>
 
 
-                <div className={ classes.signInButtonDiv }>
-                    <button type='submit' className={ classes.signInButton } >
-                            Sign In
-                     </button>
-                </div>
+                   <div style={{position: 'relative', top: '80px'}}>
+			        <button className='login-btn'
+	                        type="submit" >
+                                    Log in
+                    </button> 
 
-                <div>
-                    <Typography className={ classes.typographyText }>
+                    <div>
+                    <Typography >
                         Don't have an account? 
                     </Typography>
 
-                    <Link to='/signup' className={ classes.signUpLink }  >
+                    <Link to='/signup'   >
                               Register now
                     </Link>
+                      </div>
+
+                      </div>
+
+
+
+
+                     </form>
+
+
+
                 </div>
 
 
 
-            </form>
+
+            </div>
+
 
         </div>
     )

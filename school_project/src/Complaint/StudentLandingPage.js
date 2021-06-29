@@ -4,6 +4,7 @@ import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 import { makeStyles } from '@material-ui/core/styles'
 import StudentComplaintPersistentDrawer from '../Drawers/StudentComplaintPersistentDrawer'
 import Typography from '@material-ui/core/Typography'
+import StudentComplaintNavBar from '../Drawers/StudentComplaintNavBar'
 
 
 // icons
@@ -18,34 +19,10 @@ import './complaintSliderStyling.css'
 import Carousel from 'react-elastic-carousel'
 
 
-// scroll bar
-//import ScrollArea from 'react-scrollbar'
-import { Scrollbars } from 'react-custom-scrollbars'
- 
-
 
 
 // setting up styling.
 const useStyles = makeStyles( theme => ({
-    parentContainer: {
-        display: 'flex'
-    },
-    headerTextDiv: {
-        backgroundColor: '#2E2A3B',
-        color: 'white',
-        width: '900px',
-        height: '80px',
-        //borderRadius: '50%'
-        boxShadow: '2px 2px 8px grey',
-        position: 'relative',
-        top: '30px',
-        left: '120px'
-    },
-    headerText: {
-        position: 'relative',
-        left: '260px',
-        top: '20px'
-    },
     totalComplaintsDiv: {
         position: 'relative',
         top: '50px',
@@ -179,7 +156,7 @@ export default function StudentLandingPage(props) {
     // the function to push users to sign in when they log out.
     const goToStudentSignIn = () => {
       
-        router.push('/signin')  
+        router.push('/login')  
     }
 
 
@@ -333,10 +310,15 @@ export default function StudentLandingPage(props) {
            {
                user ? 
            
-        <div className={ classes.parentContainer }>
-            <StudentComplaintPersistentDrawer user={ user } handleLogout={ handleLogout } />
+        <div >
+            <StudentComplaintNavBar  user={ user } handleLogout={ handleLogout } />
 
-            <div style={{ position: 'relative', top: '20', left: '240px'}}>
+
+
+            <div style={{ marginTop: '100px' }}>
+                {
+                    /*
+                
                <div className={ classes.headerTextDiv }>
                      <Typography className={ classes.headerText } variant='h6' >
                            Student Dashboard
@@ -417,21 +399,12 @@ export default function StudentLandingPage(props) {
 
 
             </Carousel>
+
+
+            */ 
+
+            }
            
-        
-              
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
 
 

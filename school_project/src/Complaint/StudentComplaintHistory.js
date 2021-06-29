@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import MaterialTable, { MTableToolbar } from 'material-table'
-import StudentComplaintSwipeableDrawer from '../Drawers/StudentComplaintSwipeableDrawer'
+import { useHistory } from 'react-router-dom'
+import StudentComplaintNavBar from '../Drawers/StudentComplaintNavBar'
+//import StudentComplaintSwipeableDrawer from '../Drawers/StudentComplaintSwipeableDrawer'
 //import StudentComplaintPersistentDrawer from '../Drawers/PersistentDrawer'
 import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 import { makeStyles } from '@material-ui/core/styles'
@@ -47,6 +49,17 @@ export default function StudentComplaintHistory( props ) {
     // initializing styling.
     const classes = useStyles()
 
+    // initializing router
+    const router = useHistory()
+
+
+     // function to push sign in.
+     const goToSignIn = () => {
+        // modal here later.
+        //alert('You are logging out')
+        router.push('/login')
+    }
+
     
 
 
@@ -54,7 +67,7 @@ export default function StudentComplaintHistory( props ) {
     const [ fetchAllComplaintsMounted, setFetchAllComplaintsMounted ] = useState( true )
 
     useEffect(() => {
-        if( fetchAllComplaintsMounted ) {
+        if( fetchAllComplaintsMounted && user ) {
         let fetchComplaints = projectFirestore.collection('Submitted Complaints Collection').where('studentEmail', '==', user.email)
         fetchComplaints.onSnapshot( snapshot => {
             setTotalComplaintsSubmitted( snapshot.size )
@@ -82,7 +95,7 @@ export default function StudentComplaintHistory( props ) {
     const [ fetchAllResolvedMounted, setFetchAllResolvedMounted ] = useState( true )
 
     useEffect(() => {
-        if( fetchAllResolvedMounted ) {
+        if( fetchAllResolvedMounted && user ) {
         let fetchComplaints = projectFirestore.collection('Submitted Complaints Collection')
         .where('studentEmail', '==', user.email).where('complaintStatus', '==', 'Resolved')
         fetchComplaints.onSnapshot( snapshot => {
@@ -104,7 +117,7 @@ export default function StudentComplaintHistory( props ) {
     const [ fetchAllPendingMounted, setFetchAllPendingMounted ] = useState( true )
 
     useEffect(() => {
-        if( fetchAllPendingMounted ) {
+        if( fetchAllPendingMounted && user) {
         let fetchComplaints = projectFirestore.collection('Submitted Complaints Collection')
         .where('studentEmail', '==', user.email).where('complaintStatus', '==', 'Pending')
         fetchComplaints.onSnapshot( snapshot => {
@@ -141,22 +154,14 @@ export default function StudentComplaintHistory( props ) {
 
 
     return (
-        <div >
-            <div style={{backgroundColor: '#2E2A3B', color: 'white'}}>
-                  <StudentComplaintSwipeableDrawer handleLogout={ handleLogout } user={ user }  />
-                  <h5 style={{ position: 'relative', bottom: '50px', left: '800px', cursor: 'pointer', fontSize: '15px'}}>
-                      Total Complaints: { totalComplaintsSubmitted } 
-                  </h5>
-                  <h5 style={{ position: 'relative', bottom: '94px', left: '1000px', cursor: 'pointer', fontSize: '15px'}}>
-                      Resolved: { totalResolvedComplaints } 
-                  </h5>
-                  <h5 style={{ position: 'relative', bottom: '138px', left: '1190px', cursor: 'pointer', fontSize: '15px'}}>
-                      Pending: { totalPendingComplaints } 
-                  </h5>
-            </div>
+        <div>
+            {
+                user ?
+            
+            <div>
+           <StudentComplaintNavBar user={ user } handleLogout={ handleLogout } />
 
-           
-            <div style={{ position: 'relative', bottom: '130px'}}>
+            <div style={{ marginTop: '100px' }}>
             <MaterialTable 
                 title='Submitted Complaints'
                 data={ studentComplaintsArray }
@@ -188,6 +193,11 @@ export default function StudentComplaintHistory( props ) {
             
             />
             </div>
+
+            </div>
+
+            : goToSignIn()   }
+            
 
 
         </div>

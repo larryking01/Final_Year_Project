@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom'
 import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import { firebaseAuthentication } from './firebaseSetup/firebaseConfig'
 
 
 
 /*import SelectUser from './SelectUserType/SelectUser'
 import SelectUserWithButtons from './SelectUserType/SelectUserWithButtons' */
+import StudentTrackingNavBar from './Drawers/StudentTrackingNavBar'
+import StudentComplaintNavBar from './Drawers/StudentComplaintNavBar'
 import StaffLogin from './StudentTracking/StaffLogin'
 import StudentLogin from './Complaint/StudentLogin'
 import StudentSignUp from './Complaint/StudentSignUp'
@@ -24,9 +27,8 @@ import StudentLandingPage from './Complaint/StudentLandingPage'
 import PostAnnouncement from './StudentTracking/PostAnnouncement'
 import ManageAnnouncements from './StudentTracking/ManageAnnouncements'
 import StartUpLandingPage from './LandingPages/StartUpLandingPage'
-import Dialog from './Complaint/Dialog'
+import StudentComplaintLogin from './LandingPages/StudentComplaintLogin'
 
-import ReactCameraMediaStream from './StudentTracking/ReactCameraMediaStream'
 
 
 
@@ -159,6 +161,13 @@ function App() {
     
   }, [])
 
+
+
+
+  // handling staff login
+  const [staffID, setStaffID] = useState('')
+  const [staffPIN, setStaffPIN] = useState('')
+
   
 
 
@@ -167,17 +176,38 @@ function App() {
 
 
   return (
-    <div className="App">
+    <div className="App"> 
         <BrowserRouter> 
             <Switch>
                 <Route exact path='/' component={ StartUpLandingPage } />
-                <Route exact path='/stafflogin' component={ StaffLogin } />
+                <Route exact path='/stafflogin' >
+                    <StaffLogin staffID={ staffID }
+                                staffPIN={ staffPIN }
+                                setStaffID={ setStaffID }
+                                setStaffPIN={ setStaffPIN }
+                                />
+
+                </Route>
                 <Route exact path='/studentsignup' component={ StudentSignUp } />
                 <Route exact path='/studentLogin' component={ StudentLogin } />
-                <Route exact path='/viewallstudents' component={ MainPage } />
-                <Route exact path='/addnewstudent' component={ AddNewStudent } />
-                <Route exact path='/newvisitor' component={ NewVisitor } />
-                <Route exact path='/managevisitors' component={ ManageVisitors } />
+
+                <Route exact path='/viewallstudents'> 
+                      <MainPage staffID={ staffID } />
+                </Route>
+
+                <Route exact path='/addnewstudent'>
+                    <AddNewStudent staffID={ staffID } />
+                </Route>
+
+
+                <Route exact path='/newvisitor'> 
+                     <NewVisitor staffID={ staffID } />
+                </Route>
+
+                <Route exact path='/managevisitors'> 
+                      <ManageVisitors staffID={ staffID } />
+                </Route>
+
                 <Route exact path='/signup' >
                       <SignUp 
                             signImail={signInEmail} 
@@ -228,27 +258,60 @@ function App() {
                       <StudentComplaintHistory handleLogout={ handleLogOut } user={ user } />
                 </Route>
 
-                <Route exact path='/viewallcomplaints' component={ ViewAllComplaints } />
-
-                <Route exact path='/devicepicture' component={ ReactCameraMediaStream } />
+                <Route exact path='/viewallcomplaints'>
+                      <ViewAllComplaints staffID= { staffID } />
+                </Route>
 
                 <Route exact path='/nssaccomodationfinder' render={() => (window.location = "https://nss-accom.herokuapp.com/")} />
 
-                <Route exact path='/dialog' component={ Dialog } />
-
-                <Route exact path='/stafflandingpage' component={ StaffLandingPage } />
+                <Route exact path='/stafflandingpage' >
+                    <StaffLandingPage staffID={ staffID }
+                                      staffPIN={ staffPIN } />
+          
+                </Route>
 
                 <Route exact path='/studentlandingpage'>
                     <StudentLandingPage handleLogout={ handleLogOut } user={ user } />
                 </Route>
 
-                <Route exact path='/postannouncement' component={ PostAnnouncement } />
+                <Route exact path='/postannouncement' > 
+                    <PostAnnouncement staffID={ staffID } />
+                </Route>
 
-                <Route exact path='/manageannouncements' component={ ManageAnnouncements } />
+                <Route exact path='/manageannouncements' > 
+                      <ManageAnnouncements staffID={ staffID } />
+                </Route>
 
                 <Route exact path='/startuplandingpage' component={ StartUpLandingPage } />
 
+                <Route exact path='/login' >
+                      <StudentComplaintLogin 
+                          signImail={signInEmail} 
+                          setSignInEmail={setSignInEmail}
+                          signUpEmail={signUpEmail}
+                          setSignUpEmail={setSignUpEmail}
+                          signInpassword={signInPassword}
+                          signUpPassword={signUpPassword}
+                          setSignUpPassword={setSignUpPassword}
+                          setSignInPassword={setSignInPassword}
+                          handleLogin={handleLogin}
+                          handleSignUp={handleSignUp}
+                          hasAccount={hasAccount}
+                          person={person} 
+                          setHasAccount={setHasAccount}
+                          emailError={emailError}
+                          passwordError={passwordError} 
+                          user={user}
+                          clearErrors={clearErrors}
+                      />
+
+                </Route>
+
+                <Route path='/navbar' component={ StudentComplaintNavBar } />
+
                 <Route path='*' render={() => <h2> Sorry, page not found </h2>} />
+
+                
 
 
             </Switch>

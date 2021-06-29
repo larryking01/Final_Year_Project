@@ -15,14 +15,16 @@ export default function StartUpLandingPage() {
 
     // handle student button clicked.
     const handleStudentButtonClicked = () => {
-        router.push('/signin')
+        router.push('/login')
     }
 
 
+    
     // handle staff button clicked.
     const handleStaffButtonClicked = () => {
         router.push('/stafflogin')
     }
+
 
 
     // handle NSS btn clicked.
@@ -35,7 +37,6 @@ export default function StartUpLandingPage() {
 
         <div className='parentContainer' >
 
-    
             <div className="content">
 	            <small>Welcome to the </small>
 	            <h1>Student Tracking,</h1> 

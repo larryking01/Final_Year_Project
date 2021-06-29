@@ -1,35 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 import { makeStyles } from '@material-ui/core/styles'
-import PersistentDrawer from '../Drawers/PersistentDrawer'
+//import PersistentDrawer from '../Drawers/PersistentDrawer'
 //import SwipeableDrawer from '../Drawers/SwipeableDrawer'
 import Typography from '@material-ui/core/Typography'
+import StudentTrackingNavBar from '../Drawers/StudentTrackingNavBar'
 
 
 
 // icons
 import { BsPeopleFill } from "react-icons/bs"
-import { BiBookOpen } from 'react-icons/bi'
 import { IoIosPerson } from 'react-icons/io'
 import { AiOutlineForm } from 'react-icons/ai'
 import { AiFillNotification } from 'react-icons/ai'
-import { HiUserGroup } from 'react-icons/hi'
 
 
 
 // date picker.
-import { DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns';
-
-/*import Calendar from 'react-calendar'
-import 'react-calendar/dist/Calendar.css'*/
-
-
-/*import { Calendar, momentLocalizer } from 'react-big-calendar'
-import moment from 'moment' */
-
-
-
 
 
 
@@ -163,7 +152,15 @@ const useStyles = makeStyles( theme => ({
 
 
 
-export default function StaffLandingPage() {
+export default function StaffLandingPage( props ) {
+
+    // destructuring props.
+    const { staffID, staffPIN } = props
+
+
+
+
+
 
     // initializing styling.
     const classes = useStyles()
@@ -270,17 +267,24 @@ export default function StaffLandingPage() {
 
     return (
         <div className={ classes.parentContainer }>
-            <PersistentDrawer />
+           { /*<PersistentDrawer /> */ }
+           
+           <StudentTrackingNavBar staffID={ staffID } staffPIN={ staffPIN } />
 
         
-            <div style={{ position: 'relative', top: '20', left: '240px'}}>
+            <div style={{ position: 'relative', marginTop: '100px', left: '240px'}}>
 
+        { /*
+
+        
             <div className={ classes.headerTextDiv }>
                 <HiUserGroup size={ 50 } style={{ position: 'relative', left: '70px', top: '15px'}}/>
                 <Typography className={ classes.headerText } variant='h6' >
                     Resident Student Tracking System
                 </Typography>
             </div>
+
+    */ }
 
 
             <div className={ classes.totalStudentsDiv }>

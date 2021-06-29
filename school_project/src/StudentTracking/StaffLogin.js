@@ -58,7 +58,14 @@ const useStyles = makeStyles({
 
 
 // the functional component.
-const StaffLogin = () => {
+const StaffLogin = ( props ) => {
+
+    // destructuring props.
+    const { staffID, staffPIN, setStaffID, setStaffPIN } = props
+
+
+
+
 
     // initializing styling
     const classes = useStyles()
@@ -67,8 +74,7 @@ const StaffLogin = () => {
     let router = useHistory()
 
     // handling state.
-    const [staffID, setStaffID] = useState('')
-    const [staffPIN, setStaffPIN] = useState('')
+    
     const [loginsArray, setLoginsArray] = useState([])
     const [verifyingComplete, setVerifyingComplete] = useState(true)
 

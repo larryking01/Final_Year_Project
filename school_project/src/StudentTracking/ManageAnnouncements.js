@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import MaterialTable from 'material-table'
 //import PersistentDrawer from '../Drawers/PersistentDrawer'
-import SwipeableDrawer from '../Drawers/SwipeableDrawer'
+//import SwipeableDrawer from '../Drawers/SwipeableDrawer'
+import StudentTrackingNavBar from '../Drawers/StudentTrackingNavBar'
 import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 
 
 
-export default function ManageAnnouncements() {
+export default function ManageAnnouncements( props ) {
+
+    // destructuring props.
+    const { staffID } = props
 
     // handling state.
     const [ totalAnnouncementsArray, setTotalAnnouncementsArray ] = useState([])
@@ -57,12 +61,10 @@ export default function ManageAnnouncements() {
 
     return (
         <div style={{display: 'column'}}>
-            <div style={{ backgroundColor: '#2E2A3B', height: '70px'}}>
-                 <SwipeableDrawer />
-            </div>
+            <StudentTrackingNavBar staffId={ staffID } />
             
 
-            <div style={{ flexDirection: 'column'}}>
+            <div style={{ flexDirection: 'column', marginTop: '100px'}}>
                 <MaterialTable 
                     title='Manage Announcements'
                     data={ totalAnnouncementsArray }
@@ -70,8 +72,8 @@ export default function ManageAnnouncements() {
                     onRowClick={ ((event, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
                     options={{
                         headerStyle: {
-                            backgroundColor: '#01579b', /*'#01579b', #2E2A3B */ 
-                            color: '#FFF'
+                            backgroundColor: 'white', /*'#01579b', /*'#01579b', #2E2A3B */ 
+                            color: 'black'
                         },
                         rowStyle: rowData => ({
                             backgroundColor: ( rowData.tableData.id % 2 === 1 ) ? '#b3b3ff' : '#FFF'

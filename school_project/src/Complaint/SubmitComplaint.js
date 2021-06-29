@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import TextField from '@material-ui/core/TextField'
-import Autocomplete from '@material-ui/lab/Autocomplete'
-import TextareaAutosize from '@material-ui/core/TextareaAutosize'
-import Typography from '@material-ui/core/Typography'
 import { DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
-import DateFnsUtils from '@date-io/date-fns';
-import StudentComplaintPersistentDrawer from '../Drawers/StudentComplaintPersistentDrawer'
-//import StudentComplaintSwipeabledrawer from '../Drawers/StudentComplaintSwipeableDrawer'
-
+import DateFnsUtils from '@date-io/date-fns'
+import StudentComplaintNavBar from '../Drawers/StudentComplaintNavBar'
+import { Form, Col, Row, FormControl, Button } from 'react-bootstrap'
 
 
 // for firebase.
@@ -23,133 +18,41 @@ import './complaintFormBtns.css'
 
 
 const useStyles = makeStyles( theme => ({
-    headerTextDiv: {
-        backgroundColor: '#01579b',
-        color: 'white',
-        width: '850px',
-        height: '80px',
-        /*borderRadius: '50%' */
-        boxShadow: '2px 2px 8px grey', 
+    formWrapper: {
+        width: '80vw',
+        height: '600px',
+        marginLeft: '120px',
+        boxShadow: '2px 4px 8px grey'
+    },
+    complaintForm: {
         position: 'relative',
-        top: '30px',
-        left: '400px'
+        left: '280px',
+        width: '60vw'
     },
-    headerText: {
-        position: 'relative',
-        left: '340px',
-        top: '20px'
-    },
-    submitComplaintForm: {
-        width:'790px',
-        height: '520px',
-        position: 'relative',
-        top: '60px',
-        left: '400px',
-        /*boxShadow: '2px 2px 8px',
-        borderRadius: '3%', */
-        textAlign: 'center'
-    },
-    fullNameAndIndexNumberDiv: {
-        position: 'relative',
-        top: '10px'
-    },
-    fullNameTextField: {
-        width: '300px',
-        position: 'relative',
-        right: '80px'
-    },
-    indexNumberTextField: {
-        width: '300px',
-        position: 'relative',
-        left: '30px'
-    },
-    roomNumberAndMobileNumberDiv: {
-        position: 'relative',
-        top: '27px'
-    },
-    roomNumberTextField: {
-        width: '300px',
-        position: 'relative',
-        right: '80px'
-    },
-    mobileNumberTextField: {
-        width: '300px',
-        position: 'relative',
-        left: '30px'
-    },
-    complaintType: {
-        position: 'relative',
-        top: '50px',
-        left: '15px'
-    },
-    specifyOtherComplaintTypeTextField: {
-        width: '300px',
-        position: 'relative',
-        bottom: '47px',
-        left: '167px'
-    },
-    complaintDescription: {
-        position: 'relative',
-        top: '87px',
-        right: '20px'
-    },
-    secondaryComplaintDescription: {
-        position: 'relative',
-        top: '40px',
-        right: '20px'
-    },
-    complaintDescriptionTextarea: {
-        width: '710px'
-    },
-    secondaryComplaintDescriptionTextarea : {
-        width: '710px'
-    },
-    dateAndTimePickerDiv: {
-        position: 'relative',
-        top: '90px'
+    formRow: {
+        marginBottom: '30px'
     },
     datePicker: {
-        position: 'relative',
-        right: '110px'
+        marginLeft: '140px',
+        marginTop: '-5px'
     },
     timePicker: {
-        position: 'relative',
-        left: '78px'
+        marginLeft: '100px',
+        marginTop: '-5px'
     },
-    formButtonsDiv: {
-        position: 'relative',
-        top: '110px'
+    submitBtn: {
+        width: '230px',
+        marginTop: '-8px',
+        marginLeft: '90px',
+        paddingLeft: '50px'
     },
-    secondaryDateAndTimePickerDiv: {
-        position: 'relative',
-        top: '45px'
-    },
-    secondaryFormButtonsDiv: {
-        position: 'relative',
-        top: '70px'
-    },
-    complaintStatusSpan: {
-        position: 'relative',
-        top: '155px'
-    },
-    secondarycomplaintStatusSpan: {
-        position: 'relative',
-        top: '100px'
-    },
-    studentEmailTextFieldDiv: {
-        position: 'relative',
-        top: '60px',
-        right: '230px'
-    },
-    secondaryStudentEmailTextFieldDiv: {
-        position: 'relative',
-        top: '13px',
-        right: '-13px',
-        width: '240px'
-    },
-    studentEmailTextField: {
-        width: '300px'
+    cancelBtn: {
+        width: '230px',
+        marginTop: '-8px',
+        marginLeft: '100px',
+        paddingLeft: '90px'
     }
+
 
 }))
 
@@ -175,11 +78,15 @@ export default function SubmitComplaint(props) {
     const [ otherComplaintType, setOtherComplaintType ] = useState('')
 
     // the autocomplete.
-    const [ complaintType, setComplaintType ] = useState('Electrical')
+    //const [ complaintType, setComplaintType ] = useState('Electrical')
     const [ complaintTypeInputValue, setComplaintTypeInputValue ] = useState('')
 
-    // state for date and time
+
     const [ selectedDateAndTime, setSelectedDateAndTime ] = useState(new Date());
+
+    const updateDateAndTime = ( date ) => {
+        setSelectedDateAndTime( date )
+    }
 
 
     // the remaining components.
@@ -207,6 +114,10 @@ export default function SubmitComplaint(props) {
 
     const handleMobileNumberChange = ( event ) => {
         setMobileNumber( event.target.value )
+    }
+
+    const handleComplaintTypeChange = ( event ) => {
+        setComplaintTypeInputValue( event.target.value )
     }
 
     const handleComplaintDescriptionChange = ( event ) => {
@@ -332,8 +243,8 @@ export default function SubmitComplaint(props) {
     // function to push sign in.
     const goToSignIn = () => {
         // modal here later.
-        alert('You are logging out')
-        router.push('/signin')
+        //alert('You are logging out')
+        router.push('/login')
     }
 
 
@@ -346,180 +257,103 @@ export default function SubmitComplaint(props) {
             {
                 user ? 
             
-        <div style={{ display: 'flex' }}>
+        <div>
             
-            <StudentComplaintPersistentDrawer handleLogout={ handleLogout } 
-                                              user={ user }
-            />
+            <StudentComplaintNavBar user={ user } handleLogout={ handleLogout } />
 
-            <div style={{flex: 'column'}}>
-            <div className={ classes.headerTextDiv }>
-                <Typography  variant='h6' className={ classes.headerText} >
-                    Submit A Complaint
-                </Typography>
-            </div>
-        
-        <div className={ classes.submitComplaintForm }>
-            <form onSubmit={ handleFormSubmit }>
-                <MuiPickersUtilsProvider utils={ DateFnsUtils }>
+            <div style={{ marginTop: '140px'}}>
+                <div>
+                <Form className={ classes.complaintForm } onSubmit={ handleFormSubmit } >
+                    <Row className={ classes.formRow }>
+                        <Col>
+                            <Form.Control type='text' placeholder='Student full name' required onChange={ handleStudentFullNameChange } value={ studentFullName } />
+                        </Col>
+                        <Col>
+                             <Form.Control type='text' placeholder='Student index number' required onChange={ handleStudentIndexNumberChange } value={ studentIndexNumber } />
+                        </Col>
+                    </Row>
 
-                 <div className={ classes.fullNameAndIndexNumberDiv}>
-                        <TextField
-                            variant='outlined'
-                            label='Student Full Name'
-                            required={ true }
-                            className={ classes.fullNameTextField }
-                            onChange={ handleStudentFullNameChange }
-                            value={ studentFullName }
-                        />
+                    <Row className={ classes.formRow }>
+                        <Col>
+                            <Form.Control type='text' placeholder='Room number' required onChange={ handleRoomNumberChange }  value={ roomNumber } />
+                        </Col>
+                        <Col>
+                             <Form.Control type='text' placeholder='Mobile number' required onChange={ handleMobileNumberChange } value={ mobileNumber } />
+                        </Col>
+                    </Row>
 
-                        <TextField
-                            variant='outlined'
-                            label='Student Index Number'
-                            required={ true }
-                            className={ classes.indexNumberTextField }
-                            onChange={ handleStudentIndexNumberChange }
-                            value={ studentIndexNumber }
+                    <Row className={ classes.formRow }>
+                        <Col>
+                            <Form.Control type='text' placeholder='Complaint type' onChange={ handleComplaintTypeChange } required value={ complaintTypeInputValue } />
+                        </Col>
+                        <Col>
+                             <Form.Control type='email' placeholder='Email' required onChange={ handleStudentEmailChange }  value={ studentEmail } />
+                        </Col>
+                    </Row>
 
-                        />
+                    <Row className={ classes.formRow }>
+                        <Col>
+                            <Form.Control type='text' placeholder='Specify other complaint type' required onChange={ handleOtherComplaintTypeChange }  value={ otherComplaintType } />
+                        </Col>
+                    </Row>
 
-                 </div>
+                    <Row className={ classes.formRow }>
+                        <Col>
+                            <FormControl as='textarea' placeholder='Complaint description' required  onChange={ handleComplaintDescriptionChange }  value={ complaintDescription } />
+                        </Col>
+                    </Row>
 
-                 <div className={ classes.roomNumberAndMobileNumberDiv }>
-                       <TextField
-                            variant='outlined'
-                            label='Room Number'
-                            required={ true }
-                            className={ classes.roomNumberTextField }
-                            onChange={ handleRoomNumberChange }
-                            value={ roomNumber }
-
-                        />
-
-                        <TextField
-                            variant='outlined'
-                            label='Mobile Number'
-                            required={ true }
-                            className={ classes.mobileNumberTextField }
-                            onChange={ handleMobileNumberChange }
-                            value={ mobileNumber }
-                        />
-
-
-                 </div>
-
-
-                 <div className={ classes.complaintType }>
-                        <Autocomplete 
-                            id='complaint type autocomplete'
-                            options={ complaintTypesArray }
-                            getOptionLabel={ (option) => option.complaintType }
-                            renderInput={ (params) => (
-                                <TextField {...params} required={true} label='Complaint Type' variant='outlined' />
-                            )}
-                            style={{ width: 300 }}
-                            className={ classes.complaintTypeAutocomplete }
-                            size='small'
-                            onChange={( event, newComplaint ) => {
-                                setComplaintType(newComplaint)
-                                console.log('value = ', complaintType )
-                            }}
-                            value={ complaintType }
-                            onInputChange={( event, newInputValue ) => {
-                                setComplaintTypeInputValue(newInputValue)
-                                console.log('input change = ', complaintTypeInputValue)
-                            }}
-                            inputValue={ complaintTypeInputValue }
-                        />
-
-
-                        { specifyOtherComplaintType && <TextField
-                                                         variant='outlined'
-                                                         label='Please specify complaint type'
-                                                         required={ true }
-                                                         className={ classes.specifyOtherComplaintTypeTextField } 
-                                                         onChange={ handleOtherComplaintTypeChange }
-                                                         value={ otherComplaintType }  
-                                                /> 
-                        }
-                 </div>
-
-
-                 <div className={ specifyOtherComplaintType ? classes.secondaryStudentEmailTextFieldDiv : classes.studentEmailTextFieldDiv }>
-                     <TextField 
-                        variant='outlined'
-                        label='Email'
-                        type='email'
-                        required={ true }
-                        className={ classes.studentEmailTextField }
-                        onChange={ handleStudentEmailChange }
-                        value={ studentEmail }
-                     />
-
-                 </div>
-
-
-                 <div className={ specifyOtherComplaintType? classes.secondaryComplaintDescription : classes.complaintDescription }>
-                     <TextareaAutosize className={ specifyOtherComplaintType? classes.secondaryComplaintDescriptionTextarea : classes.complaintDescriptionTextarea }
-                                       required={ true }
-                                       placeholder='Complaint Description'
-                                       rowsMin={ 3 }
-                                       onChange={ handleComplaintDescriptionChange }
-                                       value={ complaintDescription }
-                     />
-                 </div>
-
-
-                 <div className={ specifyOtherComplaintType? classes.secondaryDateAndTimePickerDiv : classes.dateAndTimePickerDiv }>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <Row className={ classes.formRow }>
+                    <Col>
                     <DatePicker 
-                                disableToolbar
-                                variant='inline'
-                                required={ true }
-                                format="MM / dd / yyyy"
-                                margin="normal"
-                                id="date-picker-inline"
-                                label="Select Date"
-                                value={ selectedDateAndTime }
-                                onChange={ updateSelectedDateAndTime }
-                                className={ classes.datePicker }
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                }} /> 
+                        disableToolbar
+                        variant="inline"
+                        required
+                        format="MM / dd / yyyy"
+                        margin="normal"
+                        id="date-picker-inline"
+                        label="Select Date"
+                        value={ selectedDateAndTime }
+                        onChange={ updateDateAndTime }
+                        className={ classes.datePicker }
+                            KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                        }} /> 
+                        </Col>
 
-
-                            <TimePicker 
-                                margin="normal"
-                                id="time-picker"
-                                label="Pick Time"
-                                required={ true }
-                                value={ selectedDateAndTime }
-                                onChange={ updateSelectedDateAndTime }
-                                className={ classes.timePicker }
+                        <Col>
+                        <TimePicker 
+                            margin="normal"
+                            id="time-picker"
+                            label="Pick Time"
+                            required
+                            value={ selectedDateAndTime }
+                            onChange={ updateDateAndTime }
+                            className={ classes.timePicker }
                                 KeyboardButtonProps={{
                                   'aria-label': 'change time',
                                 }}
-                    
-                              /> 
-            
-                </div>
-
-
-                <div className={ specifyOtherComplaintType? classes.secondaryFormButtonsDiv : classes.formButtonsDiv}>
-                <button type='submit' className='submitComplaintButton' > Submit Complaint </button>
-
-                <button type='button' className='cancelButton' onClick={ handleCancelButtonClick }> Cancel </button>
-
-                </div>
-
-                
-                { complaintSubmitting && <span className={ specifyOtherComplaintType? classes.secondarycomplaintStatusSpan : classes.complaintStatusSpan}> 
-                     Submitting complaint....</span> }
-                
+                        /> 
+                        </Col>
+                    </Row>
                 </MuiPickersUtilsProvider>
-            </form>
+
+                <Row>
+                    <Col>
+                        <Button type='submit' variant='primary' size='md' className={ classes.submitBtn }> Submit Complaint </Button>{' '}
+                    </Col>
+                    <Col>
+                        <Button type='button' variant='primary' size='md' className={ classes.cancelBtn } onClick={ handleCancelButtonClick }> Cancel </Button>
+                    </Col>
+                </Row>
             
+
+
+                </Form>
+                </div>
             
-        </div>
+    
         </div>
 
         </div>

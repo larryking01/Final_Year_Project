@@ -2,126 +2,61 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { projectFirestore, projectStorage } from '../firebaseSetup/firebaseConfig'
 import './addStudentBtnStyles.css'
-import PersistentDrawer from '../Drawers/PersistentDrawer'
-//import SwipeableDrawer from '../Drawers/SwipeableDrawer'
-
+import { Form, Col, Row, Button } from 'react-bootstrap'
+import StudentTrackingNavBar from '../Drawers/StudentTrackingNavBar'
 import { makeStyles } from '@material-ui/core/styles'
-import { Typography, TextField, Button } from '@material-ui/core'
-import { Autocomplete } from '@material-ui/lab'
-
-
-
-// the dialog.
-import Dialog from '@material-ui/core/Dialog'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogActions from '@material-ui/core/DialogActions'
+import { DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import DateFnsUtils from '@date-io/date-fns'
 
 
 
 
 // setting up styling.
 const useStyles = makeStyles(theme => ({
-
-    headerTextDiv: {
-        backgroundColor: '#01579b',
-        color: 'white',
-        width: '850px',
-        height: '80px',
-        //borderRadius: '50%'
-        boxShadow: '2px 2px 8px grey',
+    addStudentForm: {
         position: 'relative',
-        top: '30px',
-        left: '400px'
+        left: '280px',
+        width: '60vw'
     },
-    headerText: {
-        position: 'relative',
-        left: '340px',
-        top: '20px'
+    formRow: {
+        marginBottom: '30px'
     },
-    addNewStudentForm: {
-        width:'850px',
-        height: '540px',
-        position: 'relative',
-        top: '40px',
-        left: '400px',
-        /*boxShadow: '2px 2px 8px',
-        borderRadius: '3%' */
-        
+    submitBtn: {
+        width: '390px',
+        marginTop: '60px',
+        marginLeft: '5px',
+        paddingLeft: '140px'
     },
-    actualForm: {
-        textAlign: 'center',
-        marginTop: '10px'
+    cancelBtn: {
+        width: '390px',
+        marginTop: '60px',
+        marginLeft: '10px',
+        paddingLeft: '160px'
     },
-    firstNameLastNameDiv: {
-        marginTop: '15px'
+    imageErrorMessage: {
+        marginTop: '7px'
     },
-    firstNameTextField: {
-        position: 'relative',
-        right: '90px',
-        width: '300px'
+    ButtonsRow: {
+        marginTop: '-22px'
     },
-    lastNameTextField: {
-        position: 'relative',
-        left: '40px',
-        width: '300px'
+    secondaryButtonsRow: {
+        marginTop: '-35px'
     },
-    idNumberAndRoomNumberDiv: {
-        marginTop: '30px'
-    },
-    levelAndSexDiv: {
-        marginTop: '30px'
-    },
-    courseAndMobileNumberDiv: {
-        marginTop: '-10px'
-    },
-    pictureDiv: {
-        position: 'relative',
-        top: '20px',
-        right: '170px'
-    },
-    addStudentButton: {
-        width: '200px',
-        position: 'relative',
-        top: '55px'
-    },
-    cancelAddStudentButton: {
-        width: '200px',
-        position: 'relative',
-        top: '55px',
-        marginLeft: '30px'
-    },
-    uploadPictureText: {
-        position: 'relative',
-        right: '12px',
-        top: '5px'
-    },
-    sexAutocomplete: {
-        position: 'relative',
-        left: '35px'
-        
-    },
-    levelAutocomplete: {
-        position: 'relative',
-        left: '462px',
-        bottom: '50px'
-        
-    },
-    errorSpan: {
-        color: 'red',
-        position: 'relative',
-        left: '70px',
-        top: '5px',
-        fontSize: '13px'
+    addingStudentMessage: {
+        marginTop: '13px',
+        fontSize: '16px'
     }
+
 }))
 
 
 
 
 
-export default function AddNewStudent() {
+export default function AddNewStudent( props ) {
+
+    // destructuring props.
+    const { staffID } = props
 
     // handling state for each of the form components.
     const [ firstName, setFirstName ] = useState('')
@@ -133,44 +68,8 @@ export default function AddNewStudent() {
     const [ addStudentComplete, setAddStudentComplete ] = useState(true)
 
 
-    // handling state for the dialog.
-    const [ open, setOpen ] = useState( false )
 
-    const handleDialogOpen = () => {
-        setOpen(true)
-    }
-
-    const handleDialogClose = () => {
-        setOpen(false)
-    }
-
-
-    // function to return the dialog.
-    const showConfirmationDialog = () => {
-        setOpen(true)
-        console.log(`open = ${open}`)
-        console.log('show confirmation dialog executing')
-        return(
-            <Dialog open={ open } onClose={ handleDialogClose }>
-                <DialogTitle> Confirmation Message </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Student added successfully !
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button>
-                        OK
-                    </Button>
-                </DialogActions>
-
-            </Dialog>
-        )
-        
-    }
-
-
-
+    
     // handling state for the uploaded student picture.
     const [ studentPicture, setStudentPicture ] = useState(null)
     const [ error, setError ] = useState(null)
@@ -258,7 +157,7 @@ export default function AddNewStudent() {
     const handleFormSubmit = ( event ) => {
         event.preventDefault()
         setAddStudentComplete(false) 
-        setOpen( true )
+        
 
             // the reference to the image file.
             let storageReference = projectStorage.ref()
@@ -359,69 +258,19 @@ export default function AddNewStudent() {
     
 
     return (
-        <div style={{display: 'flex'}}>
+        <div>
 
-            <PersistentDrawer />
+            <StudentTrackingNavBar staffID={ staffID } />
 
-            <div style={{flex: 'column'}}>
-            <div className={ classes.headerTextDiv }>
-                <Typography  variant='h6' className={ classes.headerText} >
-                    Add a new student
-                </Typography>
-            </div>
+            <div style={{flex: 'column', marginTop: '140px'}}>
+          
             
             {/* the form for adding a new student */}
-            <div className={classes.addNewStudentForm}>
-                <form onSubmit={ handleFormSubmit } className={classes.actualForm}>
-                    <Typography variant='h14'>
-                        Enter the details of the student.
-                    </Typography>
-
-                    {/* the first name and last name div */}
-                    <div className={classes.firstNameLastNameDiv}>
-                       <TextField 
-                          variant='outlined'
-                          label='First Name'
-                          required={ true }
-                          className={classes.firstNameTextField}
-                          onChange={ handleFirstNameComponentState }
-                          value={ firstName }
-                       />
-
-                       <TextField 
-                        variant='outlined'
-                        label='Last Name'
-                        required={ true }
-                        className={classes.lastNameTextField}
-                        onChange={ handleLastNameComponent } 
-                        value={ lastName }
-                       />
-
-                    </div>
-
-                    {/* the id number and room number div */}
-                    <div className={classes.idNumberAndRoomNumberDiv}>
-                       <TextField 
-                          variant='outlined'
-                          label='Index Number'
-                          required={ true }
-                          className={classes.firstNameTextField}
-                          onChange={ handleIndexNumberComponent }
-                          value={ indexNumber }
-                       />
-
-                        <TextField 
-                          variant='outlined'
-                          label='Room Number'
-                          required={ true }
-                          className={classes.lastNameTextField}
-                          onChange={ handleRoomNumberComponent }
-                          value={ roomNumber }
-                       />
-                       
-                    </div>
-
-                    {/* the level and sex div */}
+            <div >
+                {
+                    /*
+                
+                    {/* the level and sex div 
                     <div className={classes.levelAndSexDiv}>
                         <Autocomplete 
                             id='sex autocomplete'
@@ -468,52 +317,126 @@ export default function AddNewStudent() {
 
                     </div>
 
-                    {/* the course and mobile number div */}
-                    <div className={classes.courseAndMobileNumberDiv}>
-                       <TextField 
-                          variant='outlined'
-                          label='Course'
-                          required={ true }
-                          className={classes.firstNameTextField}
-                          onChange={ handleCourseComponent }
-                          value={ course }
-                       />
+                   
 
-                       <TextField 
-                        variant='outlined'
-                        label='Mobile Number'
-                        required={ true }
-                        className={classes.lastNameTextField}
-                        onChange={ handleMobileNumberComponent }
-                        value={ mobileNumber }
-                       />
-
-                    </div>
-
-                    {/* the upload picture div */}
-                    <div className={classes.pictureDiv}>
-                        <input type='file' onChange={ handlePictureSelected } required={ true } style={{ position: 'relative', right: '100px' }} />
-                        <div className={classes.uploadPictureText}>
-                        <Typography variant='h9' >
-                            Upload student picture.
-                        </Typography>
-                        </div>
-                        { error && <span className={classes.errorSpan}> { error } </span> } 
-                        { !addStudentComplete && <span> Adding student... </span>}
-                        
-                    </div>
-
-
-                    <div className='actionButtonsDiv'>
-                        <button type='submit' className='addStudentBtn'> Add student  </button>
-
-                        <button type='button' className='cancelAddStudentBtn' onClick={ handleCancelBtnClick }>
-                             Cancel  
-                        </button>
-                    </div>
+                    {/* the upload picture div 
+                    
+                   
                         
                  
                 </form>
+
+                    */ }
+
+                <Form className={ classes.addStudentForm } onSubmit={ handleFormSubmit }>
+                    <Row className={ classes.formRow }>
+                        <Col>
+                            <Form.Control type='text' required placeholder='Student First Name' onChange={ handleFirstNameComponentState } value={ firstName } />
+                        </Col>
+
+                        <Col>
+                            <Form.Control type='text' required placeholder='Student Last Name' onChange={ handleLastNameComponent } value={ lastName } />
+                        </Col>
+                    </Row>
+
+                    <Row className={ classes.formRow }>
+                        <Col>
+                            <Form.Control type='text' required placeholder='Index Number' onChange={ handleIndexNumberComponent } value={ indexNumber } />
+                        </Col>
+
+                        <Col>
+                            <Form.Control type='text' required placeholder='Room Number' onChange={ handleRoomNumberComponent }  value={ roomNumber } />
+                        </Col>
+                    </Row>
+
+                    <Row className={ classes.formRow }>
+                        <Col>
+                            <Form.Control type='text' required placeholder='Gender Combobox'  />
+                        </Col>
+
+                        <Col>
+                            <Form.Control type='text' required placeholder='Level Combobox' />
+                        </Col>
+                    </Row>
+
+                    <Row className={ classes.formRow }>
+                        <Col>
+                            <Form.Control type='text' required placeholder='Course' onChange={ handleCourseComponent } value={ course } />
+                        </Col>
+
+                        <Col>
+                            <Form.Control type='text' required placeholder='Mobile Number' onChange={ handleMobileNumberComponent } value={ mobileNumber } />
+                        </Col>
+                    </Row>
+
+                    <MuiPickersUtilsProvider utils={ DateFnsUtils }>
+                    <Row className={ classes.fileRow }>
+                        <Col>
+                            <Form.File name='Upload student picture' onChange={ handlePictureSelected } required />
+                        </Col>
+                    </Row>
+
+                    <Row className={ classes.imageErrorMessage }>
+                        { error && <Col> { error } </Col> } 
+                    </Row>
+
+                    <Row>
+                        <Col>
+                            <DatePicker 
+                                 disableToolbar
+                                 variant="inline"
+                                 required
+                                 format="MM / dd / yyyy"
+                                 margin="normal"
+                                 id="date-picker-inline"
+                                 label="Select Date"
+                                 //value={ selectedDateAndTime }
+                                 //onChange={ updateDateAndTime }
+                                 //className={ classes.datePicker }
+                                 KeyboardButtonProps={{
+                                  'aria-label': 'change date'
+                                
+                                 }} /> 
+                        </Col>
+
+                    </Row>
+                    </MuiPickersUtilsProvider>
+
+
+                    
+
+                    <Row className={ error? classes.secondaryButtonsRow : classes.ButtonsRow }>
+                        <Col>
+                            <Button type='submit' variant='primary' size='md' className={ classes.submitBtn }> Add Student </Button>
+                        </Col>
+
+                        <Col>
+                            <Button type='button' variant='primary' size='md' className={ classes.cancelBtn } onClick={ handleCancelBtnClick }> Cancel </Button>
+                        </Col>
+                    </Row>
+
+                    <Row className={ classes.addingStudentMessage }>
+                          { !addStudentComplete && <Col> Adding student... </Col>}
+                    </Row>
+
+
+
+
+
+
+
+
+
+                </Form>
+
+
+
+
+
+
+
+
+                
                 
             </div>
             </div>
