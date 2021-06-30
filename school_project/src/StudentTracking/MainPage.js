@@ -224,11 +224,12 @@ export default function MainPage( props ) {
         { title: 'Index Number', field: 'indexNumber'},
         { title: 'First Name', field: 'firstName'},
         { title: 'Last Name', field: 'lastName'},
-        { title: 'Sex', field: 'sexInputValue'},
+        { title: 'Gender', field: 'sexInputValue'},
         { title: 'Room Number', field: 'roomNumber'},
         { title: 'Course', field: 'course'},
         { title: 'Level', field: 'levelInputValue'},
         { title: 'Mobile Number', field: 'mobileNumber', width:'30%'},
+        { title: 'Date Added', field: 'dateRegistered'},
         { title: 'Check In Status', field: 'checkInStatus', editable: 'never',
                 render: item => <button className={ item.checkInStatus === 'Checked In' ? classes.checkInButton : classes.checkOutButton }> { item.checkInStatus } </button>
         }

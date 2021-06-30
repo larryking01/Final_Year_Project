@@ -56,7 +56,9 @@ export default function ManageVisitors( props ) {
         { title: 'Room Member Visited', field: 'roomMemberGettingVisited'},
         { title: 'Date Of Visit', field: 'dateOfVisit'},
         { title: 'Time Of Visit', field: 'timeOfVisit'},
-        { title: 'Time Of Departure', field: 'timeOfDeparture'}
+        { title: 'Time Of Departure', field: 'timeOfDeparture'},
+        { title: 'Mobile Number', field: 'visitorMobileNumber'},
+        { title: 'Is the visitor a UG student?', field: 'visitorUGStudentStatus'}
         
     ]
 

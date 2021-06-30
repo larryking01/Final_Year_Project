@@ -51,6 +51,9 @@ const useStyles = makeStyles( theme => ({
         marginTop: '-8px',
         marginLeft: '100px',
         paddingLeft: '90px'
+    },
+    textArea: {
+        resize: 'none'
     }
 
 
@@ -299,7 +302,7 @@ export default function SubmitComplaint(props) {
 
                     <Row className={ classes.formRow }>
                         <Col>
-                            <FormControl as='textarea' placeholder='Complaint description' required  onChange={ handleComplaintDescriptionChange }  value={ complaintDescription } />
+                            <FormControl as='textarea' placeholder='Complaint description' rows={ 3 } required  onChange={ handleComplaintDescriptionChange }  value={ complaintDescription } className={ classes.textArea } />
                         </Col>
                     </Row>
 

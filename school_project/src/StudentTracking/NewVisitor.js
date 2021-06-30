@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 import { DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns';
+import Autocomplete from '@material-ui/lab/Autocomplete'
+import TextField from '@material-ui/core/TextField'
 
 //import './addVisitorBtnStyles.css'
 
@@ -56,14 +58,29 @@ export default function NewVisitor( props ) {
     // initializing styling.
     let classes = useStyles()
 
+    // for date and time.
+    let visitingDate = new Date()
+
+
+    // for whether or not visitor is a UG student
+    // handling the state for the sex autocomplete component.
+    const [ visitorUGStudentValue, setVisitorUGStudentValue ] = useState('Yes')
+    const [ visitorUGStudentInputValue, setVisitorUGStudentInputValue ] = useState('')
+
+    let visitorStudentStatus = [
+        { UGStudent: 'Yes'},
+        { UGStudent: 'No'}
+    ]
+
 
     // handling state.
     const [ visitorFullName, setVisitorFullName ] = useState('')
     const [ visitorIndexNumber, setVisitorIndexNumber ] = useState('')
     const [ visitingRoom, setVisitingRoom ] = useState('')
     const [ roomMemberGettingVisited, setRoomMemberGettingVisited ] = useState('')
-    const [ visitorUGStudent, setVisitorUGStudent ] = useState( true )
+    //const [ visitorUGStudent, setVisitorUGStudent ] = useState( true )
     const [ visitorAddedComplete, setVisitorAddedComplete ] = useState( true )
+    const [ visitorMobileNumber, setVisitorMobileNumber ] = useState('')
 
 
     // state for date and time
@@ -90,6 +107,10 @@ export default function NewVisitor( props ) {
         setRoomMemberGettingVisited( event.target.value )
     }
 
+    const updateVisitorMobileNumber = ( event ) => {
+        setVisitorMobileNumber( event.target.value )
+    }
+
 
     // handling cancel button click.
     const handleCancelBtnClick = ( ) => {
@@ -97,6 +118,8 @@ export default function NewVisitor( props ) {
         setVisitorIndexNumber('')
         setRoomMemberGettingVisited('')
         setVisitingRoom('')
+        setVisitorUGStudentInputValue('')
+        setVisitorMobileNumber('')
     }
 
 
@@ -110,12 +133,14 @@ export default function NewVisitor( props ) {
             visitorIndexNumber : visitorIndexNumber.trim(),
             visitingRoom : visitingRoom.trim(),
             roomMemberGettingVisited,
-            dateOfVisit: selectedDateAndTime.toDateString(),
-            timeOfVisit: selectedDateAndTime.toLocaleTimeString([], {
+            dateOfVisit: visitingDate.toDateString(),
+            timeOfVisit: visitingDate.toLocaleTimeString([], {
                 hour: '2-digit',
                 minute: '2-digit'
             }),
-            timeOfDeparture: 'Not available yet'
+            timeOfDeparture: 'Not available yet',
+            visitorUGStudentStatus: visitorUGStudentInputValue,
+            visitorMobileNumber
         }
 
 
@@ -152,7 +177,7 @@ export default function NewVisitor( props ) {
                 </Col>
 
                 <Col>
-                    <Form.Control type='text' placeholder='Index Number' required onChange={ updateVisitorIndexNumber } value={ visitorIndexNumber } disabled={ visitorUGStudent ? false : true } />
+                    <Form.Control type='text' placeholder='Index Number' required onChange={ updateVisitorIndexNumber } value={ visitorIndexNumber } disabled={ visitorUGStudentInputValue === 'Yes' || visitorUGStudentInputValue === ''  ? false : true } />
                 </Col>
             </Row>
 
@@ -168,14 +193,33 @@ export default function NewVisitor( props ) {
 
             <Row className={ classes.formRow }>
                 <Col>
-                    <Form.Control type='text' placeholder='Is the visitor a UG student?' required />
+                <Autocomplete 
+                            id='visitor student status'
+                            options={ visitorStudentStatus }
+                            getOptionLabel = { (option) => option.UGStudent }
+                            renderInput = { (params) => (
+                                <TextField {...params} required label='Is the visitor a UG student?' variant='filled' />
+                            ) }
+                            style={{width: 395}}
+                            size='small'
+                            value={ visitorUGStudentValue }
+                            onChange={(event, newValue) => {
+                                setVisitorUGStudentValue(newValue)
+                            }}
+                            inputValue={ visitorUGStudentInputValue }
+                            onInputChange={(event, newInputValue) => {
+                                setVisitorUGStudentInputValue(newInputValue)
+                            }}
+                                
+                        />
                 </Col>
                 <Col>
-                    <Form.Control type='text' placeholder='Mobile number' />
+                    <Form.Control type='text' placeholder='Mobile number' style={{ height: 50}} required onChange={ updateVisitorMobileNumber } value={ visitorMobileNumber } />
                 </Col>
             </Row>
 
 
+            { /* 
             <MuiPickersUtilsProvider utils={ DateFnsUtils } >
                 <Row className={ classes.formRow }>
                     <Col>
@@ -216,6 +260,8 @@ export default function NewVisitor( props ) {
                 </Row>
 
             </MuiPickersUtilsProvider>
+
+                        */ }
 
 
             <Row>

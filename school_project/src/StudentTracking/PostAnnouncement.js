@@ -164,10 +164,6 @@ export default function PostAnnouncement( props ) {
 
                 </Row>
 
-
-
-
-
             </Form>
 
 

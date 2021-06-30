@@ -7,7 +7,8 @@ import StudentTrackingNavBar from '../Drawers/StudentTrackingNavBar'
 import { makeStyles } from '@material-ui/core/styles'
 import { DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
-
+import Autocomplete from '@material-ui/lab/Autocomplete'
+import TextField from '@material-ui/core/TextField'
 
 
 
@@ -57,6 +58,9 @@ export default function AddNewStudent( props ) {
 
     // destructuring props.
     const { staffID } = props
+
+    // for date registered.
+    const dateAdded = new Date()
 
     // handling state for each of the form components.
     const [ firstName, setFirstName ] = useState('')
@@ -189,7 +193,8 @@ export default function AddNewStudent( props ) {
             sexInputValue,
             levelInputValue,
             imageUrl,
-            checkInStatus : 'Checked In'
+            checkInStatus : 'Checked In',
+            dateRegistered: dateAdded.toDateString()
         }
 
 
@@ -262,72 +267,8 @@ export default function AddNewStudent( props ) {
 
             <StudentTrackingNavBar staffID={ staffID } />
 
-            <div style={{flex: 'column', marginTop: '140px'}}>
-          
-            
-            {/* the form for adding a new student */}
-            <div >
-                {
-                    /*
-                
-                    {/* the level and sex div 
-                    <div className={classes.levelAndSexDiv}>
-                        <Autocomplete 
-                            id='sex autocomplete'
-                            options={ sexValuesArray }
-                            getOptionLabel = { (option) => option.gender }
-                            renderInput = { (params) => (
-                                <TextField {...params} required={true} label='Sex' variant='filled' />
-                            ) }
-                            style={{width: 300}}
-                            className={classes.sexAutocomplete}
-                            size='small'
-                            value={ sexValue }
-                            onChange={(event, newValue) => {
-                                setSexValue(newValue)
-                            }}
-                            inputValue={ sexInputValue }
-                            onInputChange={(event, newInputValue) => {
-                                setSexInputValue(newInputValue)
-                            }}
-                            
-                                
-                        />
-
-                        <Autocomplete 
-                            id='level autocomplete'
-                            options={ levelValuesArray }
-                            getOptionLabel={ (option) => option.level }
-                            renderInput={ (params) => (
-                                <TextField {...params} required={true} label='Level' variant='filled' />
-                            )}
-                            style={{width: 300}}
-                            className={classes.levelAutocomplete}
-                            size='small'
-                            value={ levelValue }
-                            onChange={(event, newValue) => {
-                                setLevelValue(newValue)
-                            }}
-                            inputValue={ levelInputValue }
-                            onInputChange={(event, newInputValue) => {
-                                setLevelInputValue(newInputValue)
-                            }}
-                              
-                        />
-
-                    </div>
-
+            <div style={{flex: 'column', marginTop: '180px'}}>
                    
-
-                    {/* the upload picture div 
-                    
-                   
-                        
-                 
-                </form>
-
-                    */ }
-
                 <Form className={ classes.addStudentForm } onSubmit={ handleFormSubmit }>
                     <Row className={ classes.formRow }>
                         <Col>
@@ -351,11 +292,47 @@ export default function AddNewStudent( props ) {
 
                     <Row className={ classes.formRow }>
                         <Col>
-                            <Form.Control type='text' required placeholder='Gender Combobox'  />
+                        <Autocomplete 
+                            id='sex autocomplete'
+                            options={ sexValuesArray }
+                            getOptionLabel = { (option) => option.gender }
+                            renderInput = { (params) => (
+                                <TextField {...params} required label='Gender' variant='filled' />
+                            ) }
+                            style={{width: 400}}
+                            size='small'
+                            value={ sexValue }
+                            onChange={(event, newValue) => {
+                                setSexValue(newValue)
+                            }}
+                            inputValue={ sexInputValue }
+                            onInputChange={(event, newInputValue) => {
+                                setSexInputValue(newInputValue)
+                            }}
+                                
+                        />
                         </Col>
 
                         <Col>
-                            <Form.Control type='text' required placeholder='Level Combobox' />
+                        <Autocomplete 
+                            id='level autocomplete'
+                            options={ levelValuesArray }
+                            getOptionLabel={ (option) => option.level }
+                            renderInput={ (params) => (
+                                <TextField {...params} required label='Level' variant='filled' />
+                            )}
+                            style={{width: 395}}
+                            size='small'
+                            value={ levelValue }
+                            onChange={(event, newValue) => {
+                                setLevelValue(newValue)
+                            }}
+                            inputValue={ levelInputValue }
+                            onInputChange={(event, newInputValue) => {
+                                setLevelInputValue(newInputValue)
+                            }}
+                              
+                        />
                         </Col>
                     </Row>
 
@@ -369,7 +346,7 @@ export default function AddNewStudent( props ) {
                         </Col>
                     </Row>
 
-                    <MuiPickersUtilsProvider utils={ DateFnsUtils }>
+                    {/*<MuiPickersUtilsProvider utils={ DateFnsUtils }> */}
                     <Row className={ classes.fileRow }>
                         <Col>
                             <Form.File name='Upload student picture' onChange={ handlePictureSelected } required />
@@ -380,6 +357,7 @@ export default function AddNewStudent( props ) {
                         { error && <Col> { error } </Col> } 
                     </Row>
 
+                { /* 
                     <Row>
                         <Col>
                             <DatePicker 
@@ -402,8 +380,8 @@ export default function AddNewStudent( props ) {
                     </Row>
                     </MuiPickersUtilsProvider>
 
+                                */ }
 
-                    
 
                     <Row className={ error? classes.secondaryButtonsRow : classes.ButtonsRow }>
                         <Col>
@@ -419,28 +397,11 @@ export default function AddNewStudent( props ) {
                           { !addStudentComplete && <Col> Adding student... </Col>}
                     </Row>
 
-
-
-
-
-
-
-
-
                 </Form>
 
-
-
-
-
-
-
-
-                
                 
             </div>
             </div>
 
-        </div>
     )
 }
