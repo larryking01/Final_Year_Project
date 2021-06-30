@@ -6,6 +6,8 @@ import StudentTrackingNavBar from '../Drawers/StudentTrackingNavBar'
 import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
 import RestoreIcon from '@material-ui/icons/Restore'
+import Fade from 'react-reveal/Fade'
+
 import { makeStyles } from '@material-ui/styles'
 
 
@@ -181,6 +183,7 @@ export default function ViewAllComplaints( props ) {
 
             <StudentTrackingNavBar staffID={ staffID } />
             
+            <Fade top>
             <div style={{ marginTop: '100px' }}>
             <MaterialTable 
                 title='Submitted Complaints'
@@ -276,6 +279,7 @@ export default function ViewAllComplaints( props ) {
 
             />
             </div>
+            </Fade>
 
 
 

@@ -6,6 +6,8 @@ import StudentTrackingNavBar from '../Drawers/StudentTrackingNavBar'
 //import SwipeableDrawer from '../Drawers/SwipeableDrawer'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import CancelIcon from '@material-ui/icons/Cancel'
+import Fade from 'react-reveal/Fade'
+
 //import PersistentDrawer from '../Drawers/PersistentDrawer'
 
 // the Dialog
@@ -243,7 +245,7 @@ export default function MainPage( props ) {
 
             <StudentTrackingNavBar staffID={ staffID } />
             
-
+            <Fade top>
             <div style={{ marginTop: '100px' }}>
                 <MaterialTable 
                     title='List Of Resident Students'
@@ -375,7 +377,7 @@ export default function MainPage( props ) {
 
 
             </div>
-                
+            </Fade>
             
         </div>
     )

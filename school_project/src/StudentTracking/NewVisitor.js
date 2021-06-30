@@ -7,6 +7,8 @@ import { DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pi
 import DateFnsUtils from '@date-io/date-fns';
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import TextField from '@material-ui/core/TextField'
+import Fade from 'react-reveal/Fade'
+
 
 //import './addVisitorBtnStyles.css'
 
@@ -169,7 +171,8 @@ export default function NewVisitor( props ) {
             <StudentTrackingNavBar staffID={ staffID } />
 
             <div style={{display: 'column', marginTop: '210px'}}>
-            
+        
+        <Fade top>
         <Form className={ classes.addVisitorForm } onSubmit={ handleFormSubmit }>
             <Row className={ classes.formRow }>
                 <Col>
@@ -286,6 +289,7 @@ export default function NewVisitor( props ) {
             
 
         </Form>
+        </Fade>
         </div>
 
 

@@ -9,6 +9,7 @@ import { firebaseAuthentication } from './firebaseSetup/firebaseConfig'
 /*import SelectUser from './SelectUserType/SelectUser'
 import SelectUserWithButtons from './SelectUserType/SelectUserWithButtons' */
 import StudentTrackingNavBar from './Drawers/StudentTrackingNavBar'
+import OpeningLandingPage from './NewLandingPage/OpeningLandingPage'
 import StudentComplaintNavBar from './Drawers/StudentComplaintNavBar'
 import StaffLogin from './StudentTracking/StaffLogin'
 import StudentLogin from './Complaint/StudentLogin'
@@ -308,6 +309,8 @@ function App() {
                 </Route>
 
                 <Route path='/navbar' component={ StudentComplaintNavBar } />
+
+                <Route path='/newlandingpage' component={ OpeningLandingPage } />
 
                 <Route path='*' render={() => <h2> Sorry, page not found </h2>} />
 

@@ -4,6 +4,11 @@ import { DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pi
 import DateFnsUtils from '@date-io/date-fns'
 import StudentComplaintNavBar from '../Drawers/StudentComplaintNavBar'
 import { Form, Col, Row, FormControl, Button } from 'react-bootstrap'
+import Rotate from 'react-reveal/Rotate'
+import Fade from 'react-reveal/Fade'
+import Flip from 'react-reveal/Flip'
+
+
 
 
 // for firebase.
@@ -266,6 +271,7 @@ export default function SubmitComplaint(props) {
 
             <div style={{ marginTop: '140px'}}>
                 <div>
+                <Fade top>
                 <Form className={ classes.complaintForm } onSubmit={ handleFormSubmit } >
                     <Row className={ classes.formRow }>
                         <Col>
@@ -354,6 +360,7 @@ export default function SubmitComplaint(props) {
 
 
                 </Form>
+                </Fade>
                 </div>
             
     

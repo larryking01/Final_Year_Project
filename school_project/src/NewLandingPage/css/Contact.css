@@ -1,0 +1,89 @@
+
+*{
+	margin: 0;
+	padding: 0;
+	background-image: url("images/suparise-logo.png");
+}
+.logo 
+{
+height: 50px;
+}
+.navbar{
+	box-shadow: 0 5px 10px #efefef;
+}
+ul li{
+	padding: 10px;
+}
+.container{
+	margin-top: 60px;
+}
+.big-text{
+	font-size: 60px;
+	margin: 10px 0px;
+	color: darkorange;
+}
+.btn
+{
+	margin: 30px 10px;
+	width: 100px;
+	padding: 10px;
+	border-radius: 50px;
+}
+#btn{
+	margin: 30px 10px;
+	padding: 10px;
+}
+
+h1
+{
+	text-align: center;
+	color: #555 !important;
+	padding-bottom: 10px;
+}
+h1::after
+{
+	content: '';
+	background: #007bff;
+	display: block;
+	height: 3px;
+	width: 170px;
+	margin: 20px auto 5px;
+}
+
+
+/*Contact Us*/
+#contact{
+	background-color: #efefef;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	color: #777;
+}
+.contact-form
+{
+	padding: 15px;
+}
+.form-control
+{
+	border-radius: 0 !important;
+	border: none !important;
+}
+::placeholder
+{
+	columns: #999 !important;
+}
+.follow
+{
+	background-color: #fff;
+	padding: 10px;
+	margin: 15px;
+}
+.contact-info .fa
+{
+	margin: 10px;
+	color: #007bff;
+	font-weight: bold;
+}
+footer{
+	background-color:#000;
+	color: #fff;
+}
