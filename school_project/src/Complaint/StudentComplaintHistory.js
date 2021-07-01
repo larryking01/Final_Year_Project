@@ -62,7 +62,7 @@ export default function StudentComplaintHistory( props ) {
      const goToSignIn = () => {
         // modal here later.
         //alert('You are logging out')
-        router.push('/login')
+        router.push('/studentsignin')
     }
 
     

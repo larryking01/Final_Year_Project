@@ -7,21 +7,21 @@ import { firebaseAuthentication } from './firebaseSetup/firebaseConfig'
 
 
 /*import SelectUser from './SelectUserType/SelectUser'
-import SelectUserWithButtons from './SelectUserType/SelectUserWithButtons' */
+import SelectUserWithButtons from './SelectUserType/SelectUserWithButtons' 
 import StudentTrackingNavBar from './Drawers/StudentTrackingNavBar'
-import OpeningLandingPage from './NewLandingPage/OpeningLandingPage'
+import AuthenticationNavBar from './Drawers/AuthenticationNavBar'
+import SignUp from './Complaint/SignUp'
+import SignIn from './Complaint/SignIn' */
+import StudentLogin2 from './LandingPages/StudentLogin'
+import StudentSignUp2 from './LandingPages/StudentSignUp'
 import StudentComplaintNavBar from './Drawers/StudentComplaintNavBar'
 import StaffLogin from './StudentTracking/StaffLogin'
-import StudentLogin from './Complaint/StudentLogin'
-import StudentSignUp from './Complaint/StudentSignUp'
 import SubmitComplaint from './Complaint/SubmitComplaint'
 import MainPage from './StudentTracking/MainPage'
 import AddNewStudent from './StudentTracking/AddNewStudent'
 import NewVisitor from './StudentTracking/NewVisitor'
 import ManageVisitors from './StudentTracking/ManageVisitors'
 import ViewAllComplaints from './StudentTracking/ViewAllComplaints'
-import SignUp from './Complaint/SignUp'
-import SignIn from './Complaint/SignIn'
 import StudentComplaintHistory from './Complaint/StudentComplaintHistory'
 import StaffLandingPage from './StudentTracking/StaffLandingPage'
 import StudentLandingPage from './Complaint/StudentLandingPage'
@@ -133,12 +133,14 @@ function App() {
   }
 
 
+
   // handling log out.
   const handleLogOut = () => {
     firebaseAuthentication.signOut()
     console.log('executing signout')
     console.log(`user = ${ user }`)
   }
+
 
 
   // handling authentication listener.
@@ -189,8 +191,6 @@ function App() {
                                 />
 
                 </Route>
-                <Route exact path='/studentsignup' component={ StudentSignUp } />
-                <Route exact path='/studentLogin' component={ StudentLogin } />
 
                 <Route exact path='/viewallstudents'> 
                       <MainPage staffID={ staffID } />
@@ -209,6 +209,8 @@ function App() {
                       <ManageVisitors staffID={ staffID } />
                 </Route>
 
+           {
+             /*
                 <Route exact path='/signup' >
                       <SignUp 
                             signImail={signInEmail} 
@@ -250,7 +252,8 @@ function App() {
                        />
 
                 </Route>
-                  
+        */ }
+
                 <Route exact path='/submitcomplaint'> 
                       <SubmitComplaint handleLogout={ handleLogOut } user={ user } />
                 </Route>
@@ -285,32 +288,32 @@ function App() {
 
                 <Route exact path='/startuplandingpage' component={ StartUpLandingPage } />
 
-                <Route exact path='/login' >
-                      <StudentComplaintLogin 
-                          signImail={signInEmail} 
-                          setSignInEmail={setSignInEmail}
-                          signUpEmail={signUpEmail}
-                          setSignUpEmail={setSignUpEmail}
-                          signInpassword={signInPassword}
-                          signUpPassword={signUpPassword}
-                          setSignUpPassword={setSignUpPassword}
-                          setSignInPassword={setSignInPassword}
-                          handleLogin={handleLogin}
-                          handleSignUp={handleSignUp}
-                          hasAccount={hasAccount}
-                          person={person} 
-                          setHasAccount={setHasAccount}
-                          emailError={emailError}
-                          passwordError={passwordError} 
-                          user={user}
-                          clearErrors={clearErrors}
-                      />
 
+                <Route exact path='/studentsignin' >
+                      <StudentLogin2 
+                            signImail={signInEmail} 
+                            setSignInEmail={setSignInEmail}
+                            signInpassword={signInPassword}
+                            setSignInPassword={setSignInPassword}
+                            handleLogin={handleLogin}
+                            emailError={emailError}
+                            passwordError={passwordError} 
+                            user={user}
+                            clearErrors={clearErrors}
+                      />
                 </Route>
 
-                <Route path='/navbar' component={ StudentComplaintNavBar } />
-
-                <Route path='/newlandingpage' component={ OpeningLandingPage } />
+                <Route exact path='/studentsignup' >
+                    <StudentSignUp2 
+                        signUpEmail={signUpEmail}
+                        setSignUpEmail={setSignUpEmail}
+                        signUpPassword={signUpPassword}
+                        setSignUpPassword={setSignUpPassword}
+                        handleSignUp={handleSignUp}
+                        emailError={emailError}
+                        passwordError={passwordError}
+                    />
+                </Route>
 
                 <Route path='*' render={() => <h2> Sorry, page not found </h2>} />
 

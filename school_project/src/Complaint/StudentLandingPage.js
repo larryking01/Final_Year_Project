@@ -156,7 +156,7 @@ export default function StudentLandingPage(props) {
     // the function to push users to sign in when they log out.
     const goToStudentSignIn = () => {
       
-        router.push('/login')  
+        router.push('/studentsignin')  
     }
 
 

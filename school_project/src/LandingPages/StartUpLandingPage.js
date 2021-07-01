@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory, Redirect } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import './css/style.css'
 import bubble from './assets/bubble.png'
@@ -15,7 +15,7 @@ export default function StartUpLandingPage() {
 
     // handle student button clicked.
     const handleStudentButtonClicked = () => {
-        router.push('/login')
+        router.push('/studentsignin')
     }
 
 

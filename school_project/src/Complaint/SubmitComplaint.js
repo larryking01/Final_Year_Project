@@ -248,11 +248,12 @@ export default function SubmitComplaint(props) {
 
     
 
+    
     // function to push sign in.
     const goToSignIn = () => {
         // modal here later.
         //alert('You are logging out')
-        router.push('/login')
+        router.push('/studentsignin')
     }
 
 
