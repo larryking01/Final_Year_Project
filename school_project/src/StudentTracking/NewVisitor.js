@@ -7,7 +7,7 @@ import { DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pi
 import DateFnsUtils from '@date-io/date-fns';
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import TextField from '@material-ui/core/TextField'
-import Fade from 'react-reveal/Fade'
+import Rotate from 'react-reveal/Rotate'
 
 
 //import './addVisitorBtnStyles.css'
@@ -172,7 +172,7 @@ export default function NewVisitor( props ) {
 
             <div style={{display: 'column', marginTop: '210px'}}>
         
-        <Fade top>
+        <Rotate top left>
         <Form className={ classes.addVisitorForm } onSubmit={ handleFormSubmit }>
             <Row className={ classes.formRow }>
                 <Col>
@@ -289,7 +289,7 @@ export default function NewVisitor( props ) {
             
 
         </Form>
-        </Fade>
+        </Rotate>
         </div>
 
 

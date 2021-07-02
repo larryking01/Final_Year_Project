@@ -272,7 +272,7 @@ export default function SubmitComplaint(props) {
 
             <div style={{ marginTop: '140px'}}>
                 <div>
-                <Fade top>
+                <Rotate top left>
                 <Form className={ classes.complaintForm } onSubmit={ handleFormSubmit } >
                     <Row className={ classes.formRow }>
                         <Col>
@@ -361,7 +361,7 @@ export default function SubmitComplaint(props) {
 
 
                 </Form>
-                </Fade>
+                </Rotate>
                 </div>
             
     

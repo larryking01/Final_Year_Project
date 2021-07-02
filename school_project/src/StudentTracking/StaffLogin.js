@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import TextField from '@material-ui/core/TextField'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/styles'
-import { InputAdornment, IconButton } from "@material-ui/core"
-import Visibility from "@material-ui/icons/Visibility"
-import VisibilityOff from "@material-ui/icons/VisibilityOff"
+import AuthenticationNavBar from '../Drawers/AuthenticationNavBar'
+/*import mathImage from './assets/math.png'
+import brainstorming from './assets/brainstorming.png'
+import login from './assets/login.png' */
+import authentication from '../LandingPages/assets/authentication.png'
+import { Form, Button } from 'react-bootstrap'
+import { Link, useHistory } from 'react-router-dom'
+import { makeStyles } from '@material-ui/core/styles'
+
+
+
+
 
 // importing other files.
 import '../App.css'
@@ -15,42 +20,7 @@ import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 
 // setting up styling.
 const useStyles = makeStyles({
-    loginContainer: {
-        height: '470px',
-        width: '360px',
-        textAlign: 'center',
-        position: 'relative',
-        top: '40px',
-        left: '400px',
-        /*borderRadius: '5%',
-        boxShadow: '2px 2px 8px' */
-    },
-    staffIDTextField: {
-        marginTop: 100,
-        width: 270
-    },
-    staffPINTextField: {
-        marginTop: 50,
-        width: 270
-    },
-    signInButton: {
-        marginTop: 50,
-        width: 270,
-        backgroundColor: '#2E2A3B',
-        color: 'white',
-        height: 35,
-        fontSize: 16, 
-        cursor: 'pointer',
-        border: 'none',
-        '&:hover': {
-            backgroundColor: 'blue',
-            color: 'white'
-        }
-    },
-    headerText: {
-        position: 'relative',
-        top: 40
-    }
+    
 })
 
 
@@ -73,23 +43,28 @@ const StaffLogin = ( props ) => {
     // for routing.
     let router = useHistory()
 
+
     // handling state.
-    
     const [loginsArray, setLoginsArray] = useState([])
     const [verifyingComplete, setVerifyingComplete] = useState(true)
 
-    // function to update staff ID
+
+    /* function to update staff ID
     const updateStaffID = (event) => {
         setStaffID(event.target.value)
     }
 
+
     // function to update staff PIN
     const updateStaffPIN = (event) => {
         setStaffPIN(event.target.value)
-    }
+    } */
 
-    // Showing and hiding the password
+
+
+    /* Showing and hiding the password
     const [showPassword, setShowPassword] = useState(false);
+
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword)
@@ -99,6 +74,7 @@ const StaffLogin = ( props ) => {
         setShowPassword(!showPassword)
     }
 
+    */
 
 
     // function to verify staff credentials.
@@ -146,61 +122,47 @@ const StaffLogin = ( props ) => {
     return (
        
             <div className={classes.loginContainer}>
-                <form onSubmit={ HandleFormSubmit }>
-                <Typography variant='h4' className={classes.headerText}>
-                    Staff Login 
-                </Typography>
 
-                <div>
-                <TextField className={classes.staffIDTextField}
-                           variant='outlined' 
-                           label='Staff ID'
-                           color='primary'
-                           type='text' 
-                           required={ true } 
-                           onChange={ updateStaffID }
-                           value={ staffID }
-                           onKeyPress={HandleEnterPressed}
-                />
-                </div>
+                <AuthenticationNavBar buttonText='Staff Sign In' />
+
+                <div style={{
+                marginTop: '94px',
+                width: '90vw',
+                height: '90vh',
+                display: 'flex'
+
+                 }}>
+
+                    <img src={ authentication } width={ 800 } />
+                    <h1 style={{ position: 'relative', top: '60px', left: '70px'}}> Welcome </h1>
+                    <h4 style={{ position: 'relative', top: '160px', right: '140px'}}> Staff </h4>
 
 
-                <div>
-                <TextField className={classes.staffPINTextField}
-                           variant='outlined' 
-                           label='PIN'
-                           color='primary'
-                           type={ showPassword ? "text" : "password"}
-                           required={ true }
-                           onChange={ updateStaffPIN }
-                           value={ staffPIN }
-                           onKeyPress={HandleEnterPressed}
-                           InputProps={{ 
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                <IconButton
-                                  aria-label="toggle password visibility"
-                                  onClick={ handleClickShowPassword }
-                                  onMouseDown={ handleMouseDownPassword }
-                                >
-                                  { showPassword ? <Visibility /> : <VisibilityOff /> }
-                                </IconButton>
-                              </InputAdornment>
-                            )
+                    <Form style={{ position: 'relative', right: '370px', top: '240px'}} onSubmit={ HandleFormSubmit }>
+                    <Form.Control type='text' placeholder='Staff ID' required style={{ width: '400px', marginBottom: '30px' }} 
+                        onChange={ (event) => {
+                               setStaffID( event.target.value )
+                               
+                           } }
+                           value={ staffID } />
+
+                    <Form.Control type='password' placeholder='Staff PIN' required style={{ width: '400px', marginBottom: '50px' }} 
+                        onChange={ (event) => {
+                            setStaffPIN(event.target.value)
+                             
                           }}
-                           
-                />
+                        value={ staffPIN }
+                    />
+
+                    <Button variant='primary' type='submit' style={{ width: '400px', marginLeft: '2px', paddingLeft: '180px', marginBottom: '10px' }}> Sign In </Button>
+
+                    { !verifyingComplete && <p> Verifying your credentials. Please wait..... </p> }
+
+                
+                </Form>
+
                 </div>
 
-                <div>
-                <button type='submit' className={classes.signInButton} >
-                    Continue
-                </button>
-                </div>
-
-                { !verifyingComplete && <p> Verifying your credentials. Please wait..... </p>}
-
-                </form>
             </div>
             
     )

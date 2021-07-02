@@ -59,9 +59,10 @@ export default function StudentLogin2( props ) {
 
                 <img src={ authentication } width={ 800 } />
                 <h1 style={{ position: 'relative', top: '60px', left: '70px'}}> Welcome </h1>
+                <h4 style={{ position: 'relative', top: '160px', right: '140px'}}> Student </h4>
 
 
-                <Form style={{ position: 'relative', right: '300px', top: '240px'}} onSubmit={ handleFormSubmit }>
+                <Form style={{ position: 'relative', right: '370px', top: '240px'}} onSubmit={ handleFormSubmit }>
                     <Form.Control type='email' placeholder='Email' required style={{ width: '400px', marginBottom: '30px' }} 
                         onChange={ (event) => {
                                setSignInEmail( event.target.value )

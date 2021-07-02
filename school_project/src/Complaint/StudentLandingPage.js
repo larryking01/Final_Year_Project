@@ -2,126 +2,71 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 import { makeStyles } from '@material-ui/core/styles'
-import StudentComplaintPersistentDrawer from '../Drawers/StudentComplaintPersistentDrawer'
-import Typography from '@material-ui/core/Typography'
 import StudentComplaintNavBar from '../Drawers/StudentComplaintNavBar'
+import Rotate from 'react-reveal/Rotate'
+
+
 
 
 // icons
+/*
 import { BsCheckAll } from 'react-icons/bs'
 import { BsArrowCounterclockwise } from 'react-icons/bs'
 import { BsBookHalf } from 'react-icons/bs'
 import { AiFillNotification } from 'react-icons/ai'
+*/
 
 
-// for slider.
+/* for slider.
 import './complaintSliderStyling.css'
 import Carousel from 'react-elastic-carousel'
+*/
 
 
 
 
 // setting up styling.
 const useStyles = makeStyles( theme => ({
-    totalComplaintsDiv: {
-        position: 'relative',
-        top: '50px',
-        left:'118px',
-        backgroundColor: 'red',
-        width: '270px',
-        height: '110px',
-        borderRadius: '3%',
-        color: 'white',
-        cursor: 'pointer',
-        boxShadow: '2px 2px 8px grey'
-    },
-    totalResolvedComplaintsDiv: {
-        position: 'relative',
-        bottom: '60px',
-        left:'433px',
-        backgroundColor: 'green',
-        width: '274px',
-        height: '110px',
-        borderRadius: '3%',
-        color: 'white',
-        cursor: 'pointer',
-        boxShadow: '2px 2px 8px grey'
-    },
-    totalPendingComplaintsDiv: {
-        position: 'relative',
-        bottom: '170px',
-        left:'743px',
-        backgroundColor: 'blue',
-        width: '274px',
-        height: '110px',
-        borderRadius: '3%',
-        color: 'white',
-        cursor: 'pointer',
-        boxShadow: '2px 2px 8px grey'
-    },
-    totalStudentsIcon: {
-        height: '200px'
-    },
-    totalComplaintsText: {
+    totalSubmittedComplaints: {
+        width: '400px',
+        height: '180px',
+        backgroundColor: '#ffffff',
+        marginLeft: '60px',
         position: 'relative',
         top: '20px',
-        right: '70px'
+        boxShadow: '1px 1px 1px grey',
+        borderRadius: '5%'
     },
-    totalResolvedComplaintsText: {
+    totalPendingComplaints: {
+        width: '400px',
+        height: '180px',
+        backgroundColor: '#ffffff',
+        marginLeft: '20px',
         position: 'relative',
         top: '20px',
-        right: '70px'
+        boxShadow: '1px 1px 1px grey',
+        borderRadius: '5%'
     },
-    totalPendingComplaintsText: {
+    totalResolvedComplaints: {
+        width: '400px',
+        height: '180px',
+        backgroundColor: '#ffffff',
+        marginLeft: '20px',
         position: 'relative',
         top: '20px',
-        right: '70px'
+        boxShadow: '1px 1px 1px grey',
+        borderRadius: '5%'
     },
-    totalResolvedComplaintsNumber: {
+    announcements: {
+        width: '820px',
+        height: '340px',
+        backgroundColor: '#ffffff',
+        marginLeft: '60px',
         position: 'relative',
-        bottom: '50px',
-        left: '150px'
-    },
-    totalComplaintsNumber: {
-        position: 'relative',
-        bottom: '50px',
-        left: '150px'
-    },
-    totalPendingComplaintsNumber: {
-        position: 'relative',
-        bottom: '50px',
-        left: '150px'
-    },
-    totalAnnouncementsDiv: {
-        position: 'relative',
-        left: '117px',
-        bottom: '130px',
-        backgroundColor: ' green',
-        height: '110px',
-        width: '270px',
-        borderRadius: '3%',
-        color: 'white',
-        cursor: 'pointer'
-    },
-    totalAnnouncementsNumber: {
-        position: 'relative',
-        bottom: '60px',
-        left: '140px'
-    },
-    showAnnouncementsSlide: {
-        position: 'relative',
-        bottom: '120px',
-        backgroundColor: '#4d4dff',
-        left: '110px',
-        width: '200px',
-        height: '350px',
-        borderRadius: '3%',
-        color: 'white',
-        cursor: 'pointer',
-        boxShadow: '2px 2px 8px grey'
+        top: '40px',
+        boxShadow: '1px 1px 1px grey',
+        borderRadius: '5%'
     }
-
-
 
 
 }))
@@ -306,105 +251,50 @@ export default function StudentLandingPage(props) {
 
 
     return (
-       <div>
+       <div style={{ backgroundColor: '#f2f2f2'}}>
            {
                user ? 
            
-        <div >
+        <div>
             <StudentComplaintNavBar  user={ user } handleLogout={ handleLogout } />
 
 
 
-            <div style={{ marginTop: '100px' }}>
-                {
-                    /*
+            <div style={{ marginTop: '95px'/* backgroundColor: '#eff1f3' */, height: '85vh' }}>
+                <div style={{ display: 'flex' }}> 
+
+                <Rotate top left>
+                <div className={ classes.totalSubmittedComplaints }>
+                    Total complaints
+
+                </div>
+                </Rotate>
+
+                <Rotate top left>
+                <div className={ classes.totalPendingComplaints }>
+                    Pending
+
+                </div>
+                </Rotate>
+
+                <Rotate top left>
+                <div className={ classes.totalResolvedComplaints }>
+                    Resolved
+
+                </div>
+                </Rotate>
+
+                </div>
+
+                <Rotate top left>
+                <div className={ classes.announcements }>
+                    Announcements
+
+                </div>
+                </Rotate>
                 
-               <div className={ classes.headerTextDiv }>
-                     <Typography className={ classes.headerText } variant='h6' >
-                           Student Dashboard
-                     </Typography>
-                 </div>
-
-
-                 <div className={ classes.totalComplaintsDiv }>
-                     <BsBookHalf size={ 70 } style={{ paddingLeft: '20px', paddingTop: '5px'}} />
-
-                     <Typography variant='h7' className={ classes.totalComplaintsText }>
-                           Total Complaints 
-                     </Typography>
-
-                     <Typography variant='h4' className={ classes.totalComplaintsNumber }>
-                          { totalComplaintsNumber }
-                     </Typography>
                 
-                 </div>
-
-
-
-                 <div className={ classes.totalResolvedComplaintsDiv}>
-                    <BsCheckAll size={ 70 } style={{ paddingLeft: '20px'}} />
-
-                    <Typography variant='h7' className={ classes.totalResolvedComplaintsText }>
-                        Resolved
-                    </Typography>
-
-                    <Typography variant='h4' className={ classes.totalResolvedComplaintsNumber }>
-                        { totalResolvedComplaintsNumber }
-                    </Typography>
-
-                 </div>
-
-
-
-                 <div className={ classes.totalPendingComplaintsDiv}>
-                     <BsArrowCounterclockwise size={ 70 } style={{ paddingLeft: '20px', paddingTop: '10px'}} />
-
-                     <Typography variant='h7' className={ classes.totalPendingComplaintsText }>
-                        Pending
-                     </Typography>
-
-                     <Typography variant='h4' className={ classes.totalPendingComplaintsNumber }>
-                             { totalPendingComplaintsNumber }
-                     </Typography>
-
-                 </div>
-
-
-      
-            <Carousel className={ classes.showAnnouncementsSlide } 
-                      itemsToShow={ 1 }
-                      enableAutoPlay
-                      autoPlaySpeed={ 5000 } // same time
-            >
-                    
-                 { totalAnnouncementsArray.map(announcement => 
-                  
-                     <div key={announcement.announcementTitle} onClick={() => console.log(announcement.id)}>
-                         
-                         <div style={{alignItems: 'center'}}>
-                             <h2 style={{ paddingLeft: '140px'}}> { announcement.announcementTitle } </h2> 
-                             <AiFillNotification  size={ 30 } style={{ position: 'relative', left: '40px', bottom: '45px'}}  />
-                             <hr style={{ color: 'white', width: '60vw', position: 'relative', bottom: '44px'}}/>
-                         </div>
-
-                         <div style={{ position:'relative', bottom: '30px', paddingLeft: '35px'}}>
-                             { announcement.announcementBody }
-
-                         </div>
-
-                    </div>
-            
-                    )
-                }
-
-
-            </Carousel>
-
-
-            */ 
-
-            }
-           
+                        
             </div>
 
 

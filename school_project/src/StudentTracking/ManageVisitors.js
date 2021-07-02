@@ -4,7 +4,7 @@ import StudentTrackingNavBar from '../Drawers/StudentTrackingNavBar'
 //import PersistentDrawer from '../Drawers/PersistentDrawer'
 //import SwipeableDrawer from '../Drawers/SwipeableDrawer'
 import CheckIcon from '@material-ui/icons/Check'
-import Fade from 'react-reveal/Fade'
+import Rotate from 'react-reveal/Rotate'
 
 
 
@@ -71,7 +71,7 @@ export default function ManageVisitors( props ) {
 
             <StudentTrackingNavBar staffID={ staffID } />
             
-            <Fade top>
+            <Rotate top>
             <div style={{ marginTop: '100px' }}>
                 <MaterialTable 
                     title='List Of Visitors'
@@ -163,7 +163,7 @@ export default function ManageVisitors( props ) {
 
                 />
             </div>
-            </Fade>
+            </Rotate>
 
         </div>
     )

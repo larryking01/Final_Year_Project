@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter, Route, Link, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { firebaseAuthentication } from './firebaseSetup/firebaseConfig'
 
 
 
-/*import SelectUser from './SelectUserType/SelectUser'
-import SelectUserWithButtons from './SelectUserType/SelectUserWithButtons' 
-import StudentTrackingNavBar from './Drawers/StudentTrackingNavBar'
-import AuthenticationNavBar from './Drawers/AuthenticationNavBar'
-import SignUp from './Complaint/SignUp'
-import SignIn from './Complaint/SignIn' */
+
 import StudentLogin2 from './LandingPages/StudentLogin'
 import StudentSignUp2 from './LandingPages/StudentSignUp'
-import StudentComplaintNavBar from './Drawers/StudentComplaintNavBar'
 import StaffLogin from './StudentTracking/StaffLogin'
 import SubmitComplaint from './Complaint/SubmitComplaint'
 import MainPage from './StudentTracking/MainPage'
@@ -28,7 +22,6 @@ import StudentLandingPage from './Complaint/StudentLandingPage'
 import PostAnnouncement from './StudentTracking/PostAnnouncement'
 import ManageAnnouncements from './StudentTracking/ManageAnnouncements'
 import StartUpLandingPage from './LandingPages/StartUpLandingPage'
-import StudentComplaintLogin from './LandingPages/StudentComplaintLogin'
 
 
 
@@ -46,7 +39,7 @@ function App() {
   const [ signUpPassword, setSignUpPassword ] = useState('')
   const [ emailError, setEmailError ] = useState('')
   const [ passwordError, setPasswordError ] = useState('')
-  const [ hasAccount, setHasAccount ] = useState( false )
+  //const [ hasAccount, setHasAccount ] = useState( false )
 
 
   // clearing inputs.
@@ -266,7 +259,10 @@ function App() {
                       <ViewAllComplaints staffID= { staffID } />
                 </Route>
 
-                <Route exact path='/nssaccomodationfinder' render={() => (window.location = "https://nss-accom.herokuapp.com/")} />
+                <Route exact path='/nssaccomodationfinder' render={() => (window.location = "https://nss-accom.herokuapp.com/adlist")} />
+
+                <Route exact path='/nssaccomodationfinder/disp' render={() => (window.location = "https://nss-accom.herokuapp.com/disp")} />
+
 
                 <Route exact path='/stafflandingpage' >
                     <StaffLandingPage staffID={ staffID }

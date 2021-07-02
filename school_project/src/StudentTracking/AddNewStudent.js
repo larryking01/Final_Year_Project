@@ -9,7 +9,7 @@ import { DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pi
 import DateFnsUtils from '@date-io/date-fns'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import TextField from '@material-ui/core/TextField'
-import Fade from 'react-reveal/Fade'
+import Rotate from 'react-reveal/Rotate'
 
 
 
@@ -270,7 +270,7 @@ export default function AddNewStudent( props ) {
 
             <div style={{flex: 'column', marginTop: '180px'}}>
                    
-                <Fade top>
+                <Rotate top left>
                 <Form className={ classes.addStudentForm } onSubmit={ handleFormSubmit }>
                     <Row className={ classes.formRow }>
                         <Col>
@@ -400,7 +400,7 @@ export default function AddNewStudent( props ) {
                     </Row>
 
                 </Form>
-                </Fade>
+                </Rotate>
 
                 
             </div>

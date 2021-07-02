@@ -6,7 +6,7 @@ import StudentComplaintNavBar from '../Drawers/StudentComplaintNavBar'
 //import StudentComplaintPersistentDrawer from '../Drawers/PersistentDrawer'
 import { projectFirestore } from '../firebaseSetup/firebaseConfig'
 import { makeStyles } from '@material-ui/core/styles'
-import Fade from 'react-reveal/Fade'
+import Rotate from 'react-reveal/Rotate'
 
 
 
@@ -166,7 +166,7 @@ export default function StudentComplaintHistory( props ) {
             <div>
            <StudentComplaintNavBar user={ user } handleLogout={ handleLogout } />
             
-            <Fade top>
+            <Rotate top left>
             <div style={{ marginTop: '100px' }}>
             <MaterialTable 
                 title='Submitted Complaints'
@@ -199,7 +199,7 @@ export default function StudentComplaintHistory( props ) {
             
             />
             </div>
-            </Fade>
+            </Rotate>
 
             </div>
 

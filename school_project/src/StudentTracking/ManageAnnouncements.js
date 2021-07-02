@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import MaterialTable from 'material-table'
-import Fade from 'react-reveal/Fade'
+import Rotate from 'react-reveal/Rotate'
 //import PersistentDrawer from '../Drawers/PersistentDrawer'
 //import SwipeableDrawer from '../Drawers/SwipeableDrawer'
 import StudentTrackingNavBar from '../Drawers/StudentTrackingNavBar'
@@ -66,7 +66,7 @@ export default function ManageAnnouncements( props ) {
         <div style={{display: 'column'}}>
             <StudentTrackingNavBar staffId={ staffID } />
             
-            <Fade top>
+            <Rotate top left>
             <div style={{ flexDirection: 'column', marginTop: '100px'}}>
                 <MaterialTable 
                     title='Manage Announcements'
@@ -122,7 +122,7 @@ export default function ManageAnnouncements( props ) {
                 />
 
             </div>
-            </Fade>
+            </Rotate>
 
 
         </div>

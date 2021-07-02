@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap'
+import { Navbar, Nav, Button } from 'react-bootstrap'
 
 import { useHistory } from 'react-router-dom'
 
@@ -35,15 +35,15 @@ export default function StudentTrackingNavBar( props ) {
 
                <Nav>
 
-                   <Nav.Link onClick={() => router.push('/submitcomplaint')}> Submit a complaint </Nav.Link>
-                   <Nav.Link onClick={() => router.push('/studentcomplainthistory')}> View complaints history </Nav.Link>
-                   <Nav.Link onClick={() => router.push('/nssaccomodationfinder')}> Access NSS accommodation </Nav.Link>
-                   <Nav.Link onClick={() => {}}> { user.email } </Nav.Link>
+                   <Nav.Link onClick={() => router.push('/submitcomplaint')} style={{color: 'white'}} > Submit a complaint </Nav.Link>
+                   <Nav.Link onClick={() => router.push('/studentcomplainthistory')} style={{color: 'white'}}> View complaints history </Nav.Link>
+                   <Nav.Link onClick={() => router.push('/nssaccomodationfinder/disp')} style={{color: 'white'}}> Access NSS accommodation </Nav.Link>
+                   <Nav.Link onClick={() => {}} style={{color: 'white'}}> { user.email } </Nav.Link>
                   
                </Nav>
 
                <Button /*variant='primary' */ 
-                       style={{ position: 'relative', right: '90px', backgroundColor: '#00d1b2', color: 'white' }}
+                       style={{ position: 'relative', right: '90px', backgroundColor: '#00d1b2', color: 'black', width:'5.5em'  }}
                        onClick={ handleLogout }>
                             Log out 
                 </Button>

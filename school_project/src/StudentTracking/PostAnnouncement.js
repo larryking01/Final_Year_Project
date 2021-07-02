@@ -3,7 +3,7 @@ import { projectFirestore, timestamp } from '../firebaseSetup/firebaseConfig'
 import { makeStyles } from '@material-ui/core/styles'
 import StudentTrackingNavBar from '../Drawers/StudentTrackingNavBar'
 import { Form, Row, Col, Button } from 'react-bootstrap'
-import Fade from 'react-reveal/Fade'
+import Rotate from 'react-reveal/Rotate'
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns';
 
@@ -139,7 +139,7 @@ export default function PostAnnouncement( props ) {
 
             <StudentTrackingNavBar staffID={ staffID } />
 
-            <Fade top>
+            <Rotate top left>
             <Form className={ classes.addVisitorForm } onSubmit={ formSubmit } >
                 <Row className={ classes.announcementTitle }>
                     <Col>
@@ -167,7 +167,7 @@ export default function PostAnnouncement( props ) {
                 </Row>
 
             </Form>
-            </Fade>
+            </Rotate>
 
 
            

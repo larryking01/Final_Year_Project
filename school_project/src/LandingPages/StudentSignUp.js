@@ -27,8 +27,6 @@ export default function StudentSignUp2( props ) {
 
 
 
-
-
     // for routing.
     const router = useHistory()
 
@@ -53,9 +51,9 @@ export default function StudentSignUp2( props ) {
 
                 <img src={ authentication } width={ 800 } />
                 <h1 style={{ position: 'relative', top: '60px', left: '70px'}}> Welcome </h1>
+                <h4 style={{ position: 'relative', top: '160px', right: '140px'}}> Student </h4>
 
-
-                <Form style={{ position: 'relative', right: '300px', top: '240px'}} onSubmit={ handleFormSubmit }>
+                <Form style={{ position: 'relative', right: '370px', top: '240px'}} onSubmit={ handleFormSubmit }>
                     <Form.Control type='email' required placeholder='Email' style={{ width: '400px', marginBottom: '30px' }} onChange={ (event) => setSignUpEmail(event.target.value) }
                         value={ signUpEmail } />
 

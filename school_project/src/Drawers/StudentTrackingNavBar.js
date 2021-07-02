@@ -33,25 +33,25 @@ export default function StudentTrackingNavBar( props ) {
                     <h5 style={{ fontSize: '11px', position: 'relative', top: '8px', left: '4px'}}>Student Tracking</h5>
                </Navbar.Brand>
 
-               <Nav >
+               <Nav style={{ color: 'white'}} >
                    
-                   <NavDropdown title='All features' >
+                   <NavDropdown title='All features' style={{ color: 'white' }} >
                        <NavDropdown.Item onClick={() => router.push('/managevisitors')}>Manage Visitors </NavDropdown.Item>
                        <NavDropdown.Item onClick={() => router.push('/viewallcomplaints')}>View all complaints </NavDropdown.Item>
                        <NavDropdown.Item onClick={() => router.push('/postannouncement')}>Post an announcement </NavDropdown.Item>
                        <NavDropdown.Item onClick={() => router.push('/manageannouncements')}>Manage announcements </NavDropdown.Item>
-                       <NavDropdown.Item onClick={() => router.push('/nssaccomodationfinder')}>Access NSS accommodation </NavDropdown.Item>
+                       <NavDropdown.Item onClick={() => router.push('/nssaccomodationfinder/disp')}>Access NSS accommodation </NavDropdown.Item>
                    </NavDropdown>
 
-                   <Nav.Link onClick={() => router.push('/addnewstudent')}> Add a new student </Nav.Link>
-                   <Nav.Link onClick={() => router.push('/viewallstudents')}> View all students </Nav.Link>
-                   <Nav.Link onClick={() => router.push('/newvisitor')}> Add a new visitor </Nav.Link>
-                   <Nav.Link onClick={() => {}}> { staffID } </Nav.Link>
+                   <Nav.Link onClick={() => router.push('/addnewstudent')} style={{ color: 'white' }}> Add a new student </Nav.Link>
+                   <Nav.Link onClick={() => router.push('/viewallstudents')} style={{ color: 'white' }}> View all students </Nav.Link>
+                   <Nav.Link onClick={() => router.push('/newvisitor')} style={{ color: 'white' }}> Add a new visitor </Nav.Link>
+                   <Nav.Link onClick={() => {}} style={{ color: 'white' }}> { staffID } </Nav.Link>
                    
                </Nav>
 
                <Button variant='primary' 
-                       style={{ position: 'relative', right: '90px' }}
+                       style={{ position: 'relative', right: '90px', backgroundColor: '#00d1b2', color: 'black' }}
                        onClick={() => router.push('/stafflogin')}>
                             Log out 
                 </Button>
